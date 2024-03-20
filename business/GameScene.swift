@@ -10,12 +10,16 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    var cameraNode: SKCameraNode!
     var touchStart: CGPoint?
     
     override func didMove(to view: SKView) {
         backgroundColor = .white
         physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
         physicsWorld.contactDelegate = self
+        
+        cameraNode = SKCameraNode()
+        self.camera = cameraNode
         
         let floorSize = CGSize(width: frame.width, height: 125)
         let floorNode = FloorNode(size: floorSize)
@@ -27,12 +31,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let normalWall2 = WallNode(size: CGSize(width: 200, height: 1000), material: .normal)
         normalWall2.position = CGPoint(x: frame.midX - 200, y: frame.height * 0.4)
         
-        let normalWall3 = WallNode(size: CGSize(width: 200, height: 500), material: .normal)
+        let normalWall3 = WallNode(size: CGSize(width: 200, height: 500), material: .glass)
         normalWall3.position = CGPoint(x: frame.midX + 200, y: frame.height * 0.2)
         
         let catNode = CatNode(size: CGSize(width: 50, height: 50))
         catNode.position = CGPoint(x: frame.midX - 50, y: -frame.height * 0.25)
         
+        addChild(cameraNode)
         addChild(normalWall1)
         addChild(normalWall2)
         addChild(normalWall3)
@@ -41,18 +46,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        touchStart = touch.location(in: self)
+        guard let touch = touches.first, let camera = cameraNode else { return }
+        touchStart = touch.location(in: camera)
         
         if let catNode = childNode(withName: "cat") as? CatNode, catNode.canJump {
-            catNode.physicsBody?.velocity = catNode.currentWallMaterial.value == WallMaterial.glass ? CGVector(dx: 0, dy: -2) : .zero
+            let catShouldStop = !(catNode.currentWallMaterial.value == WallMaterial.glass)
+            catNode.physicsBody?.velocity = .zero
             catNode.physicsBody?.isDynamic = false
         }
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first, let start = touchStart else { return }
-        let location = touch.location(in: self)
+        guard let touch = touches.first, let start = touchStart, let camera = cameraNode else { return }
+        let location = touch.location(in: camera)
 
         var dx = start.x - location.x
         var dy = start.y - location.y
@@ -111,4 +117,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
+    override func update(_ currentTime: TimeInterval) {
+        super.update(currentTime)
+        
+        if let catNode = self.childNode(withName: "cat") as? CatNode {
+            let catPosition = catNode.position
+
+            let lerpFactor: CGFloat = 0.1
+
+            let smoothedPosition = CGPoint(
+                x: cameraNode.position.x + (catPosition.x - cameraNode.position.x) * lerpFactor,
+                y: cameraNode.position.y + ((catPosition.y + frame.height * 0.1) - cameraNode.position.y) * lerpFactor
+            )
+            
+            cameraNode.position = smoothedPosition
+        }
+    }
 }
