@@ -15,6 +15,11 @@
 		B31A3C842BAA264D005728C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B31A3C822BAA264D005728C8 /* Main.storyboard */; };
 		B31A3C862BAA264F005728C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B31A3C852BAA264F005728C8 /* Assets.xcassets */; };
 		B31A3C892BAA264F005728C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B31A3C872BAA264F005728C8 /* LaunchScreen.storyboard */; };
+		B31A3C912BAA5085005728C8 /* CatNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A3C902BAA5085005728C8 /* CatNode.swift */; };
+		B31A3C932BAA55C9005728C8 /* WallMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A3C922BAA55C9005728C8 /* WallMaterial.swift */; };
+		B31A3C962BAA5862005728C8 /* WallNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A3C952BAA5862005728C8 /* WallNode.swift */; };
+		B31A3C982BAA5AF6005728C8 /* PhysicsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A3C972BAA5AF6005728C8 /* PhysicsCategory.swift */; };
+		B31A3C9A2BAA60EF005728C8 /* FloorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A3C992BAA60EF005728C8 /* FloorNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +32,11 @@
 		B31A3C832BAA264D005728C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B31A3C852BAA264F005728C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B31A3C882BAA264F005728C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B31A3C902BAA5085005728C8 /* CatNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatNode.swift; sourceTree = "<group>"; };
+		B31A3C922BAA55C9005728C8 /* WallMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallMaterial.swift; sourceTree = "<group>"; };
+		B31A3C952BAA5862005728C8 /* WallNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallNode.swift; sourceTree = "<group>"; };
+		B31A3C972BAA5AF6005728C8 /* PhysicsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsCategory.swift; sourceTree = "<group>"; };
+		B31A3C992BAA60EF005728C8 /* FloorNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +69,7 @@
 		B31A3C772BAA264D005728C8 /* business */ = {
 			isa = PBXGroup;
 			children = (
+				B31A3C8F2BAA5058005728C8 /* Model */,
 				B31A3C782BAA264D005728C8 /* AppDelegate.swift */,
 				B31A3C7A2BAA264D005728C8 /* GameScene.sks */,
 				B31A3C7C2BAA264D005728C8 /* Actions.sks */,
@@ -69,6 +80,34 @@
 				B31A3C872BAA264F005728C8 /* LaunchScreen.storyboard */,
 			);
 			path = business;
+			sourceTree = "<group>";
+		};
+		B31A3C8F2BAA5058005728C8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B3434B6E2BAB655700F9D401 /* +ext */,
+				B31A3C942BAA5852005728C8 /* GameNode */,
+				B31A3C922BAA55C9005728C8 /* WallMaterial.swift */,
+				B31A3C972BAA5AF6005728C8 /* PhysicsCategory.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B31A3C942BAA5852005728C8 /* GameNode */ = {
+			isa = PBXGroup;
+			children = (
+				B31A3C902BAA5085005728C8 /* CatNode.swift */,
+				B31A3C952BAA5862005728C8 /* WallNode.swift */,
+				B31A3C992BAA60EF005728C8 /* FloorNode.swift */,
+			);
+			path = GameNode;
+			sourceTree = "<group>";
+		};
+		B3434B6E2BAB655700F9D401 /* +ext */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "+ext";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,9 +183,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B31A3C932BAA55C9005728C8 /* WallMaterial.swift in Sources */,
+				B31A3C912BAA5085005728C8 /* CatNode.swift in Sources */,
+				B31A3C9A2BAA60EF005728C8 /* FloorNode.swift in Sources */,
 				B31A3C7F2BAA264D005728C8 /* GameScene.swift in Sources */,
 				B31A3C812BAA264D005728C8 /* GameViewController.swift in Sources */,
 				B31A3C792BAA264D005728C8 /* AppDelegate.swift in Sources */,
+				B31A3C962BAA5862005728C8 /* WallNode.swift in Sources */,
+				B31A3C982BAA5AF6005728C8 /* PhysicsCategory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,12 +344,16 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7U55BCTM6U;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Uuup Up Cat";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -328,12 +376,16 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7U55BCTM6U;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Uuup Up Cat";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
