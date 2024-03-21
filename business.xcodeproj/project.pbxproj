@@ -20,6 +20,7 @@
 		B31A3C962BAA5862005728C8 /* WallNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A3C952BAA5862005728C8 /* WallNode.swift */; };
 		B31A3C982BAA5AF6005728C8 /* PhysicsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A3C972BAA5AF6005728C8 /* PhysicsCategory.swift */; };
 		B31A3C9A2BAA60EF005728C8 /* FloorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A3C992BAA60EF005728C8 /* FloorNode.swift */; };
+		B3434B702BACAEE000F9D401 /* WallFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3434B6F2BACAEE000F9D401 /* WallFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		B31A3C952BAA5862005728C8 /* WallNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallNode.swift; sourceTree = "<group>"; };
 		B31A3C972BAA5AF6005728C8 /* PhysicsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsCategory.swift; sourceTree = "<group>"; };
 		B31A3C992BAA60EF005728C8 /* FloorNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorNode.swift; sourceTree = "<group>"; };
+		B3434B6F2BACAEE000F9D401 /* WallFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,15 +71,13 @@
 		B31A3C772BAA264D005728C8 /* business */ = {
 			isa = PBXGroup;
 			children = (
+				B3434B742BACB7B900F9D401 /* Storyboards */,
+				B3434B732BACB7B200F9D401 /* Common */,
+				B3434B722BACB7A200F9D401 /* Scene */,
+				B3434B712BACB79900F9D401 /* Factories */,
 				B31A3C8F2BAA5058005728C8 /* Model */,
-				B31A3C782BAA264D005728C8 /* AppDelegate.swift */,
-				B31A3C7A2BAA264D005728C8 /* GameScene.sks */,
-				B31A3C7C2BAA264D005728C8 /* Actions.sks */,
-				B31A3C7E2BAA264D005728C8 /* GameScene.swift */,
 				B31A3C802BAA264D005728C8 /* GameViewController.swift */,
-				B31A3C822BAA264D005728C8 /* Main.storyboard */,
 				B31A3C852BAA264F005728C8 /* Assets.xcassets */,
-				B31A3C872BAA264F005728C8 /* LaunchScreen.storyboard */,
 			);
 			path = business;
 			sourceTree = "<group>";
@@ -108,6 +108,41 @@
 			children = (
 			);
 			path = "+ext";
+			sourceTree = "<group>";
+		};
+		B3434B712BACB79900F9D401 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				B3434B6F2BACAEE000F9D401 /* WallFactory.swift */,
+			);
+			path = Factories;
+			sourceTree = "<group>";
+		};
+		B3434B722BACB7A200F9D401 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				B31A3C7C2BAA264D005728C8 /* Actions.sks */,
+				B31A3C7E2BAA264D005728C8 /* GameScene.swift */,
+				B31A3C7A2BAA264D005728C8 /* GameScene.sks */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		B3434B732BACB7B200F9D401 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				B31A3C782BAA264D005728C8 /* AppDelegate.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		B3434B742BACB7B900F9D401 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				B31A3C822BAA264D005728C8 /* Main.storyboard */,
+				B31A3C872BAA264F005728C8 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,6 +219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B31A3C932BAA55C9005728C8 /* WallMaterial.swift in Sources */,
+				B3434B702BACAEE000F9D401 /* WallFactory.swift in Sources */,
 				B31A3C912BAA5085005728C8 /* CatNode.swift in Sources */,
 				B31A3C9A2BAA60EF005728C8 /* FloorNode.swift in Sources */,
 				B31A3C7F2BAA264D005728C8 /* GameScene.swift in Sources */,
@@ -341,7 +377,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 7U55BCTM6U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Uuup Up Cat";
@@ -358,7 +394,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mnhz.business;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -373,7 +409,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 7U55BCTM6U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Uuup Up Cat";
@@ -390,7 +426,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mnhz.business;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

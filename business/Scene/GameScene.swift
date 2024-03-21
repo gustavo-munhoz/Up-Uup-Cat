@@ -11,17 +11,29 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var cameraNode: SKCameraNode!
+    var wallGenerateTrigger: Double!
+    
     var touchStart: CGPoint?
+    var zoomOutTimer: Timer?
+    
+    var wallFactory: WallFactory!
+
+    
+    // MARK: - Scene setup
     
     override func didMove(to view: SKView) {
+        wallGenerateTrigger = frame.height * 0.05
         backgroundColor = .white
         physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
         physicsWorld.contactDelegate = self
         
+        
         cameraNode = SKCameraNode()
         self.camera = cameraNode
         
-        let floorSize = CGSize(width: frame.width, height: 125)
+        wallFactory = WallFactory(frame: frame, cameraPositionY: cameraNode.position.y)
+        
+        let floorSize = CGSize(width: frame.width * 2, height: 125)
         let floorNode = FloorNode(size: floorSize)
         floorNode.position = CGPoint(x: frame.midX, y: frame.minY + floorSize.height / 2)
 
@@ -36,6 +48,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let catNode = CatNode(size: CGSize(width: 50, height: 50))
         catNode.position = CGPoint(x: frame.midX - 50, y: -frame.height * 0.25)
+        catNode.zPosition = 2
         
         addChild(cameraNode)
         addChild(normalWall1)
@@ -45,81 +58,66 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(catNode)
     }
     
+    // MARK: - Default methods
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first, let camera = cameraNode else { return }
         touchStart = touch.location(in: camera)
         
-        if let catNode = childNode(withName: "cat") as? CatNode, catNode.canJump {
-            let catShouldStop = !(catNode.currentWallMaterial.value == WallMaterial.glass)
-            catNode.physicsBody?.velocity = .zero
-            catNode.physicsBody?.isDynamic = false
+        guard let catNode = childNode(withName: "cat") as? CatNode, catNode.currentWallMaterial != .none else { return }
+        
+        catNode.prepareForJump()
+        
+        zoomOutTimer = Timer.scheduledTimer(withTimeInterval: 5/6, repeats: false) { [weak self] _ in
+            self?.zoomOutCamera()
         }
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first, let start = touchStart, let camera = cameraNode else { return }
+        guard let touch = touches.first, let start = touchStart, let camera = cameraNode,
+              let catNode = childNode(withName: "cat") as? CatNode else { return }
+        
         let location = touch.location(in: camera)
+        
+        catNode.handleJump(from: start, to: location)
+        
+        zoomOutTimer?.invalidate()
+        zoomOutTimer = nil
 
-        var dx = start.x - location.x
-        var dy = start.y - location.y
-
-        let magnitude = sqrt(dx * dx + dy * dy)
-
-        let maxMagnitude: CGFloat = 125.0
-        let minMagnitude: CGFloat = 10.0
-        let clampedMagnitude = min(maxMagnitude, max(minMagnitude, magnitude))
-
-        dx /= magnitude
-        dy /= magnitude
-        dx *= clampedMagnitude
-        dy *= clampedMagnitude
-
-        if let catNode = childNode(withName: "cat") as? CatNode, catNode.canJump {
-            catNode.physicsBody?.isDynamic = true
-            catNode.physicsBody?.applyImpulse(CGVector(dx: dx, dy: dy))
-            catNode.currentWallMaterial.value = .none
-        }
+        resetCamera()
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
         let (bodyA, bodyB) = (contact.bodyA, contact.bodyB)
         
-        if (bodyA.categoryBitMask == PhysicsCategory.player && bodyB.categoryBitMask == PhysicsCategory.wall) ||
-           (bodyA.categoryBitMask == PhysicsCategory.wall && bodyB.categoryBitMask == PhysicsCategory.player) {
-
-            let catNode = (bodyA.categoryBitMask == PhysicsCategory.player ? bodyA.node : bodyB.node) as? CatNode
-            let wallNode = (bodyA.categoryBitMask == PhysicsCategory.wall ? bodyA.node : bodyB.node) as? WallNode
-
-            if let catNode = catNode, let wallNode = wallNode {
-                catNode.currentWallMaterial.value = wallNode.material
-            }
-        }
-        
-        if (bodyA.categoryBitMask == PhysicsCategory.player && bodyB.categoryBitMask == PhysicsCategory.floor) ||
-           (bodyA.categoryBitMask == PhysicsCategory.floor && bodyB.categoryBitMask == PhysicsCategory.player) {
-
-            let catNode = (bodyA.categoryBitMask == PhysicsCategory.player ? bodyA.node : bodyB.node) as? CatNode
-
-            if let catNode = catNode {
-                catNode.currentWallMaterial.value = .normal
-            }
+        if let catNode = bodyA.node as? CatNode {
+            catNode.beganContact(with: bodyB.node!)
+        } else if let catNode = bodyB.node as? CatNode {
+            catNode.beganContact(with: bodyA.node!)
         }
     }
-    
-    func didEnd(_ contact: SKPhysicsContact) {
-        if contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask == PhysicsCategory.player | PhysicsCategory.floor ||
-           contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask == PhysicsCategory.player | PhysicsCategory.wall {
 
-            let catNode = (contact.bodyA.categoryBitMask == PhysicsCategory.player ? contact.bodyA.node 
-                           : contact.bodyB.node) as? CatNode
-            
-            catNode?.currentWallMaterial.value = .none
+    func didEnd(_ contact: SKPhysicsContact) {
+        let (bodyA, bodyB) = (contact.bodyA, contact.bodyB)
+        
+        if let catNode = bodyA.node as? CatNode {
+            catNode.endedContact(with: bodyB.node!)
+        } else if let catNode = bodyB.node as? CatNode {
+            catNode.endedContact(with: bodyA.node!)
         }
     }
 
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
         
+        updateCameraPosition()
+        handleWallGeneration()
+        wallFactory.cameraPositionY = cameraNode.position.y
+    }
+    
+    // MARK: - Custom methods
+    
+    func updateCameraPosition() {
         if let catNode = self.childNode(withName: "cat") as? CatNode {
             let catPosition = catNode.position
 
@@ -131,6 +129,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             )
             
             cameraNode.position = smoothedPosition
+        }
+    }
+    
+    func zoomOutCamera() {
+        let zoomOutAction = SKAction.scale(to: 1.5, duration: 0.5)
+        zoomOutAction.timingMode = .easeInEaseOut
+        cameraNode?.run(zoomOutAction)
+    }
+    
+    func resetCamera() {
+        let resetZoomAction = SKAction.scale(to: 1.0, duration: 0.5)
+        resetZoomAction.timingMode = .easeInEaseOut
+        cameraNode?.run(resetZoomAction)
+    }
+    
+    func handleWallGeneration() {
+        if cameraNode.position.y > wallGenerateTrigger {
+            let newWall = wallFactory.createWall()
+            addChild(newWall)
+            
+            wallGenerateTrigger += frame.size.height * 0.3
         }
     }
 }

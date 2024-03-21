@@ -9,6 +9,7 @@ import SpriteKit
 
 class WallNode: SKShapeNode {
     var material: WallMaterial = .normal
+    let id = UUID()
     
     init(size: CGSize, material: WallMaterial) {
         super.init()
@@ -22,7 +23,6 @@ class WallNode: SKShapeNode {
         self.physicsBody?.isDynamic = false
         self.physicsBody?.categoryBitMask = PhysicsCategory.wall
         self.physicsBody?.contactTestBitMask = PhysicsCategory.player
-        self.physicsBody?.collisionBitMask = PhysicsCategory.none
         
         setupWallProperties()
     }
