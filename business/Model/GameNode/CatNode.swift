@@ -8,15 +8,13 @@
 import SpriteKit
 
 class CatNode: SKShapeNode {
-    var wallContacts = Set<UUID>()
-    
     var currentWallMaterial: WallMaterial = .none {
         didSet {
             canJump = currentWallMaterial != .none
         }
     }
 
-    var canJump: Bool = false
+    var canJump: Bool = true
     
     init(size: CGSize) {
         super.init()
@@ -27,8 +25,7 @@ class CatNode: SKShapeNode {
         physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: size.width * 0.8, height: size.height))
         physicsBody?.isDynamic = true
         physicsBody?.categoryBitMask = PhysicsCategory.player
-        physicsBody?.contactTestBitMask = PhysicsCategory.wall | PhysicsCategory.floor
-        physicsBody?.collisionBitMask = PhysicsCategory.floor
+        physicsBody?.contactTestBitMask = PhysicsCategory.wall
         physicsBody?.usesPreciseCollisionDetection = true
         
         name = "cat"
@@ -64,29 +61,6 @@ extension CatNode {
         dy *= clampedMagnitude
         
         physicsBody?.isDynamic = true
-        physicsBody?.applyImpulse(CGVector(dx: dx, dy: dy))
-        canJump = false
-    }
-}
-
-extension CatNode {
-    func beganContact(with node: SKNode) {
-        if let wallNode = node as? WallNode {
-            wallContacts.insert(wallNode.id)
-            currentWallMaterial = wallNode.material
-        } else if node.name == "floor" {
-            canJump = true
-        }
-    }
-
-    func endedContact(with node: SKNode) {
-        if let wallNode = node as? WallNode {
-            wallContacts.remove(wallNode.id)
-            if wallContacts.isEmpty {
-                currentWallMaterial = .none
-            }
-        } else if node.name == "floor" {
-            canJump = false
-        }
+        physicsBody?.applyImpulse(CGVector(dx: dx, dy: dy)) 
     }
 }

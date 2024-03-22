@@ -19,7 +19,6 @@
 		B31A3C932BAA55C9005728C8 /* WallMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A3C922BAA55C9005728C8 /* WallMaterial.swift */; };
 		B31A3C962BAA5862005728C8 /* WallNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A3C952BAA5862005728C8 /* WallNode.swift */; };
 		B31A3C982BAA5AF6005728C8 /* PhysicsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A3C972BAA5AF6005728C8 /* PhysicsCategory.swift */; };
-		B31A3C9A2BAA60EF005728C8 /* FloorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A3C992BAA60EF005728C8 /* FloorNode.swift */; };
 		B3434B702BACAEE000F9D401 /* WallFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3434B6F2BACAEE000F9D401 /* WallFactory.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,7 +36,6 @@
 		B31A3C922BAA55C9005728C8 /* WallMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallMaterial.swift; sourceTree = "<group>"; };
 		B31A3C952BAA5862005728C8 /* WallNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallNode.swift; sourceTree = "<group>"; };
 		B31A3C972BAA5AF6005728C8 /* PhysicsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsCategory.swift; sourceTree = "<group>"; };
-		B31A3C992BAA60EF005728C8 /* FloorNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorNode.swift; sourceTree = "<group>"; };
 		B3434B6F2BACAEE000F9D401 /* WallFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -98,7 +96,6 @@
 			children = (
 				B31A3C902BAA5085005728C8 /* CatNode.swift */,
 				B31A3C952BAA5862005728C8 /* WallNode.swift */,
-				B31A3C992BAA60EF005728C8 /* FloorNode.swift */,
 			);
 			path = GameNode;
 			sourceTree = "<group>";
@@ -221,7 +218,6 @@
 				B31A3C932BAA55C9005728C8 /* WallMaterial.swift in Sources */,
 				B3434B702BACAEE000F9D401 /* WallFactory.swift in Sources */,
 				B31A3C912BAA5085005728C8 /* CatNode.swift in Sources */,
-				B31A3C9A2BAA60EF005728C8 /* FloorNode.swift in Sources */,
 				B31A3C7F2BAA264D005728C8 /* GameScene.swift in Sources */,
 				B31A3C812BAA264D005728C8 /* GameViewController.swift in Sources */,
 				B31A3C792BAA264D005728C8 /* AppDelegate.swift in Sources */,

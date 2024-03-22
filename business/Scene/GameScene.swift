@@ -17,12 +17,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var zoomOutTimer: Timer?
     
     var wallFactory: WallFactory!
+    var existingWalls: [WallNode] = []
 
+    var catNode: CatNode!
     
     // MARK: - Scene setup
     
     override func didMove(to view: SKView) {
-        wallGenerateTrigger = frame.height * 0.05
+        wallGenerateTrigger = frame.height * 0.3
         backgroundColor = .white
         physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
         physicsWorld.contactDelegate = self
@@ -33,28 +35,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         wallFactory = WallFactory(frame: frame, cameraPositionY: cameraNode.position.y)
         
-        let floorSize = CGSize(width: frame.width * 2, height: 125)
-        let floorNode = FloorNode(size: floorSize)
-        floorNode.position = CGPoint(x: frame.midX, y: frame.minY + floorSize.height / 2)
-
-        let normalWall1 = WallNode(size: CGSize(width: 350, height: 700), material: .normal)
-        normalWall1.position = CGPoint(x: frame.midX + 200, y: -frame.height * 0.4)
+        let initialWalls = wallFactory.createInitialWalls()
         
-        let normalWall2 = WallNode(size: CGSize(width: 200, height: 1000), material: .normal)
-        normalWall2.position = CGPoint(x: frame.midX - 200, y: frame.height * 0.4)
-        
-        let normalWall3 = WallNode(size: CGSize(width: 200, height: 500), material: .glass)
-        normalWall3.position = CGPoint(x: frame.midX + 200, y: frame.height * 0.2)
-        
-        let catNode = CatNode(size: CGSize(width: 50, height: 50))
+        catNode = CatNode(size: CGSize(width: 30, height: 70))
         catNode.position = CGPoint(x: frame.midX - 50, y: -frame.height * 0.25)
         catNode.zPosition = 2
+        catNode.prepareForJump()
         
         addChild(cameraNode)
-        addChild(normalWall1)
-        addChild(normalWall2)
-        addChild(normalWall3)
-        addChild(floorNode)
+        
+        for wall in initialWalls {
+            existingWalls.append(wall)
+            addChild(wall)
+        }
+        
         addChild(catNode)
     }
     
@@ -64,7 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard let touch = touches.first, let camera = cameraNode else { return }
         touchStart = touch.location(in: camera)
         
-        guard let catNode = childNode(withName: "cat") as? CatNode, catNode.currentWallMaterial != .none else { return }
+        guard catNode.currentWallMaterial != .none else { return }
         
         catNode.prepareForJump()
         
@@ -74,8 +68,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first, let start = touchStart, let camera = cameraNode,
-              let catNode = childNode(withName: "cat") as? CatNode else { return }
+        guard let touch = touches.first, let start = touchStart, let camera = cameraNode else { return }
         
         let location = touch.location(in: camera)
         
@@ -86,31 +79,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         resetCamera()
     }
-    
-    func didBegin(_ contact: SKPhysicsContact) {
-        let (bodyA, bodyB) = (contact.bodyA, contact.bodyB)
-        
-        if let catNode = bodyA.node as? CatNode {
-            catNode.beganContact(with: bodyB.node!)
-        } else if let catNode = bodyB.node as? CatNode {
-            catNode.beganContact(with: bodyA.node!)
-        }
-    }
-
-    func didEnd(_ contact: SKPhysicsContact) {
-        let (bodyA, bodyB) = (contact.bodyA, contact.bodyB)
-        
-        if let catNode = bodyA.node as? CatNode {
-            catNode.endedContact(with: bodyB.node!)
-        } else if let catNode = bodyB.node as? CatNode {
-            catNode.endedContact(with: bodyA.node!)
-        }
-    }
 
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
-        
         updateCameraPosition()
+        
+        // Is already holding a wall, check is useless
+        guard catNode.physicsBody?.velocity != .zero else { return }
+        
+        handleCatMovement()
         handleWallGeneration()
         wallFactory.cameraPositionY = cameraNode.position.y
     }
@@ -121,7 +98,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let catNode = self.childNode(withName: "cat") as? CatNode {
             let catPosition = catNode.position
 
-            let lerpFactor: CGFloat = 0.1
+            let lerpFactor: CGFloat = 0.2
 
             let smoothedPosition = CGPoint(
                 x: cameraNode.position.x + (catPosition.x - cameraNode.position.x) * lerpFactor,
@@ -147,9 +124,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func handleWallGeneration() {
         if cameraNode.position.y > wallGenerateTrigger {
             let newWall = wallFactory.createWall()
+            existingWalls.append(newWall)
             addChild(newWall)
             
-            wallGenerateTrigger += frame.size.height * 0.3
+            wallGenerateTrigger += frame.size.height * 0.4
         }
     }
+    
+    func handleCatMovement() {
+        for wall in existingWalls {
+            let contactAreaWidth = wall.frame.width - catNode.frame.width
+            let contactAreaHeight = wall.frame.height - catNode.frame.height
+
+            let contactAreaOriginX = wall.position.x - contactAreaWidth / 2
+            let contactAreaOriginY = wall.position.y - wall.frame.height / 2
+
+            let contactAreaFrameInScene = CGRect(
+                x: contactAreaOriginX,
+                y: contactAreaOriginY,
+                width: contactAreaWidth,
+                height: contactAreaHeight
+            )
+
+            if catNode.frame.intersects(contactAreaFrameInScene) {
+                catNode.currentWallMaterial = wall.material
+                return
+            }
+        }
+        catNode.currentWallMaterial = .none
+    }
+
 }

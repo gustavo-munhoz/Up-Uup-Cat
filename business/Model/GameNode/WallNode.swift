@@ -9,20 +9,18 @@ import SpriteKit
 
 class WallNode: SKShapeNode {
     var material: WallMaterial = .normal
-    let id = UUID()
     
     init(size: CGSize, material: WallMaterial) {
         super.init()
         
-        path = CGPath(rect: CGRect(origin: CGPoint(x: -size.width / 2, y: -size.height / 2), size: size), transform: nil)
+        let origin = CGPoint(x: -size.width / 2, y: -size.height / 2)
+        
+        path = CGPath(rect: CGRect(origin: origin, size: size), transform: nil)
+        
         name = "wall"
         
         self.material = material
         
-        self.physicsBody = SKPhysicsBody(rectangleOf: size)
-        self.physicsBody?.isDynamic = false
-        self.physicsBody?.categoryBitMask = PhysicsCategory.wall
-        self.physicsBody?.contactTestBitMask = PhysicsCategory.player
         
         setupWallProperties()
     }

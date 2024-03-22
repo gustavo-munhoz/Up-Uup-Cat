@@ -36,13 +36,12 @@ class GameViewController: UIViewController {
         }
     }
 
-
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return [.portrait, .portraitUpsideDown]
+        [.portrait, .portraitUpsideDown]
     }
 
     override var prefersStatusBarHidden: Bool {
-        return true
+        true
     }
     
     @objc func resetGameScene() {
