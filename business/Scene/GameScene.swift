@@ -10,16 +10,20 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    var hasStarted = false
+    
     var cameraNode: SKCameraNode!
     var wallGenerateTrigger: Double!
     
     var touchStart: CGPoint?
     var zoomOutTimer: Timer?
+    var lastUpdateTime: TimeInterval = 0
     
     var wallFactory: WallFactory!
     var existingWalls: [WallNode] = []
 
     var catNode: CatNode!
+    var enemyCucumber: EnemyCucumberNode!
     
     // MARK: - Scene setup
     
@@ -42,6 +46,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         catNode.zPosition = 2
         catNode.prepareForJump()
         
+        enemyCucumber = EnemyCucumberNode(size: CGSize(width: 50, height: 80))
+        enemyCucumber.position = CGPoint(x: frame.minX + 50, y: -frame.height * 0.5)
+        enemyCucumber.target = catNode
+        enemyCucumber.zPosition = 5
+        
         addChild(cameraNode)
         
         for wall in initialWalls {
@@ -50,6 +59,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         addChild(catNode)
+        addChild(enemyCucumber)
     }
     
     // MARK: - Default methods
@@ -70,6 +80,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first, let start = touchStart, let camera = cameraNode else { return }
         
+        if !hasStarted { hasStarted = true }
+        
         let location = touch.location(in: camera)
         
         catNode.handleJump(from: start, to: location)
@@ -84,12 +96,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         super.update(currentTime)
         updateCameraPosition()
         
+        if hasStarted {
+            enemyCucumber.applyForceToMoveToTarget()
+        }
+        
         // Is already holding a wall, check is useless
         guard catNode.physicsBody?.velocity != .zero else { return }
         
         handleCatMovement()
         handleWallGeneration()
         wallFactory.cameraPositionY = cameraNode.position.y
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        let (bodyA, bodyB) = (contact.bodyA, contact.bodyB)
+        
+        if bodyA.node?.name == "cat" && bodyB.node?.name == "enemyCucumber"
+            || bodyA.node?.name == "enemyCucumber" && bodyB.node?.name == "cat"
+        {
+            GameManager.shared.resetGame()
+        }
     }
     
     // MARK: - Custom methods
@@ -153,5 +179,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         catNode.currentWallMaterial = .none
     }
-
 }

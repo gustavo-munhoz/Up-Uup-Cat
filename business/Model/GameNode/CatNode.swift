@@ -6,6 +6,7 @@
 //
 
 import SpriteKit
+import GameplayKit
 
 class CatNode: SKShapeNode {
     var currentWallMaterial: WallMaterial = .none {
@@ -25,7 +26,7 @@ class CatNode: SKShapeNode {
         physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: size.width * 0.8, height: size.height))
         physicsBody?.isDynamic = true
         physicsBody?.categoryBitMask = PhysicsCategory.player
-        physicsBody?.contactTestBitMask = PhysicsCategory.wall
+        physicsBody?.contactTestBitMask = PhysicsCategory.wall | PhysicsCategory.enemy
         physicsBody?.usesPreciseCollisionDetection = true
         
         name = "cat"

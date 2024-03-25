@@ -8,9 +8,12 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import Combine
 
 class GameViewController: UIViewController {
 
+    private var cancellables = Set<AnyCancellable>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,6 +37,8 @@ class GameViewController: UIViewController {
                 
             }
         }
+        
+        setupSubscriptions()
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -42,6 +47,15 @@ class GameViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool {
         true
+    }
+    
+    func setupSubscriptions() {
+        GameManager.shared.shouldReset.sink { shouldReset in
+            if shouldReset {
+                self.resetGameScene()
+            }
+        }
+        .store(in: &cancellables)
     }
     
     @objc func resetGameScene() {
