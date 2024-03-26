@@ -46,8 +46,8 @@ extension CatEntity {
         var dy = start.y - end.y
         
         let magnitude = sqrt(dx * dx + dy * dy)
-        let maxMagnitude: CGFloat = 95.0
-        let minMagnitude: CGFloat = 5.0
+        let maxMagnitude: CGFloat = GC.PLAYER_DEFAULT_BOOST_MAX
+        let minMagnitude: CGFloat = GC.PLAYER_DEFAULT_BOOST_MIN
         let clampedMagnitude = min(maxMagnitude, max(minMagnitude, magnitude))
         
         dx /= magnitude

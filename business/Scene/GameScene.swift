@@ -102,7 +102,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         updateCameraPosition()
         
         if lastUpdateTime == 0 { lastUpdateTime = currentTime }
-        
         if hasStarted { handleCucumberMovement(currentTime: currentTime) }
         
         guard catEntity.spriteComponent.node.physicsBody?.velocity != .zero else { return }
@@ -118,6 +117,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if bodyA.node?.name == "cat" && bodyB.node?.name == "enemyCucumber"
             || bodyA.node?.name == "enemyCucumber" && bodyB.node?.name == "cat"
         {
+            cucumberEntity.isJumpingAtPlayer = false
             GameManager.shared.resetGame()
         }
     }
@@ -182,17 +182,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         catEntity.spriteComponent.currentWallMaterial = .none
     }
     
-    func handleCucumberMovement(currentTime: TimeInterval) {        
-        cucumberEntity.updateTarget(catEntity.agentComponent.agent)
-        
-        var deltaTime = currentTime - lastUpdateTime
-        lastUpdateTime = currentTime
-        
-        if deltaTime > 0.02 {
-            deltaTime = 0.02
+    func handleCucumberMovement(currentTime: TimeInterval) {
+        if let vy = catEntity.spriteComponent.node.physicsBody?.velocity.dy, vy < -2000 {
+            cucumberEntity.jumpAtPlayer(player: catEntity)
+            
+        } else if !cucumberEntity.isJumpingAtPlayer {
+            cucumberEntity.updateTarget(catEntity.agentComponent.agent)
+            var deltaTime = currentTime - lastUpdateTime
+            lastUpdateTime = currentTime
+            
+            if deltaTime > 0.02 {
+                deltaTime = 0.02
+            }
+            
+            cucumberEntity.agentComponent.agent.update(deltaTime: deltaTime)
+            catEntity.agentComponent.agent.update(deltaTime: deltaTime)
         }
-        
-        cucumberEntity.agentComponent.agent.update(deltaTime: deltaTime)
-        catEntity.agentComponent.agent.update(deltaTime: deltaTime)
     }
 }

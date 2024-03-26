@@ -12,4 +12,8 @@ extension CGVector {
         let length = sqrt(dx * dx + dy * dy)
         return CGVector(dx: dx / length, dy: dy / length)
     }
+    
+    static func * (lhs: CGVector, rhs: Float) -> CGVector {
+        return CGVector(dx: lhs.dx * CGFloat(rhs), dy: lhs.dy * CGFloat(rhs))
+    }
 }

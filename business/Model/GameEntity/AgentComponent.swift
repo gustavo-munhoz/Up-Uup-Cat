@@ -12,9 +12,6 @@ class AgentComponent: GKComponent {
 
     override init() {
         super.init()
-        agent.maxSpeed = 2500
-        agent.maxAcceleration = 500
-        agent.mass = 0.5
     }
 
     required init?(coder aDecoder: NSCoder) {

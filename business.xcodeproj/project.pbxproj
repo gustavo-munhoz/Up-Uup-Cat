@@ -26,6 +26,7 @@
 		B3434B822BB1E45700F9D401 /* CucumberEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3434B812BB1E45700F9D401 /* CucumberEntity.swift */; };
 		B3434B842BB1E50200F9D401 /* CatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3434B832BB1E50200F9D401 /* CatEntity.swift */; };
 		B3434B862BB1E51B00F9D401 /* CatSpriteComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3434B852BB1E51B00F9D401 /* CatSpriteComponent.swift */; };
+		B3434B8C2BB33B8600F9D401 /* GameConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3434B8B2BB33B8600F9D401 /* GameConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		B3434B812BB1E45700F9D401 /* CucumberEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CucumberEntity.swift; sourceTree = "<group>"; };
 		B3434B832BB1E50200F9D401 /* CatEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatEntity.swift; sourceTree = "<group>"; };
 		B3434B852BB1E51B00F9D401 /* CatSpriteComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatSpriteComponent.swift; sourceTree = "<group>"; };
+		B3434B8B2BB33B8600F9D401 /* GameConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 		B31A3C8F2BAA5058005728C8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B3434B8B2BB33B8600F9D401 /* GameConstants.swift */,
 				B3434B6E2BAB655700F9D401 /* +ext */,
 				B31A3C942BAA5852005728C8 /* GameEntity */,
 				B31A3C922BAA55C9005728C8 /* WallMaterial.swift */,
@@ -254,6 +257,7 @@
 				B3434B7E2BB1E3B500F9D401 /* AgentComponent.swift in Sources */,
 				B3434B702BACAEE000F9D401 /* WallFactory.swift in Sources */,
 				B3434B822BB1E45700F9D401 /* CucumberEntity.swift in Sources */,
+				B3434B8C2BB33B8600F9D401 /* GameConstants.swift in Sources */,
 				B31A3C7F2BAA264D005728C8 /* GameScene.swift in Sources */,
 				B3434B862BB1E51B00F9D401 /* CatSpriteComponent.swift in Sources */,
 				B31A3C812BAA264D005728C8 /* GameViewController.swift in Sources */,
@@ -413,7 +417,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 7U55BCTM6U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Uuup Up Cat";
@@ -445,7 +449,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 7U55BCTM6U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Uuup Up Cat";
