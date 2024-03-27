@@ -27,6 +27,7 @@
 		B3434B842BB1E50200F9D401 /* CatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3434B832BB1E50200F9D401 /* CatEntity.swift */; };
 		B3434B862BB1E51B00F9D401 /* CatSpriteComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3434B852BB1E51B00F9D401 /* CatSpriteComponent.swift */; };
 		B3434B8C2BB33B8600F9D401 /* GameConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3434B8B2BB33B8600F9D401 /* GameConstants.swift */; };
+		B3434B922BB4972E00F9D401 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3434B912BB4972E00F9D401 /* CameraManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		B3434B832BB1E50200F9D401 /* CatEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatEntity.swift; sourceTree = "<group>"; };
 		B3434B852BB1E51B00F9D401 /* CatSpriteComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatSpriteComponent.swift; sourceTree = "<group>"; };
 		B3434B8B2BB33B8600F9D401 /* GameConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConstants.swift; sourceTree = "<group>"; };
+		B3434B912BB4972E00F9D401 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,10 +87,10 @@
 			children = (
 				B3434B742BACB7B900F9D401 /* Storyboards */,
 				B3434B732BACB7B200F9D401 /* Common */,
+				B3434B932BB4A0C400F9D401 /* Controller */,
 				B3434B722BACB7A200F9D401 /* Scene */,
 				B3434B712BACB79900F9D401 /* Factories */,
 				B31A3C8F2BAA5058005728C8 /* Model */,
-				B31A3C802BAA264D005728C8 /* GameViewController.swift */,
 				B31A3C852BAA264F005728C8 /* Assets.xcassets */,
 			);
 			path = business;
@@ -97,11 +99,9 @@
 		B31A3C8F2BAA5058005728C8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B3434B8B2BB33B8600F9D401 /* GameConstants.swift */,
+				B3434B8D2BB496DA00F9D401 /* Constant */,
 				B3434B6E2BAB655700F9D401 /* +ext */,
 				B31A3C942BAA5852005728C8 /* GameEntity */,
-				B31A3C922BAA55C9005728C8 /* WallMaterial.swift */,
-				B31A3C972BAA5AF6005728C8 /* PhysicsCategory.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -109,10 +109,11 @@
 		B31A3C942BAA5852005728C8 /* GameEntity */ = {
 			isa = PBXGroup;
 			children = (
-				B3434B7D2BB1E3B500F9D401 /* AgentComponent.swift */,
+				B3434B902BB4971200F9D401 /* Camera */,
+				B3434B8F2BB4970700F9D401 /* GKAgent */,
+				B3434B8E2BB496F600F9D401 /* Wall */,
 				B3434B7C2BB1E39800F9D401 /* Cucumber */,
 				B3434B7B2BB1E38800F9D401 /* Cat */,
-				B31A3C952BAA5862005728C8 /* WallNode.swift */,
 			);
 			path = GameEntity;
 			sourceTree = "<group>";
@@ -177,6 +178,48 @@
 				B3434B812BB1E45700F9D401 /* CucumberEntity.swift */,
 			);
 			path = Cucumber;
+			sourceTree = "<group>";
+		};
+		B3434B8D2BB496DA00F9D401 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				B3434B8B2BB33B8600F9D401 /* GameConstants.swift */,
+				B31A3C972BAA5AF6005728C8 /* PhysicsCategory.swift */,
+			);
+			path = Constant;
+			sourceTree = "<group>";
+		};
+		B3434B8E2BB496F600F9D401 /* Wall */ = {
+			isa = PBXGroup;
+			children = (
+				B31A3C922BAA55C9005728C8 /* WallMaterial.swift */,
+				B31A3C952BAA5862005728C8 /* WallNode.swift */,
+			);
+			path = Wall;
+			sourceTree = "<group>";
+		};
+		B3434B8F2BB4970700F9D401 /* GKAgent */ = {
+			isa = PBXGroup;
+			children = (
+				B3434B7D2BB1E3B500F9D401 /* AgentComponent.swift */,
+			);
+			path = GKAgent;
+			sourceTree = "<group>";
+		};
+		B3434B902BB4971200F9D401 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				B3434B912BB4972E00F9D401 /* CameraManager.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		B3434B932BB4A0C400F9D401 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B31A3C802BAA264D005728C8 /* GameViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,6 +297,7 @@
 			files = (
 				B31A3C932BAA55C9005728C8 /* WallMaterial.swift in Sources */,
 				B3434B842BB1E50200F9D401 /* CatEntity.swift in Sources */,
+				B3434B922BB4972E00F9D401 /* CameraManager.swift in Sources */,
 				B3434B7E2BB1E3B500F9D401 /* AgentComponent.swift in Sources */,
 				B3434B702BACAEE000F9D401 /* WallFactory.swift in Sources */,
 				B3434B822BB1E45700F9D401 /* CucumberEntity.swift in Sources */,

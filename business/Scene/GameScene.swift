@@ -11,30 +11,29 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var hasStarted = false
     
-    var cameraNode: SKCameraNode!
-    var wallGenerateTrigger: Double!
+    var cameraManager: CameraManager!
     
     var touchStart: CGPoint?
-    var zoomOutTimer: Timer?
-    var lastUpdateTime: TimeInterval = 0
     
     var wallFactory: WallFactory!
     var existingWalls: [WallNode] = []
+    var lastWallTopY: CGFloat!
     
     var catEntity: CatEntity!
     var cucumberEntity: CucumberEntity!
+    var lastUpdateTime: TimeInterval = 0
+    var startingHeight: CGFloat!
     
     // MARK: - Scene setup
     override func didMove(to view: SKView) {
-        wallGenerateTrigger = frame.height * 0.3
         backgroundColor = .white
         physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
         physicsWorld.contactDelegate = self
         
-        cameraNode = SKCameraNode()
-        self.camera = cameraNode
+        cameraManager = CameraManager(frame: frame)
+        self.camera = cameraManager.cameraNode
         
-        wallFactory = WallFactory(frame: frame, cameraPositionY: cameraNode.position.y)
+        wallFactory = WallFactory(frame: frame, cameraPositionY: cameraManager.cameraNode.position.y)
         
         let initialWalls = wallFactory.createInitialWalls()
         
@@ -53,16 +52,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             addChild(cucumberNode)
         }
         
-        addChild(cameraNode)
+        addChild(cameraManager.cameraNode)
         
         for wall in initialWalls {
             existingWalls.append(wall)
             addChild(wall)
         }
         
+        handleWallGeneration()
+        
         // Needed for cat standing still at startup
         catEntity.prepareForJump()
         
+        startingHeight = catEntity.spriteComponent.node.position.y
         catEntity.agentComponent.setPosition(catEntity.spriteComponent.node.position)
         cucumberEntity.agentComponent.setPosition(cucumberEntity.spriteComponent.node.position)
     }
@@ -70,36 +72,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: - Default methods
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first, let camera = cameraNode else { return }
-        touchStart = touch.location(in: camera)
+        guard let touch = touches.first else { return }
+        touchStart = touch.location(in: cameraManager.cameraNode)
         
         guard catEntity.spriteComponent.currentWallMaterial != .none else { return }
         
         catEntity.prepareForJump()
-        
-        zoomOutTimer = Timer.scheduledTimer(withTimeInterval: 5/6, repeats: false) { [weak self] _ in
-            self?.zoomOutCamera()
-        }
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first, let start = touchStart, let camera = cameraNode else { return }
+        guard let touch = touches.first, let start = touchStart else { return }
         
         if !hasStarted { hasStarted = true }
         
-        let location = touch.location(in: camera)
+        let location = touch.location(in: cameraManager.cameraNode)
         
         catEntity.handleJump(from: start, to: location)
-        
-        zoomOutTimer?.invalidate()
-        zoomOutTimer = nil
-
-        resetCamera()
     }
 
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
-        updateCameraPosition()
+        cameraManager.updateCameraPosition(catEntity: catEntity)
         
         if lastUpdateTime == 0 { lastUpdateTime = currentTime }
         if hasStarted { handleCucumberMovement(currentTime: currentTime) }
@@ -108,7 +101,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         handleCatMovement()
         handleWallGeneration()
-        wallFactory.cameraPositionY = cameraNode.position.y
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -123,43 +115,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     // MARK: - Custom methods
-    
-    func updateCameraPosition() {
-        let catPosition = catEntity.spriteComponent.node.position
-
-        let lerpFactor: CGFloat = 0.2
-
-        let smoothedPosition = CGPoint(
-            x: cameraNode.position.x + (catPosition.x - cameraNode.position.x) * lerpFactor,
-            y: cameraNode.position.y + ((catPosition.y + frame.height * 0.1) - cameraNode.position.y) * lerpFactor
-        )
-        
-        cameraNode.position = smoothedPosition
-    }
-    
-    func zoomOutCamera() {
-        let zoomOutAction = SKAction.scale(to: 1.5, duration: 0.5)
-        zoomOutAction.timingMode = .easeInEaseOut
-        cameraNode?.run(zoomOutAction)
-    }
-    
-    func resetCamera() {
-        let resetZoomAction = SKAction.scale(to: 1.0, duration: 0.5)
-        resetZoomAction.timingMode = .easeInEaseOut
-        cameraNode?.run(resetZoomAction)
-    }
-    
     func handleWallGeneration() {
-        if cameraNode.position.y > wallGenerateTrigger {
-            let newWall = wallFactory.createWall()
-            existingWalls.append(newWall)
-            addChild(newWall)
+        wallFactory.adjustWallParameters(forProgress: catEntity.calculateProgress())
+        
+        if cameraManager.cameraNode.position.y * cameraManager.currentScale + (frame.size.height * 0.5) > wallFactory.lastWallMaxY {
+            let walls = wallFactory.createWalls()
             
-            wallGenerateTrigger += frame.size.height * 0.4
+            for wall in walls {
+                existingWalls.append(wall)
+                wall.zPosition = 1
+                addChild(wall)
+            }
+            
+//            let newWall = wallFactory.createWall()
+//            existingWalls.append(newWall)
+//            addChild(newWall)
         }
     }
     
     func handleCatMovement() {
+        catEntity.updateHeight(newHeight: (catEntity.spriteComponent.node.position.y - startingHeight) / 20)
+        
         for wall in existingWalls {
             let contactAreaWidth = wall.frame.width - catEntity.spriteComponent.node.frame.width
             let contactAreaHeight = wall.frame.height - catEntity.spriteComponent.node.frame.height

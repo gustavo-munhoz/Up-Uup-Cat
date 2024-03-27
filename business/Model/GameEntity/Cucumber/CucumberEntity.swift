@@ -15,9 +15,9 @@ class CucumberEntity: GKEntity {
     init(size: CGSize) {
         spriteComponent = CucumberSpriteComponent(size: size)
         agentComponent = AgentComponent()
-        agentComponent.agent.maxSpeed = GC.CUCUMBER_DEFAULT_MAX_SPEED
-        agentComponent.agent.maxAcceleration = GC.CUCUMBER_DEFAULT_MAX_ACCELERATION
-        agentComponent.agent.mass = GC.CUCUMBER_DEFAULTL_MASS
+        agentComponent.agent.maxSpeed = GC.CUCUMBER.DEFAULT_MAX_SPEED
+        agentComponent.agent.maxAcceleration = GC.CUCUMBER.DEFAULT_MAX_ACCELERATION
+        agentComponent.agent.mass = GC.CUCUMBER.DEFAULT_MASS
         
         super.init()
 
@@ -55,7 +55,7 @@ extension CucumberEntity {
                 dy: playerNode.position.y - spriteComponent.node.position.y
             ).normalized()
             
-            let jumpVelocity = direction * GC.CUCUMBER_JUMPING_SPEED
+            let jumpVelocity = direction * GC.CUCUMBER.JUMPING_SPEED
             
             physicsBody.velocity = jumpVelocity
             isJumpingAtPlayer = true
