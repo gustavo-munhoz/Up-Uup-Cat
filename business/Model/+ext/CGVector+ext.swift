@@ -8,8 +8,12 @@
 import Foundation
 
 extension CGVector {
+    func length() -> CGFloat {
+        return sqrt(dx*dx + dy*dy)
+    }
+    
     func normalized() -> CGVector {
-        let length = sqrt(dx * dx + dy * dy)
+        let length = self.length()
         return CGVector(dx: dx / length, dy: dy / length)
     }
     

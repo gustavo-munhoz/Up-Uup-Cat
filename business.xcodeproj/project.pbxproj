@@ -28,6 +28,9 @@
 		B3434B862BB1E51B00F9D401 /* CatSpriteComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3434B852BB1E51B00F9D401 /* CatSpriteComponent.swift */; };
 		B3434B8C2BB33B8600F9D401 /* GameConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3434B8B2BB33B8600F9D401 /* GameConstants.swift */; };
 		B3434B922BB4972E00F9D401 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3434B912BB4972E00F9D401 /* CameraManager.swift */; };
+		B39B02E42BB8B18100924FCA /* CGPoint+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39B02E32BB8B18100924FCA /* CGPoint+ext.swift */; };
+		B39B02E62BB8D7A700924FCA /* ArrowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39B02E52BB8D7A700924FCA /* ArrowNode.swift */; };
+		B39B02E82BB9071B00924FCA /* UIBezierPath+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39B02E72BB9071B00924FCA /* UIBezierPath+ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +56,9 @@
 		B3434B852BB1E51B00F9D401 /* CatSpriteComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatSpriteComponent.swift; sourceTree = "<group>"; };
 		B3434B8B2BB33B8600F9D401 /* GameConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConstants.swift; sourceTree = "<group>"; };
 		B3434B912BB4972E00F9D401 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		B39B02E32BB8B18100924FCA /* CGPoint+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+ext.swift"; sourceTree = "<group>"; };
+		B39B02E52BB8D7A700924FCA /* ArrowNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowNode.swift; sourceTree = "<group>"; };
+		B39B02E72BB9071B00924FCA /* UIBezierPath+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +128,8 @@
 			isa = PBXGroup;
 			children = (
 				B3434B792BB1E0E500F9D401 /* CGVector+ext.swift */,
+				B39B02E32BB8B18100924FCA /* CGPoint+ext.swift */,
+				B39B02E72BB9071B00924FCA /* UIBezierPath+ext.swift */,
 			);
 			path = "+ext";
 			sourceTree = "<group>";
@@ -167,6 +175,7 @@
 			children = (
 				B3434B832BB1E50200F9D401 /* CatEntity.swift */,
 				B3434B852BB1E51B00F9D401 /* CatSpriteComponent.swift */,
+				B39B02E52BB8D7A700924FCA /* ArrowNode.swift */,
 			);
 			path = Cat;
 			sourceTree = "<group>";
@@ -299,12 +308,15 @@
 				B3434B842BB1E50200F9D401 /* CatEntity.swift in Sources */,
 				B3434B922BB4972E00F9D401 /* CameraManager.swift in Sources */,
 				B3434B7E2BB1E3B500F9D401 /* AgentComponent.swift in Sources */,
+				B39B02E42BB8B18100924FCA /* CGPoint+ext.swift in Sources */,
+				B39B02E62BB8D7A700924FCA /* ArrowNode.swift in Sources */,
 				B3434B702BACAEE000F9D401 /* WallFactory.swift in Sources */,
 				B3434B822BB1E45700F9D401 /* CucumberEntity.swift in Sources */,
 				B3434B8C2BB33B8600F9D401 /* GameConstants.swift in Sources */,
 				B31A3C7F2BAA264D005728C8 /* GameScene.swift in Sources */,
 				B3434B862BB1E51B00F9D401 /* CatSpriteComponent.swift in Sources */,
 				B31A3C812BAA264D005728C8 /* GameViewController.swift in Sources */,
+				B39B02E82BB9071B00924FCA /* UIBezierPath+ext.swift in Sources */,
 				B31A3C792BAA264D005728C8 /* AppDelegate.swift in Sources */,
 				B31A3C962BAA5862005728C8 /* WallNode.swift in Sources */,
 				B31A3C982BAA5AF6005728C8 /* PhysicsCategory.swift in Sources */,
@@ -461,7 +473,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7U55BCTM6U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Uuup Up Cat";
@@ -478,7 +490,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mnhz.business;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -493,7 +505,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7U55BCTM6U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Uuup Up Cat";
@@ -510,7 +522,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mnhz.business;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

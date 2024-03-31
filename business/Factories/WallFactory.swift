@@ -21,18 +21,33 @@ class WallFactory {
     }
     
     func createInitialWalls() -> [WallNode] {
-        let firstWall = WallNode(size: CGSize(width: 3 * frame.width, height: frame.height), material: .normal)
-        firstWall.position = CGPoint(x: frame.midX, y: frame.midY - frame.height * 0.25)
+        let firstWall = WallNode(
+            size: CGSize(
+                width: CGFloat.random(in: 0.3...1) * frame.width,
+                height: CGFloat.random(in: 0.3...0.6) * frame.height),
+            material: .normal)
+        
+        firstWall.position = CGPoint(
+            x: CGFloat.random(in: 0.7...1.3) * frame.midX,
+            y: frame.midY - frame.height * 0.25)
         firstWall.zPosition = 1
         
-        let spacingBetweenWalls = CGFloat(wallParameters.spacingDistribution.nextInt())
-        
-        let secondWall = WallNode(size: CGSize(width: 3 * frame.width, height: frame.height), material: .normal)
-        let secondWallYPosition = firstWall.position.y + frame.height/2 + spacingBetweenWalls
-        secondWall.position = CGPoint(x: frame.midX, y: secondWallYPosition)
-        secondWall.zPosition = 1
+//        let spacingBetweenWalls = CGFloat(wallParameters.spacingDistribution.nextInt())
+//        
+//        let secondWall = WallNode(
+//            size: CGSize(
+//                width: CGFloat.random(in: 0.3...1) * frame.width,
+//                height: CGFloat.random(in: 0.3...0.8) * frame.height),
+//            material: .normal)
+//        
+//        let secondWallYPosition = firstWall.position.y + frame.height/2 + spacingBetweenWalls
+//        secondWall.position = CGPoint(
+//            x: CGFloat.random(in: 0.5...1.5) * frame.midX,
+//            y: secondWallYPosition)
+//        
+//        secondWall.zPosition = 1
 
-        return [firstWall, secondWall]
+        return [firstWall]
     }
 
     func createWalls() -> [WallNode] {
@@ -91,6 +106,8 @@ class WallFactory {
     }
 }
 
+
+// TODO: Change to gaussian distribution
 struct WallParameters {
     var widthDistribution: GKRandomDistribution
     var heightDistribution: GKRandomDistribution

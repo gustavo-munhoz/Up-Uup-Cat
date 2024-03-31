@@ -9,14 +9,18 @@ import GameplayKit
 import SpriteKit
 
 class CucumberSpriteComponent: GKComponent, GKAgentDelegate {
-    let node: SKShapeNode
+    let node: SKSpriteNode
+    
+    private var animation = SKAction.repeatForever(
+        SKAction.animate(
+            with: [GC.CUCUMBER.TEXTURE.CHASING_FRAME_1, GC.CUCUMBER.TEXTURE.CHASING_FRAME_2],
+            timePerFrame: 1/8)
+    )
     
     init(size: CGSize) {
-        node = SKShapeNode(rectOf: size)
+        node = SKSpriteNode(texture: GC.CUCUMBER.TEXTURE.CHASING_FRAME_2, size: size)
         
         super.init()
-        node.path = CGPath(rect: CGRect(origin: CGPoint(x: -size.width / 2, y: -size.height / 2), size: size), transform: nil)
-        node.fillColor = .green
 
         node.physicsBody = SKPhysicsBody(rectangleOf: size)
         node.physicsBody?.isDynamic = true
@@ -25,6 +29,9 @@ class CucumberSpriteComponent: GKComponent, GKAgentDelegate {
         node.physicsBody?.contactTestBitMask = PhysicsCategory.player
         
         node.name = "enemyCucumber"
+        
+        node.run(animation)
+
     }
     
     required init?(coder aDecoder: NSCoder) {

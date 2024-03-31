@@ -9,27 +9,25 @@ import SpriteKit
 import GameplayKit
 
 class CatSpriteComponent: GKComponent {
-    let node: SKShapeNode
+    let node: SKSpriteNode
     
     var canJump: Bool = true
-    var currentWallMaterial: WallMaterial = .none {
+    var currentWallMaterial: WallMaterial = .normal {
         didSet {
             canJump = currentWallMaterial != .none
         }
     }
     
     init(size: CGSize) {
-        node = SKShapeNode(rectOf: size)
+        node = SKSpriteNode(texture: GC.PLAYER.TEXTURE.START, size: size)
         super.init()
         
-        node.path = CGPath(rect: CGRect(origin: CGPoint(x: -size.width / 2, y: -size.height / 2), size: size), transform: nil)
-        node.fillColor = .blue
-        
-        node.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: size.width * 0.8, height: size.height))
+        node.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: size.width * 0.8, height: size.height * 0.8))
         node.physicsBody?.isDynamic = true
         node.physicsBody?.categoryBitMask = PhysicsCategory.player
         node.physicsBody?.contactTestBitMask = PhysicsCategory.wall | PhysicsCategory.enemy
         node.physicsBody?.usesPreciseCollisionDetection = true
+        node.physicsBody?.mass = GC.PLAYER.DEFAULT_MASS
         
         node.name = "cat"
     }

@@ -7,42 +7,30 @@
 
 import SpriteKit
 
-class WallNode: SKShapeNode {
+class WallNode: SKSpriteNode {
     var material: WallMaterial = .normal
     
     init(size: CGSize, material: WallMaterial) {
-        super.init()
+        self.material = material
+        super.init(texture: nil, color: .clear, size: size)
         
-        let origin = CGPoint(x: -size.width / 2, y: -size.height / 2)
+        let aspectRatio = size.width / size.height
         
-        path = CGPath(rect: CGRect(origin: origin, size: size), transform: nil)
+        if aspectRatio > 3 {
+            texture = GC.WALL.TEXTURE.LONG
+        } else if aspectRatio < 0.5 {
+            texture = GC.WALL.TEXTURE.TALL
+        } else if aspectRatio >= 0.8 && aspectRatio <= 1.2 {
+            texture = GC.WALL.TEXTURE.SQUARE
+        } else {
+            texture = GC.WALL.TEXTURE.REGULAR
+        }
         
         name = "wall"
-        
         self.material = material
-        
-        
-        setupWallProperties()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupWallProperties() {
-        switch material {
-            case .normal:
-                fillColor = .gray
-                
-            case .glass:
-                fillColor = .blue
-                
-            case .sticky:
-                fillColor = .green
-                
-            case .none:
-                fillColor = .clear
-                
-        }
     }
 }

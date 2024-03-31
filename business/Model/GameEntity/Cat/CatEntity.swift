@@ -46,8 +46,39 @@ class CatEntity: GKEntity {
 }
 
 extension CatEntity {
+    func handleMovement(startingHeight: CGFloat, walls: [WallNode]) {
+        self.updateHeight(newHeight: (self.spriteComponent.node.position.y - startingHeight) / 20)
+        
+        if spriteComponent.node.texture == GC.PLAYER.TEXTURE.HOLDING_WALL {
+            spriteComponent.node.run(GC.PLAYER.TEXTURE.ANIMATION.JUMP)
+        }
+        
+        for wall in walls {
+            let contactAreaWidth = wall.frame.width - self.spriteComponent.node.frame.width
+            let contactAreaHeight = wall.frame.height - self.spriteComponent.node.frame.height
+
+            let contactAreaOriginX = wall.position.x - contactAreaWidth / 2
+            let contactAreaOriginY = wall.position.y - wall.frame.height / 2
+
+            let contactAreaFrameInScene = CGRect(
+                x: contactAreaOriginX,
+                y: contactAreaOriginY,
+                width: contactAreaWidth,
+                height: contactAreaHeight
+            )
+
+            if self.spriteComponent.node.frame.intersects(contactAreaFrameInScene) { 
+                self.spriteComponent.currentWallMaterial = wall.material
+                return
+            }
+        }
+        self.spriteComponent.currentWallMaterial = .none
+    }
+    
     func prepareForJump() {
         if spriteComponent.canJump {
+            spriteComponent.node.texture = GC.PLAYER.TEXTURE.HOLDING_WALL
+            
             spriteComponent.node.physicsBody?.velocity = .zero
             spriteComponent.node.physicsBody?.isDynamic = false
         }
