@@ -41,8 +41,8 @@ struct GC {
     // MARK: - CUCUMBER
     
     struct CUCUMBER {
-        static let DEFAULT_MAX_SPEED: Float = 900
-        static let DEFAULT_MAX_ACCELERATION: Float = 425
+        static let DEFAULT_MAX_SPEED: Float = 600
+        static let DEFAULT_MAX_ACCELERATION: Float = 150
         static let DEFAULT_MASS: Float = 0.5
         
         static let JUMPING_SPEED: Float = 6000

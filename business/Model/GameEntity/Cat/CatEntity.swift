@@ -6,13 +6,14 @@
 //
 
 import GameplayKit
+import Combine
 
 class CatEntity: GKEntity {
     let spriteComponent: CatSpriteComponent
     let agentComponent: AgentComponent
     
-    var currentHeight: CGFloat = 0
-    var maxHeight: CGFloat = 0
+    var currentHeight: Int = 0
+    var maxHeight: Int = 0
     
     init(size: CGSize) {
         spriteComponent = CatSpriteComponent(size: size)
@@ -33,21 +34,23 @@ class CatEntity: GKEntity {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateHeight(newHeight: CGFloat) {
+    func updateHeight(newHeight: Int) {
         currentHeight = newHeight
         if newHeight > maxHeight {
             maxHeight = newHeight
+            GameManager.shared.updateHighScore(maxHeight)
         }
     }
+
     
     func calculateProgress() -> CGFloat {
-        return min(maxHeight / GC.DIFFICULTY.MAX_DIFFICULTY_HEIGHT, 1.0)
+        return min(CGFloat(maxHeight) / GC.DIFFICULTY.MAX_DIFFICULTY_HEIGHT, 1.0)
     }
 }
 
 extension CatEntity {
     func handleMovement(startingHeight: CGFloat, walls: [WallNode]) {
-        self.updateHeight(newHeight: (self.spriteComponent.node.position.y - startingHeight) / 20)
+        self.updateHeight(newHeight: Int((self.spriteComponent.node.position.y - startingHeight) / 20))
         
         if spriteComponent.node.texture == GC.PLAYER.TEXTURE.HOLDING_WALL {
             spriteComponent.node.run(GC.PLAYER.TEXTURE.ANIMATION.JUMP)
@@ -75,9 +78,13 @@ extension CatEntity {
         self.spriteComponent.currentWallMaterial = .none
     }
     
-    func prepareForJump() {
+    func prepareForJump(hasStarted: Bool = true) {
         if spriteComponent.canJump {
-            spriteComponent.node.texture = GC.PLAYER.TEXTURE.HOLDING_WALL
+            if hasStarted {
+                spriteComponent.node.texture = GC.PLAYER.TEXTURE.HOLDING_WALL
+            } else {
+                spriteComponent.node.texture = GC.PLAYER.TEXTURE.START
+            }
             
             spriteComponent.node.physicsBody?.velocity = .zero
             spriteComponent.node.physicsBody?.isDynamic = false

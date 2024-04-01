@@ -14,28 +14,37 @@ class GameViewController: UIViewController {
 
     private var cancellables = Set<AnyCancellable>()
     
+    private var sceneNode: GameScene? {
+        if let scene = GKScene(fileNamed: "GameScene") {
+            return scene.rootNode as? GameScene
+        }
+        
+        return nil
+    }
+    
+    private lazy var maxHeightLabel: UILabel = {
+        let maxHeightLabel = UILabel()
+        maxHeightLabel.translatesAutoresizingMaskIntoConstraints = false
+        maxHeightLabel.textColor = .white
+        
+        return maxHeightLabel
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let resetButton = UIButton(type: .system)
-        resetButton.setTitle("Reset", for: .normal)
-        resetButton.addTarget(self, action: #selector(resetGameScene), for: .touchUpInside)
-        resetButton.frame = CGRect(x: 300, y: 50, width: 100, height: 50)
-        view.addSubview(resetButton)
         
         guard let skView = self.view as? SKView else {
             print("Could not cast the view to SKView.")
             return
         }
         
-        if let scene = GKScene(fileNamed: "GameScene") {
-            if let sceneNode = scene.rootNode as? GameScene {
-                sceneNode.scaleMode = .aspectFill
-                
-                skView.presentScene(sceneNode)
-                skView.ignoresSiblingOrder = true
-                
-            }
+        if let sceneNode = sceneNode {
+            sceneNode.scaleMode = .aspectFill
+            
+            skView.presentScene(sceneNode)
+            skView.ignoresSiblingOrder = true
+            
+            GameManager.shared.loadHighScore()
         }
         
         setupSubscriptions()

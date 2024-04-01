@@ -17,6 +17,7 @@ class ArrowNode: SKShapeNode {
         strokeColor = .white
         lineWidth = 5
         zPosition = 10
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
