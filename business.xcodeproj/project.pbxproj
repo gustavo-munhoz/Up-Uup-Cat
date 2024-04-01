@@ -49,6 +49,7 @@
 		B39B030B2BBB56BC00924FCA /* Urbanist-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B39B02F92BBB56BC00924FCA /* Urbanist-MediumItalic.ttf */; };
 		B39B030C2BBB56BC00924FCA /* Urbanist-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B39B02FA2BBB56BC00924FCA /* Urbanist-BoldItalic.ttf */; };
 		B39B030D2BBB56BC00924FCA /* Urbanist-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B39B02FB2BBB56BC00924FCA /* Urbanist-SemiBold.ttf */; };
+		B39B03102BBB7A1D00924FCA /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B39B030F2BBB7A1D00924FCA /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +97,7 @@
 		B39B02FA2BBB56BC00924FCA /* Urbanist-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-BoldItalic.ttf"; sourceTree = "<group>"; };
 		B39B02FB2BBB56BC00924FCA /* Urbanist-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-SemiBold.ttf"; sourceTree = "<group>"; };
 		B39B030E2BBB572800924FCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B39B030F2BBB7A1D00924FCA /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 				B3434B712BACB79900F9D401 /* Factories */,
 				B31A3C8F2BAA5058005728C8 /* Model */,
 				B31A3C852BAA264F005728C8 /* Assets.xcassets */,
+				B39B030F2BBB7A1D00924FCA /* PrivacyInfo.xcprivacy */,
 			);
 			path = business;
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 				B39B02FC2BBB56BC00924FCA /* Urbanist-ExtraBoldItalic.ttf in Resources */,
 				B31A3C842BAA264D005728C8 /* Main.storyboard in Resources */,
 				B31A3C7B2BAA264D005728C8 /* GameScene.sks in Resources */,
+				B39B03102BBB7A1D00924FCA /* PrivacyInfo.xcprivacy in Resources */,
 				B39B030D2BBB56BC00924FCA /* Urbanist-SemiBold.ttf in Resources */,
 				B31A3C862BAA264F005728C8 /* Assets.xcassets in Resources */,
 				B39B03082BBB56BC00924FCA /* Urbanist-ThinItalic.ttf in Resources */,
