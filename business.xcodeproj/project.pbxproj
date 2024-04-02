@@ -50,6 +50,7 @@
 		B39B030C2BBB56BC00924FCA /* Urbanist-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B39B02FA2BBB56BC00924FCA /* Urbanist-BoldItalic.ttf */; };
 		B39B030D2BBB56BC00924FCA /* Urbanist-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B39B02FB2BBB56BC00924FCA /* Urbanist-SemiBold.ttf */; };
 		B39B03102BBB7A1D00924FCA /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B39B030F2BBB7A1D00924FCA /* PrivacyInfo.xcprivacy */; };
+		B39B03122BBC8E9500924FCA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B39B03112BBC8E9500924FCA /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +99,7 @@
 		B39B02FB2BBB56BC00924FCA /* Urbanist-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-SemiBold.ttf"; sourceTree = "<group>"; };
 		B39B030E2BBB572800924FCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B39B030F2BBB7A1D00924FCA /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		B39B03112BBC8E9500924FCA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 		B31A3C772BAA264D005728C8 /* business */ = {
 			isa = PBXGroup;
 			children = (
+				B39B03112BBC8E9500924FCA /* GoogleService-Info.plist */,
 				B39B030E2BBB572800924FCA /* Info.plist */,
 				B39B02E92BBB566E00924FCA /* Fonts */,
 				B3434B742BACB7B900F9D401 /* Storyboards */,
@@ -358,6 +361,7 @@
 			files = (
 				B39B03022BBB56BC00924FCA /* Urbanist-ExtraLightItalic.ttf in Resources */,
 				B39B03062BBB56BC00924FCA /* Urbanist-SemiBoldItalic.ttf in Resources */,
+				B39B03122BBC8E9500924FCA /* GoogleService-Info.plist in Resources */,
 				B39B02FD2BBB56BC00924FCA /* Urbanist-LightItalic.ttf in Resources */,
 				B39B02FC2BBB56BC00924FCA /* Urbanist-ExtraBoldItalic.ttf in Resources */,
 				B31A3C842BAA264D005728C8 /* Main.storyboard in Resources */,
