@@ -13,22 +13,22 @@ class GameManager {
     
     private(set) var shouldReset = PassthroughSubject<Bool, Never>()
     
-    private(set) var score: CurrentValueSubject<Int, Never> = CurrentValueSubject(0)
+    private(set) var currentScore: CurrentValueSubject<Int, Never> = CurrentValueSubject(0)
     
-    private(set) var currentHighScore: Int = 0
+    private(set) var personalBestScore: Int = 0
     
     func resetGame() {
-        if score.value > currentHighScore {
-            currentHighScore = score.value
-            saveHighScore(currentHighScore)
+        if currentScore.value > personalBestScore {
+            personalBestScore = currentScore.value
+            saveHighScore(personalBestScore)
         }
         
         shouldReset.send(true)
-        score.value = 0
+        currentScore.value = 0
     }
     
     func updateHighScore(_ newValue: Int) {
-        self.score.value = newValue
+        self.currentScore.value = newValue
     }
     
     func saveHighScore(_ highScore: Int) {
@@ -36,6 +36,6 @@ class GameManager {
     }
 
     func loadHighScore() {
-        currentHighScore = UserDefaults.standard.integer(forKey: "highScoreKey")
+        personalBestScore = UserDefaults.standard.integer(forKey: "highScoreKey")
     }
 }

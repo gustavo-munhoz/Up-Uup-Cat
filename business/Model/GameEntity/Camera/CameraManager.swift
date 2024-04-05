@@ -10,12 +10,14 @@ import SpriteKit
 class CameraManager {
     var cameraNode: SKCameraNode
     var frame: CGRect
+    var minimumHeight: CGFloat
     var currentScale: CGFloat
 
-    init(frame: CGRect) {
+    init(frame: CGRect, minimumHeight: CGFloat) {
         self.frame = frame
         self.cameraNode = SKCameraNode()
         self.currentScale = GC.CAMERA.MIN_CAMERA_SCALE
+        self.minimumHeight = minimumHeight
     }
     
     func updateCameraPosition(catEntity: CatEntity) {
@@ -28,7 +30,7 @@ class CameraManager {
             y: cameraNode.position.y + ((catPosition.y + frame.height * 0.1) - cameraNode.position.y) * lerpFactor
         )
         
-        cameraNode.position = smoothedPosition
+        cameraNode.position = smoothedPosition.y < minimumHeight ? CGPoint(x: smoothedPosition.x, y: minimumHeight) : smoothedPosition
     }
     
     func zoomOut() {

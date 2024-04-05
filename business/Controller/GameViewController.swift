@@ -11,51 +11,25 @@ import GameplayKit
 import Combine
 
 class GameViewController: UIViewController {
-
     private var cancellables = Set<AnyCancellable>()
+    private var gameView = GameView()
     
-    private var sceneNode: GameScene? {
-        if let scene = GKScene(fileNamed: "GameScene") {
-            return scene.rootNode as? GameScene
-        }
-        
-        return nil
+    override func loadView() {
+        view = gameView
+        setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
+        navigationItem.hidesBackButton = true
     }
-    
-    private lazy var maxHeightLabel: UILabel = {
-        let maxHeightLabel = UILabel()
-        maxHeightLabel.translatesAutoresizingMaskIntoConstraints = false
-        maxHeightLabel.textColor = .white
-        
-        return maxHeightLabel
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let skView = self.view as? SKView else {
-            print("Could not cast the view to SKView.")
-            return
-        }
-        
-        if let sceneNode = sceneNode {
-            sceneNode.scaleMode = .aspectFill
-            
-            skView.presentScene(sceneNode)
-            skView.ignoresSiblingOrder = true
-            
-            GameManager.shared.loadHighScore()
-        }
+        GameManager.shared.loadHighScore()
         
         setupSubscriptions()
     }
 
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        [.portrait, .portraitUpsideDown]
-    }
-
-    override var prefersStatusBarHidden: Bool {
-        true
+    override func viewWillAppear(_ animated: Bool) {
+        gameView.setupSKScene()
     }
     
     func setupSubscriptions() {
@@ -68,19 +42,15 @@ class GameViewController: UIViewController {
     }
     
     @objc func resetGameScene() {
-        if let view = self.view as! SKView? {
-            if let scene = GKScene(fileNamed: "GameScene") {
-                if let sceneNode = scene.rootNode as! GameScene? {
-                    sceneNode.scaleMode = .aspectFill
-                    
-                    let transition = SKTransition.fade(withDuration: 0.4)
-                    
-                    view.presentScene(sceneNode, transition: transition)
-                }
-            }
-            
-            view.ignoresSiblingOrder = true
-        }
+        let newGameScene = GameScene(size: gameView.skView.bounds.size)
+        newGameScene.scaleMode = .aspectFill
+        
+        let transition = SKTransition.fade(withDuration: 0.4)
+        gameView.skView.presentScene(newGameScene, transition: transition)
+    }
+    
+    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
+        return [.bottom, .top]
     }
 }
 

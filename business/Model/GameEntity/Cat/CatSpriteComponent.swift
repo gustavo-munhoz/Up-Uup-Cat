@@ -22,7 +22,7 @@ class CatSpriteComponent: GKComponent {
         node = SKSpriteNode(texture: GC.PLAYER.TEXTURE.START, size: size)
         super.init()
         
-        node.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: size.width * 0.8, height: size.height * 0.8))
+        node.physicsBody = SKPhysicsBody(rectangleOf: size * 0.8)
         node.physicsBody?.isDynamic = true
         node.physicsBody?.categoryBitMask = PhysicsCategory.player
         node.physicsBody?.contactTestBitMask = PhysicsCategory.wall | PhysicsCategory.enemy

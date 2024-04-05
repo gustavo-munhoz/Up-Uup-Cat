@@ -12,7 +12,6 @@
 		B31A3C7D2BAA264D005728C8 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B31A3C7C2BAA264D005728C8 /* Actions.sks */; };
 		B31A3C7F2BAA264D005728C8 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A3C7E2BAA264D005728C8 /* GameScene.swift */; };
 		B31A3C812BAA264D005728C8 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A3C802BAA264D005728C8 /* GameViewController.swift */; };
-		B31A3C842BAA264D005728C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B31A3C822BAA264D005728C8 /* Main.storyboard */; };
 		B31A3C862BAA264F005728C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B31A3C852BAA264F005728C8 /* Assets.xcassets */; };
 		B31A3C892BAA264F005728C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B31A3C872BAA264F005728C8 /* LaunchScreen.storyboard */; };
 		B31A3C932BAA55C9005728C8 /* WallMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A3C922BAA55C9005728C8 /* WallMaterial.swift */; };
@@ -50,7 +49,20 @@
 		B39B030C2BBB56BC00924FCA /* Urbanist-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B39B02FA2BBB56BC00924FCA /* Urbanist-BoldItalic.ttf */; };
 		B39B030D2BBB56BC00924FCA /* Urbanist-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B39B02FB2BBB56BC00924FCA /* Urbanist-SemiBold.ttf */; };
 		B39B03102BBB7A1D00924FCA /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B39B030F2BBB7A1D00924FCA /* PrivacyInfo.xcprivacy */; };
-		B39B03122BBC8E9500924FCA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B39B03112BBC8E9500924FCA /* GoogleService-Info.plist */; };
+		B3DEF4812BBE54790022A977 /* CGSize+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DEF4802BBE54790022A977 /* CGSize+ext.swift */; };
+		B3DEF4842BBF36B50022A977 /* HUDNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DEF4832BBF36B50022A977 /* HUDNode.swift */; };
+		B3DEF4862BBF3B9F0022A977 /* PauseButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DEF4852BBF3B9F0022A977 /* PauseButtonNode.swift */; };
+		B3DEF4882BC071850022A977 /* PauseNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DEF4872BC071850022A977 /* PauseNode.swift */; };
+		B3F30C992BBDC09500A734F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3F30C982BBDC09400A734F8 /* GoogleService-Info.plist */; };
+		B3F30CAB2BBDC82A00A734F8 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B3F30CAA2BBDC82A00A734F8 /* FirebaseAnalytics */; };
+		B3F30CAD2BBDC82A00A734F8 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B3F30CAC2BBDC82A00A734F8 /* FirebaseAnalyticsSwift */; };
+		B3F30CAF2BBDC82A00A734F8 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = B3F30CAE2BBDC82A00A734F8 /* FirebaseCrashlytics */; };
+		B3F30CB12BBDC82A00A734F8 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B3F30CB02BBDC82A00A734F8 /* FirebaseFirestore */; };
+		B3F30CB32BBDC82A00A734F8 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = B3F30CB22BBDC82A00A734F8 /* FirebaseFirestoreCombine-Community */; };
+		B3F30CB52BBDC82A00A734F8 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B3F30CB42BBDC82A00A734F8 /* FirebaseFirestoreSwift */; };
+		B3F30CB72BBDC86400A734F8 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F30CB62BBDC86400A734F8 /* MenuView.swift */; };
+		B3F30CBA2BBDCB6800A734F8 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F30CB92BBDCB6800A734F8 /* MenuViewController.swift */; };
+		B3F30CC02BBDEBF100A734F8 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F30CBF2BBDEBF100A734F8 /* GameView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,7 +72,6 @@
 		B31A3C7C2BAA264D005728C8 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		B31A3C7E2BAA264D005728C8 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		B31A3C802BAA264D005728C8 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
-		B31A3C832BAA264D005728C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B31A3C852BAA264F005728C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B31A3C882BAA264F005728C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B31A3C922BAA55C9005728C8 /* WallMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallMaterial.swift; sourceTree = "<group>"; };
@@ -99,7 +110,14 @@
 		B39B02FB2BBB56BC00924FCA /* Urbanist-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-SemiBold.ttf"; sourceTree = "<group>"; };
 		B39B030E2BBB572800924FCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B39B030F2BBB7A1D00924FCA /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		B39B03112BBC8E9500924FCA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B3DEF4802BBE54790022A977 /* CGSize+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+ext.swift"; sourceTree = "<group>"; };
+		B3DEF4832BBF36B50022A977 /* HUDNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDNode.swift; sourceTree = "<group>"; };
+		B3DEF4852BBF3B9F0022A977 /* PauseButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseButtonNode.swift; sourceTree = "<group>"; };
+		B3DEF4872BC071850022A977 /* PauseNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseNode.swift; sourceTree = "<group>"; };
+		B3F30C982BBDC09400A734F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B3F30CB62BBDC86400A734F8 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		B3F30CB92BBDCB6800A734F8 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		B3F30CBF2BBDEBF100A734F8 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +125,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3F30CAF2BBDC82A00A734F8 /* FirebaseCrashlytics in Frameworks */,
+				B3F30CB12BBDC82A00A734F8 /* FirebaseFirestore in Frameworks */,
+				B3F30CAD2BBDC82A00A734F8 /* FirebaseAnalyticsSwift in Frameworks */,
+				B3F30CB32BBDC82A00A734F8 /* FirebaseFirestoreCombine-Community in Frameworks */,
+				B3F30CAB2BBDC82A00A734F8 /* FirebaseAnalytics in Frameworks */,
+				B3F30CB52BBDC82A00A734F8 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,13 +156,12 @@
 		B31A3C772BAA264D005728C8 /* business */ = {
 			isa = PBXGroup;
 			children = (
-				B39B03112BBC8E9500924FCA /* GoogleService-Info.plist */,
+				B3434B732BACB7B200F9D401 /* Common */,
+				B3F30CA82BBDC7D000A734F8 /* View */,
+				B3F30C982BBDC09400A734F8 /* GoogleService-Info.plist */,
 				B39B030E2BBB572800924FCA /* Info.plist */,
 				B39B02E92BBB566E00924FCA /* Fonts */,
-				B3434B742BACB7B900F9D401 /* Storyboards */,
-				B3434B732BACB7B200F9D401 /* Common */,
 				B3434B932BB4A0C400F9D401 /* Controller */,
-				B3434B722BACB7A200F9D401 /* Scene */,
 				B3434B712BACB79900F9D401 /* Factories */,
 				B31A3C8F2BAA5058005728C8 /* Model */,
 				B31A3C852BAA264F005728C8 /* Assets.xcassets */,
@@ -160,6 +183,7 @@
 		B31A3C942BAA5852005728C8 /* GameEntity */ = {
 			isa = PBXGroup;
 			children = (
+				B3DEF4822BBF36AC0022A977 /* HUD */,
 				B3434B902BB4971200F9D401 /* Camera */,
 				B3434B8F2BB4970700F9D401 /* GKAgent */,
 				B3434B8E2BB496F600F9D401 /* Wall */,
@@ -175,6 +199,7 @@
 				B3434B792BB1E0E500F9D401 /* CGVector+ext.swift */,
 				B39B02E32BB8B18100924FCA /* CGPoint+ext.swift */,
 				B39B02E72BB9071B00924FCA /* UIBezierPath+ext.swift */,
+				B3DEF4802BBE54790022A977 /* CGSize+ext.swift */,
 			);
 			path = "+ext";
 			sourceTree = "<group>";
@@ -209,7 +234,6 @@
 		B3434B742BACB7B900F9D401 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				B31A3C822BAA264D005728C8 /* Main.storyboard */,
 				B31A3C872BAA264F005728C8 /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
@@ -272,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				B31A3C802BAA264D005728C8 /* GameViewController.swift */,
+				B3F30CB92BBDCB6800A734F8 /* MenuViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -301,6 +326,27 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		B3DEF4822BBF36AC0022A977 /* HUD */ = {
+			isa = PBXGroup;
+			children = (
+				B3DEF4832BBF36B50022A977 /* HUDNode.swift */,
+				B3DEF4852BBF3B9F0022A977 /* PauseButtonNode.swift */,
+				B3DEF4872BC071850022A977 /* PauseNode.swift */,
+			);
+			path = HUD;
+			sourceTree = "<group>";
+		};
+		B3F30CA82BBDC7D000A734F8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B3434B722BACB7A200F9D401 /* Scene */,
+				B3434B742BACB7B900F9D401 /* Storyboards */,
+				B3F30CB62BBDC86400A734F8 /* MenuView.swift */,
+				B3F30CBF2BBDEBF100A734F8 /* GameView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -317,6 +363,14 @@
 			dependencies = (
 			);
 			name = business;
+			packageProductDependencies = (
+				B3F30CAA2BBDC82A00A734F8 /* FirebaseAnalytics */,
+				B3F30CAC2BBDC82A00A734F8 /* FirebaseAnalyticsSwift */,
+				B3F30CAE2BBDC82A00A734F8 /* FirebaseCrashlytics */,
+				B3F30CB02BBDC82A00A734F8 /* FirebaseFirestore */,
+				B3F30CB22BBDC82A00A734F8 /* FirebaseFirestoreCombine-Community */,
+				B3F30CB42BBDC82A00A734F8 /* FirebaseFirestoreSwift */,
+			);
 			productName = business;
 			productReference = B31A3C752BAA264D005728C8 /* business.app */;
 			productType = "com.apple.product-type.application";
@@ -345,6 +399,9 @@
 				Base,
 			);
 			mainGroup = B31A3C6C2BAA264D005728C8;
+			packageReferences = (
+				B3F30CA92BBDC82A00A734F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = B31A3C762BAA264D005728C8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -361,10 +418,9 @@
 			files = (
 				B39B03022BBB56BC00924FCA /* Urbanist-ExtraLightItalic.ttf in Resources */,
 				B39B03062BBB56BC00924FCA /* Urbanist-SemiBoldItalic.ttf in Resources */,
-				B39B03122BBC8E9500924FCA /* GoogleService-Info.plist in Resources */,
+				B3F30C992BBDC09500A734F8 /* GoogleService-Info.plist in Resources */,
 				B39B02FD2BBB56BC00924FCA /* Urbanist-LightItalic.ttf in Resources */,
 				B39B02FC2BBB56BC00924FCA /* Urbanist-ExtraBoldItalic.ttf in Resources */,
-				B31A3C842BAA264D005728C8 /* Main.storyboard in Resources */,
 				B31A3C7B2BAA264D005728C8 /* GameScene.sks in Resources */,
 				B39B03102BBB7A1D00924FCA /* PrivacyInfo.xcprivacy in Resources */,
 				B39B030D2BBB56BC00924FCA /* Urbanist-SemiBold.ttf in Resources */,
@@ -395,23 +451,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				B31A3C932BAA55C9005728C8 /* WallMaterial.swift in Sources */,
+				B3DEF4862BBF3B9F0022A977 /* PauseButtonNode.swift in Sources */,
 				B3434B842BB1E50200F9D401 /* CatEntity.swift in Sources */,
 				B3434B922BB4972E00F9D401 /* CameraManager.swift in Sources */,
+				B3DEF4882BC071850022A977 /* PauseNode.swift in Sources */,
 				B3434B7E2BB1E3B500F9D401 /* AgentComponent.swift in Sources */,
 				B39B02E42BB8B18100924FCA /* CGPoint+ext.swift in Sources */,
+				B3F30CB72BBDC86400A734F8 /* MenuView.swift in Sources */,
 				B39B02E62BB8D7A700924FCA /* ArrowNode.swift in Sources */,
+				B3DEF4842BBF36B50022A977 /* HUDNode.swift in Sources */,
 				B3434B702BACAEE000F9D401 /* WallFactory.swift in Sources */,
 				B3434B822BB1E45700F9D401 /* CucumberEntity.swift in Sources */,
 				B3434B8C2BB33B8600F9D401 /* GameConstants.swift in Sources */,
+				B3F30CBA2BBDCB6800A734F8 /* MenuViewController.swift in Sources */,
 				B31A3C7F2BAA264D005728C8 /* GameScene.swift in Sources */,
 				B3434B862BB1E51B00F9D401 /* CatSpriteComponent.swift in Sources */,
 				B31A3C812BAA264D005728C8 /* GameViewController.swift in Sources */,
 				B39B02E82BB9071B00924FCA /* UIBezierPath+ext.swift in Sources */,
 				B31A3C792BAA264D005728C8 /* AppDelegate.swift in Sources */,
+				B3F30CC02BBDEBF100A734F8 /* GameView.swift in Sources */,
 				B31A3C962BAA5862005728C8 /* WallNode.swift in Sources */,
 				B31A3C982BAA5AF6005728C8 /* PhysicsCategory.swift in Sources */,
 				B3434B782BB10A8600F9D401 /* GameManager.swift in Sources */,
 				B3434B7A2BB1E0E500F9D401 /* CGVector+ext.swift in Sources */,
+				B3DEF4812BBE54790022A977 /* CGSize+ext.swift in Sources */,
 				B3434B802BB1E3EE00F9D401 /* CucumberSpriteComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -419,14 +482,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		B31A3C822BAA264D005728C8 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B31A3C832BAA264D005728C8 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B31A3C872BAA264F005728C8 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -490,7 +545,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -547,7 +602,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -571,7 +626,6 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
@@ -582,6 +636,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.3;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mnhz.business;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -604,7 +659,6 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
@@ -645,6 +699,50 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B3F30CA92BBDC82A00A734F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.23.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B3F30CAA2BBDC82A00A734F8 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B3F30CA92BBDC82A00A734F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		B3F30CAC2BBDC82A00A734F8 /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B3F30CA92BBDC82A00A734F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
+		};
+		B3F30CAE2BBDC82A00A734F8 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B3F30CA92BBDC82A00A734F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		B3F30CB02BBDC82A00A734F8 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B3F30CA92BBDC82A00A734F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		B3F30CB22BBDC82A00A734F8 /* FirebaseFirestoreCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B3F30CA92BBDC82A00A734F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseFirestoreCombine-Community";
+		};
+		B3F30CB42BBDC82A00A734F8 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B3F30CA92BBDC82A00A734F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B31A3C6D2BAA264D005728C8 /* Project object */;
 }
