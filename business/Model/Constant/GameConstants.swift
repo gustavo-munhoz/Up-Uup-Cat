@@ -56,12 +56,12 @@ struct GC {
     // MARK: - WALLS
     
     struct WALL {
-        static let MIN_DIFFICULTY_WIDTH: CGFloat = 800
+        static let MIN_DIFFICULTY_WIDTH: CGFloat = 400
         static let MAX_DIFFICULTY_WIDTH: CGFloat = 100
-        static let MIN_DIFFICULTY_HEIGHT: CGFloat = 1000
-        static let MAX_DIFFICULTY_HEIGHT: CGFloat = 80
+        static let MIN_DIFFICULTY_HEIGHT: CGFloat = 500
+        static let MAX_DIFFICULTY_HEIGHT: CGFloat = 40
         static let MIN_DIFFICULTY_SPACING: CGFloat = 50
-        static let MAX_DIFFICULTY_SPACING: CGFloat = 250
+        static let MAX_DIFFICULTY_SPACING: CGFloat = 150
         
         struct TEXTURE {
             static let TALL = SKTexture(imageNamed: "wall_tall")
@@ -82,5 +82,11 @@ struct GC {
     struct CAMERA {
         static let MIN_CAMERA_SCALE: CGFloat = 1
         static let MAX_CAMERA_SCALE: CGFloat = 2
+    }
+    
+    // MARK: - HUD
+    struct HUD {
+        static let PAUSE_BUTTON: String = "pauseButton"
+        static let HUD_NAME: String = "HUD"
     }
 }

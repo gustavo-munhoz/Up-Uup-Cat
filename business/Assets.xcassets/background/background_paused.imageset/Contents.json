@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "Frame 28.png",
+      "filename" : "background_paused.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Frame 28@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Frame 28@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

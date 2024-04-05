@@ -16,7 +16,7 @@ class GameViewController: UIViewController {
     
     override func loadView() {
         view = gameView
-        
+        setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
         navigationItem.hidesBackButton = true
     }
     
@@ -47,6 +47,10 @@ class GameViewController: UIViewController {
         
         let transition = SKTransition.fade(withDuration: 0.4)
         gameView.skView.presentScene(newGameScene, transition: transition)
+    }
+    
+    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
+        return [.bottom, .top]
     }
 }
 

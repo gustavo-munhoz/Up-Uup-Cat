@@ -49,6 +49,10 @@
 		B39B030C2BBB56BC00924FCA /* Urbanist-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B39B02FA2BBB56BC00924FCA /* Urbanist-BoldItalic.ttf */; };
 		B39B030D2BBB56BC00924FCA /* Urbanist-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B39B02FB2BBB56BC00924FCA /* Urbanist-SemiBold.ttf */; };
 		B39B03102BBB7A1D00924FCA /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B39B030F2BBB7A1D00924FCA /* PrivacyInfo.xcprivacy */; };
+		B3DEF4812BBE54790022A977 /* CGSize+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DEF4802BBE54790022A977 /* CGSize+ext.swift */; };
+		B3DEF4842BBF36B50022A977 /* HUDNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DEF4832BBF36B50022A977 /* HUDNode.swift */; };
+		B3DEF4862BBF3B9F0022A977 /* PauseButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DEF4852BBF3B9F0022A977 /* PauseButtonNode.swift */; };
+		B3DEF4882BC071850022A977 /* PauseNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DEF4872BC071850022A977 /* PauseNode.swift */; };
 		B3F30C992BBDC09500A734F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3F30C982BBDC09400A734F8 /* GoogleService-Info.plist */; };
 		B3F30CAB2BBDC82A00A734F8 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B3F30CAA2BBDC82A00A734F8 /* FirebaseAnalytics */; };
 		B3F30CAD2BBDC82A00A734F8 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B3F30CAC2BBDC82A00A734F8 /* FirebaseAnalyticsSwift */; };
@@ -106,6 +110,10 @@
 		B39B02FB2BBB56BC00924FCA /* Urbanist-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-SemiBold.ttf"; sourceTree = "<group>"; };
 		B39B030E2BBB572800924FCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B39B030F2BBB7A1D00924FCA /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		B3DEF4802BBE54790022A977 /* CGSize+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+ext.swift"; sourceTree = "<group>"; };
+		B3DEF4832BBF36B50022A977 /* HUDNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDNode.swift; sourceTree = "<group>"; };
+		B3DEF4852BBF3B9F0022A977 /* PauseButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseButtonNode.swift; sourceTree = "<group>"; };
+		B3DEF4872BC071850022A977 /* PauseNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseNode.swift; sourceTree = "<group>"; };
 		B3F30C982BBDC09400A734F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B3F30CB62BBDC86400A734F8 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		B3F30CB92BBDCB6800A734F8 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -175,6 +183,7 @@
 		B31A3C942BAA5852005728C8 /* GameEntity */ = {
 			isa = PBXGroup;
 			children = (
+				B3DEF4822BBF36AC0022A977 /* HUD */,
 				B3434B902BB4971200F9D401 /* Camera */,
 				B3434B8F2BB4970700F9D401 /* GKAgent */,
 				B3434B8E2BB496F600F9D401 /* Wall */,
@@ -190,6 +199,7 @@
 				B3434B792BB1E0E500F9D401 /* CGVector+ext.swift */,
 				B39B02E32BB8B18100924FCA /* CGPoint+ext.swift */,
 				B39B02E72BB9071B00924FCA /* UIBezierPath+ext.swift */,
+				B3DEF4802BBE54790022A977 /* CGSize+ext.swift */,
 			);
 			path = "+ext";
 			sourceTree = "<group>";
@@ -316,6 +326,16 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		B3DEF4822BBF36AC0022A977 /* HUD */ = {
+			isa = PBXGroup;
+			children = (
+				B3DEF4832BBF36B50022A977 /* HUDNode.swift */,
+				B3DEF4852BBF3B9F0022A977 /* PauseButtonNode.swift */,
+				B3DEF4872BC071850022A977 /* PauseNode.swift */,
+			);
+			path = HUD;
+			sourceTree = "<group>";
+		};
 		B3F30CA82BBDC7D000A734F8 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -431,12 +451,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				B31A3C932BAA55C9005728C8 /* WallMaterial.swift in Sources */,
+				B3DEF4862BBF3B9F0022A977 /* PauseButtonNode.swift in Sources */,
 				B3434B842BB1E50200F9D401 /* CatEntity.swift in Sources */,
 				B3434B922BB4972E00F9D401 /* CameraManager.swift in Sources */,
+				B3DEF4882BC071850022A977 /* PauseNode.swift in Sources */,
 				B3434B7E2BB1E3B500F9D401 /* AgentComponent.swift in Sources */,
 				B39B02E42BB8B18100924FCA /* CGPoint+ext.swift in Sources */,
 				B3F30CB72BBDC86400A734F8 /* MenuView.swift in Sources */,
 				B39B02E62BB8D7A700924FCA /* ArrowNode.swift in Sources */,
+				B3DEF4842BBF36B50022A977 /* HUDNode.swift in Sources */,
 				B3434B702BACAEE000F9D401 /* WallFactory.swift in Sources */,
 				B3434B822BB1E45700F9D401 /* CucumberEntity.swift in Sources */,
 				B3434B8C2BB33B8600F9D401 /* GameConstants.swift in Sources */,
@@ -451,6 +474,7 @@
 				B31A3C982BAA5AF6005728C8 /* PhysicsCategory.swift in Sources */,
 				B3434B782BB10A8600F9D401 /* GameManager.swift in Sources */,
 				B3434B7A2BB1E0E500F9D401 /* CGVector+ext.swift in Sources */,
+				B3DEF4812BBE54790022A977 /* CGSize+ext.swift in Sources */,
 				B3434B802BB1E3EE00F9D401 /* CucumberSpriteComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

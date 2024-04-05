@@ -9,6 +9,9 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    /// Transforms the CG expression to a relative value
+    private lazy var t: CGAffineTransform = .init(scaleX: frame.width / 393, y: frame.height / 852)
+    
     var hasStarted = false
     
     var cameraManager: CameraManager!
@@ -24,8 +27,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var startingHeight: CGFloat!
     
     var arrowNode: ArrowNode?
+    var hud: HUDNode!
+    var pauseScreen: PauseNode!
     
-    var maxHeightLabel: SKLabelNode!
+    var touchStartedOnButton = false
     
     // MARK: - Scene setup
     override func didMove(to view: SKView) {
@@ -34,7 +39,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupCamera()
         setupPhysicsWorld()
         setupEntities()
-        setupUI()
+        setupHUD()
     }
     
     func setupBackground() {
@@ -51,7 +56,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     func setupCamera() {
-        cameraManager = CameraManager(frame: frame)
+        cameraManager = CameraManager(frame: frame, minimumHeight: frame.midY * 1.05)
         self.camera = cameraManager.cameraNode
         addChild(cameraManager.cameraNode)
         
@@ -66,11 +71,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func setupEntities() {
         setupCatEntity()
         setupCucumberEntity()
-        wallFactory = WallFactory(frame: frame, cameraPositionY: cameraManager.cameraNode.position.y)
+        wallFactory = WallFactory(frame: frame, cameraPositionY: cameraManager.cameraNode.position.y, firstWallsHeight: frame.height * 0.5)
     }
 
     func setupCatEntity() {
-        catEntity = CatEntity(size: CGSize(width: 98, height: 141))
+        catEntity = CatEntity(size: CGSize(width: 76, height: 109).applying(t))
         guard let catNode = catEntity.component(ofType: CatSpriteComponent.self)?.node else { return }
         catNode.position = CGPoint(x: frame.midX, y: frame.midY)
         catNode.zPosition = 2
@@ -81,7 +86,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     func setupCucumberEntity() {
-        cucumberEntity = CucumberEntity(size: CGSize(width: 120, height: 165))
+        cucumberEntity = CucumberEntity(size: CGSize(width: 62, height: 84).applying(t))
         guard let cucumberNode = cucumberEntity.component(ofType: CucumberSpriteComponent.self)?.node else { return }
         cucumberNode.position = CGPoint(x: frame.minX + 50, y: -frame.height * 0.5)
         cucumberNode.zPosition = 5
@@ -89,102 +94,74 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         addChild(cucumberNode)        
     }
-
-    func setupUI() {
-        let pauseButton = SKSpriteNode(imageNamed: "pauseButton")
-        pauseButton.size = CGSize(width: 56, height: 76)
-        pauseButton.position = CGPoint(x: -frame.maxX * 0.6, y: frame.maxY * 0.8)
-        pauseButton.zPosition = 100
-        pauseButton.name = "pauseButton"
-        cameraManager.cameraNode.addChild(pauseButton)
-        
-        let highScoreLabelTitle = SKLabelNode(fontNamed: "Urbanist-Medium")
-        highScoreLabelTitle.fontSize = 24
-        highScoreLabelTitle.fontColor = .white
-        highScoreLabelTitle.text = "top"
-        highScoreLabelTitle.position = CGPoint(x: frame.maxX * 0.6, y: pauseButton.position.y * 0.96)
-        highScoreLabelTitle.zPosition = 100
-        cameraManager.cameraNode.addChild(highScoreLabelTitle)
-        
-        let highScoreLabel = SKLabelNode(fontNamed: "Urbanist-Medium")
-        highScoreLabel.fontSize = 24
-        highScoreLabel.fontColor = .white
-        highScoreLabel.text = "\(GameManager.shared.currentHighScore) m"
-        highScoreLabel.position = CGPoint(x: frame.maxX * 0.6, y: pauseButton.position.y * 0.91)
-        highScoreLabel.zPosition = 100
-        cameraManager.cameraNode.addChild(highScoreLabel)
-        
-        maxHeightLabel = SKLabelNode(fontNamed: "Urbanist-Black")
-        maxHeightLabel.fontSize = 48
-        maxHeightLabel.fontColor = .white
-        maxHeightLabel.horizontalAlignmentMode = .right
-        maxHeightLabel.verticalAlignmentMode = .top
-        maxHeightLabel.position = CGPoint(x: highScoreLabel.position.x * 0.8, y: pauseButton.position.y)
-        maxHeightLabel.text = "\(catEntity.maxHeight)"
-        maxHeightLabel.zPosition = 100
-        cameraManager.cameraNode.addChild(maxHeightLabel)
-        
-        let nigiriCountLabel = SKLabelNode(fontNamed: "Urbanist-BoldItalic")
-        nigiriCountLabel.fontSize = 42
-        nigiriCountLabel.fontColor = .white
-        nigiriCountLabel.text = "soon"
-        nigiriCountLabel.position = CGPoint(x: maxHeightLabel.position.x * 0.9, y: highScoreLabel.position.y * 0.9)
-        nigiriCountLabel.zPosition = 100
-        cameraManager.cameraNode.addChild(nigiriCountLabel)
-        
-                
-        let nigiriSprite = SKSpriteNode(imageNamed: "nigiri_score")
-        nigiriSprite.size = CGSize(width: 56, height: 38)
-        nigiriSprite.position = CGPoint(x: highScoreLabel.position.x, y: highScoreLabel.position.y * 0.93)
-        nigiriSprite.zPosition = 100
-        
-        cameraManager.cameraNode.addChild(nigiriSprite)
-        
-        let highScoreLabelTitleShadow = createShadowLabelNode(for: highScoreLabelTitle, offset: CGPoint(x: 2, y: -2), color: .black, blur: 0.15)
-        cameraManager.cameraNode.addChild(highScoreLabelTitleShadow)
-
-        let highScoreLabelShadow = createShadowLabelNode(for: highScoreLabel, offset: CGPoint(x: 2, y: -2), color: .black, blur: 0.15)
-        cameraManager.cameraNode.addChild(highScoreLabelShadow)
-
-        let maxHeightLabelShadow = createShadowLabelNode(for: maxHeightLabel, offset: CGPoint(x: -maxHeightLabel.frame.width * 2.25, y: -40), color: .black, blur: 0.15)
-        maxHeightLabelShadow.name = "maxHeightShadow"
-        cameraManager.cameraNode.addChild(maxHeightLabelShadow)
-
-        let nigiriCountLabelShadow = createShadowLabelNode(for: nigiriCountLabel, offset: CGPoint(x: 2, y: -2), color: .black, blur: 0.15)
-        cameraManager.cameraNode.addChild(nigiriCountLabelShadow)
-    }
     
+    func setupHUD() {
+        hud = HUDNode()
+        hud.setup(withFrame: frame)
+        cameraManager.cameraNode.addChild(hud)
+        
+        pauseScreen = PauseNode()
+        pauseScreen.setup(withFrame: frame)
+        pauseScreen.isHidden = true
+        
+        cameraManager.cameraNode.addChild(pauseScreen)
+    }
     
     // MARK: - Default methods
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         touchStart = touch.location(in: cameraManager.cameraNode)
         
-        guard catEntity.spriteComponent.currentWallMaterial != .none else { return }
+        guard let touchStart = touchStart else { return }
         
-        createArrowNode()
-        catEntity.prepareForJump()
+        if hud.pauseButton.contains(touchStart) {
+            touchStartedOnButton = true
+            hud.pauseButton.alpha = 0.5
+            
+        } else if pauseScreen.continueButton.contains(touchStart) {
+            touchStartedOnButton = true
+            pauseScreen.continueButton.alpha = 0.5
+            
+        } else {
+            guard catEntity.spriteComponent.currentWallMaterial != .none, !isPaused else { return }
+            
+            createArrowNode()
+            catEntity.prepareForJump()
+        }
     }
-    
+
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first, let start = touchStart else { return }
+        guard !touchStartedOnButton, let touch = touches.first, let start = touchStart else { return }
         let touchLocation = touch.location(in: cameraManager.cameraNode)
-        
         arrowNode?.update(start: start, end: touchLocation)
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first, let start = touchStart else { return }
         
-        if !hasStarted { hasStarted = true }
-        
         let location = touch.location(in: cameraManager.cameraNode)
+        
+        if touchStartedOnButton {
+            if hud.pauseButton.contains(location) && !isPaused {
+                hud.pauseButton.alpha = 1
+                togglePause()
+            } else if pauseScreen.continueButton.contains(location) && isPaused {
+                pauseScreen.continueButton.alpha = 1
+                togglePause()
+            }
+
+            touchStartedOnButton = false
+            return
+        }
+        
+        if !hasStarted { hasStarted = true }
         
         catEntity.handleJump(from: start, to: location)
         
         arrowNode?.removeFromParent()
         arrowNode = nil
     }
+
 
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
@@ -196,16 +173,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else { handleWallGeneration() }
         
         guard catEntity.spriteComponent.node.physicsBody?.velocity != .zero else { return }
-        
-        catEntity.handleMovement(startingHeight: startingHeight, walls: existingWalls)
-        
-        if maxHeightLabel != nil {
-            maxHeightLabel.text = "\(catEntity.maxHeight) m"
-            
-            if let shadowNode = cameraManager.cameraNode.childNode(withName: "maxHeightShadow") as? SKLabelNode {
-                shadowNode.text = maxHeightLabel.text
-            }
-        }
+
+        handleCatMovement()
         
         handleWallGeneration()
     }
@@ -220,10 +189,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             GameManager.shared.resetGame()
         }
     }
+    
+    func togglePause() {
+        isPaused.toggle()
+        pauseScreen.isHidden.toggle()
+    }
 }
 
 // MARK: - Custom methods
 extension GameScene {
+    func handleCatMovement() {
+        catEntity.handleMovement(startingHeight: startingHeight, walls: existingWalls)
+        
+        if catEntity.currentHeight >= catEntity.maxHeight {
+            hud.updateCurrentScore(catEntity.maxHeight)
+            pauseScreen.update(withScore: catEntity.maxHeight)
+        }
+    }
+    
     func handleWallGeneration() {
         wallFactory.adjustWallParameters(forProgress: catEntity.calculateProgress())
         
@@ -239,10 +222,12 @@ extension GameScene {
     }
     
     func handleCucumberMovement(currentTime: TimeInterval) {
-        if let vy = catEntity.spriteComponent.node.physicsBody?.velocity.dy, vy < -2000 {
+        if let vy = catEntity.spriteComponent.node.physicsBody?.velocity.dy, vy < -2000 ||
+            catEntity.spriteComponent.node.position.y < -frame.minY
+        {
             cucumberEntity.jumpAtPlayer(player: catEntity)
-            
-        } else if !cucumberEntity.isJumpingAtPlayer {
+        } 
+        else if !cucumberEntity.isJumpingAtPlayer {
             cucumberEntity.updateTarget(catEntity.agentComponent.agent)
             var deltaTime = currentTime - lastUpdateTime
             lastUpdateTime = currentTime
@@ -265,15 +250,5 @@ extension GameScene {
         )
         
         addChild(arrowNode!)
-    }
-    
-    func createShadowLabelNode(for label: SKLabelNode, offset: CGPoint, color: UIColor, blur: CGFloat) -> SKLabelNode {
-        let shadowLabel = SKLabelNode(fontNamed: label.fontName)
-        shadowLabel.text = label.text
-        shadowLabel.fontSize = label.fontSize
-        shadowLabel.fontColor = color.withAlphaComponent(blur)
-        shadowLabel.position = CGPoint(x: label.position.x + offset.x, y: label.position.y + offset.y)
-        shadowLabel.zPosition = label.zPosition - 1
-        return shadowLabel
     }
 }

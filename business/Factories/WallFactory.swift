@@ -15,9 +15,10 @@ class WallFactory {
     
     var lastWallMaxY: CGFloat = 0
     
-    init(frame: CGRect, cameraPositionY: CGFloat) {
+    init(frame: CGRect, cameraPositionY: CGFloat, firstWallsHeight: CGFloat) {
         self.frame = frame
         self.lastWallTopY = cameraPositionY
+        self.lastWallTopY = firstWallsHeight
     }
     
     func createInitialWalls() -> [WallNode] {
