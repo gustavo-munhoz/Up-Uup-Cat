@@ -30,7 +30,15 @@ class CameraManager {
             y: cameraNode.position.y + ((catPosition.y + frame.height * 0.1) - cameraNode.position.y) * lerpFactor
         )
         
-        cameraNode.position = smoothedPosition.y < minimumHeight ? CGPoint(x: smoothedPosition.x, y: minimumHeight) : smoothedPosition
+        let maxX = frame.width * 0.85
+        let minX = -frame.width * 0.85
+        
+        let clampedXPosition = max(minX, min(smoothedPosition.x, maxX))
+        
+        cameraNode.position = CGPoint(
+            x: clampedXPosition,
+            y: max(smoothedPosition.y, minimumHeight)
+        )
     }
     
     func zoomOut() {

@@ -13,6 +13,7 @@ import SpriteKit
 struct GC {
     
     static let GRAVITY: CGVector = CGVector(dx: 0, dy: -9.8)
+    static let GLASS_FORCE: CGVector = CGVector(dx: 0, dy: 9)
     
     // MARK: - PLAYER
     
@@ -23,6 +24,7 @@ struct GC {
         
         struct TEXTURE {
             static let START = SKTexture(imageNamed: "cat_start")
+            static let PREPARE = SKTexture(imageNamed: "cat_start_prepare")
             static let JUMP_FRAME_1 = SKTexture(imageNamed: "cat_jumping_1")
             static let JUMP_FRAME_2 = SKTexture(imageNamed: "cat_jumping_2")
             static let HOLDING_WALL = SKTexture(imageNamed: "cat_holding")
@@ -63,11 +65,23 @@ struct GC {
         static let MIN_DIFFICULTY_SPACING: CGFloat = 50
         static let MAX_DIFFICULTY_SPACING: CGFloat = 150
         
+        struct MATERIAL_PROBABILITY {
+            static let NORMAL: CGFloat = 0.8
+            static let GLASS: CGFloat = 0.2
+        }
+        
         struct TEXTURE {
-            static let TALL = SKTexture(imageNamed: "wall_tall")
-            static let LONG = SKTexture(imageNamed: "wall_long")
-            static let REGULAR = SKTexture(imageNamed: "wall_regular")
-            static let SQUARE = SKTexture(imageNamed: "wall_square")
+            struct NORMAL {
+                static let TALL = SKTexture(imageNamed: "normal_tall")
+                static let LONG = SKTexture(imageNamed: "normal_long")
+                static let REGULAR = SKTexture(imageNamed: "normal_regular")
+                static let SQUARE = SKTexture(imageNamed: "normal_square")
+            }
+            
+            struct GLASS {
+                static let TALL = SKTexture(imageNamed: "glass_tall")
+                static let SQUARE = SKTexture(imageNamed: "glass_square")
+            }
         }
     }
     
@@ -81,7 +95,7 @@ struct GC {
     // MARK: - CAMERA
     struct CAMERA {
         static let MIN_CAMERA_SCALE: CGFloat = 1
-        static let MAX_CAMERA_SCALE: CGFloat = 2
+        static let MAX_CAMERA_SCALE: CGFloat = 2.25
     }
     
     // MARK: - HUD

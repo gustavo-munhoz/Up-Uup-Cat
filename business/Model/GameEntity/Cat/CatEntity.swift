@@ -50,9 +50,9 @@ class CatEntity: GKEntity {
 
 extension CatEntity {
     func handleMovement(startingHeight: CGFloat, walls: [WallNode]) {
-        self.updateHeight(newHeight: Int((self.spriteComponent.node.position.y - startingHeight) / 20))
+        self.updateHeight(newHeight: Int((self.spriteComponent.node.position.y - startingHeight) / 50))
         
-        if spriteComponent.node.texture == GC.PLAYER.TEXTURE.HOLDING_WALL {
+        if spriteComponent.node.texture == GC.PLAYER.TEXTURE.HOLDING_WALL || spriteComponent.node.texture == GC.PLAYER.TEXTURE.PREPARE {
             spriteComponent.node.run(GC.PLAYER.TEXTURE.ANIMATION.JUMP)
         }
         
@@ -78,16 +78,25 @@ extension CatEntity {
         self.spriteComponent.currentWallMaterial = .none
     }
     
-    func prepareForJump(hasStarted: Bool = true) {
+    func prepareForJump(hasStarted: Bool = true, isTouching: Bool = false) {
         if spriteComponent.canJump {
             if hasStarted {
                 spriteComponent.node.texture = GC.PLAYER.TEXTURE.HOLDING_WALL
-            } else {
+                UIImpactFeedbackGenerator(style: .rigid).impactOccurred()
+            }
+            else if isTouching {
+                spriteComponent.node.texture = GC.PLAYER.TEXTURE.PREPARE
+            }
+            else {
                 spriteComponent.node.texture = GC.PLAYER.TEXTURE.START
             }
             
             spriteComponent.node.physicsBody?.velocity = .zero
-            spriteComponent.node.physicsBody?.isDynamic = false
+            spriteComponent.node.physicsBody?.isDynamic = spriteComponent.currentWallMaterial == .glass
+            
+            if spriteComponent.currentWallMaterial == .glass {
+                spriteComponent.node.physicsBody?.applyForce(GC.GLASS_FORCE)
+            }
         }
     }
     

@@ -11,90 +11,61 @@ import GameplayKit
 class WallFactory {
     var frame: CGRect
     var wallParameters = WallParameters()
-    var lastWallTopY: CGFloat = 0
-    
-    var lastWallMaxY: CGFloat = 0
+    var lastWallMaxY: CGFloat
     
     init(frame: CGRect, cameraPositionY: CGFloat, firstWallsHeight: CGFloat) {
         self.frame = frame
-        self.lastWallTopY = cameraPositionY
-        self.lastWallTopY = firstWallsHeight
+        self.lastWallMaxY = firstWallsHeight
     }
     
-    func createInitialWalls() -> [WallNode] {
-        let firstWall = WallNode(
-            size: CGSize(
-                width: CGFloat.random(in: 0.3...1) * frame.width,
-                height: CGFloat.random(in: 0.3...0.6) * frame.height),
-            material: .normal)
-        
-        firstWall.position = CGPoint(
-            x: CGFloat.random(in: 0.7...1.3) * frame.midX,
-            y: frame.midY - frame.height * 0.25)
-        firstWall.zPosition = 1
-        
-//        let spacingBetweenWalls = CGFloat(wallParameters.spacingDistribution.nextInt())
-//        
-//        let secondWall = WallNode(
-//            size: CGSize(
-//                width: CGFloat.random(in: 0.3...1) * frame.width,
-//                height: CGFloat.random(in: 0.3...0.8) * frame.height),
-//            material: .normal)
-//        
-//        let secondWallYPosition = firstWall.position.y + frame.height/2 + spacingBetweenWalls
-//        secondWall.position = CGPoint(
-//            x: CGFloat.random(in: 0.5...1.5) * frame.midX,
-//            y: secondWallYPosition)
-//        
-//        secondWall.zPosition = 1
-
-        return [firstWall]
-    }
-
     func createWalls() -> [WallNode] {
         var walls: [WallNode] = []
-        let numberOfWalls = Int.random(in: 1...4)
-        var currentMaxY = lastWallMaxY
+        let numberOfWalls = Int.random(in: 1...3)
+        var currentLineMaxY: CGFloat = lastWallMaxY
 
         for _ in 0..<numberOfWalls {
             let wallWidth = CGFloat(wallParameters.widthDistribution.nextInt())
             let wallHeight = CGFloat(wallParameters.heightDistribution.nextInt())
             
-            let wallXPosition = CGFloat.random(in: (-frame.maxX * 1.5)...(frame.maxX * 1.5))
+            let wallXPosition = CGFloat.random(in: (-frame.maxX * 0.75)...(frame.maxX * 0.75))
             
-            let wallYPosition = lastWallMaxY + CGFloat(wallParameters.spacingDistribution.nextInt()) + wallHeight / 2
+            let spacing = CGFloat(wallParameters.spacingDistribution.nextInt())
+            let wallYPosition = lastWallMaxY + spacing + wallHeight / 2
 
-            let newWall = WallNode(size: CGSize(width: wallWidth, height: wallHeight), material: .normal)
-            newWall.position = CGPoint(x: wallXPosition, y: wallYPosition)
-            newWall.zPosition = 1
-            walls.append(newWall)
+            var isOverlapping = false
+            for existingWall in walls {
+                if abs(existingWall.position.y - wallYPosition) < (wallHeight + existingWall.size.height) / 2 {
+                    if abs(existingWall.position.x - wallXPosition) < (wallWidth + existingWall.size.width) / 2 {
+                        isOverlapping = true
+                        break
+                    }
+                }
+            }
 
-            
-            currentMaxY = max(lastWallMaxY, wallYPosition + wallHeight / 2)
+            if !isOverlapping {
+                let materialRandomizer = CGFloat.random(in: 0..<1)
+                let material: WallMaterial
+                
+                if materialRandomizer <= GC.WALL.MATERIAL_PROBABILITY.GLASS {
+                    material = .glass
+                } else {
+                    material = .normal
+                }
+                
+                let newWall = WallNode(size: CGSize(width: wallWidth, height: wallHeight), material: material)
+                newWall.position = CGPoint(x: wallXPosition, y: wallYPosition)
+                newWall.zPosition = 1
+                walls.append(newWall)
+
+                currentLineMaxY = max(currentLineMaxY, wallYPosition + wallHeight / 2)
+            }
         }
-        lastWallMaxY = currentMaxY
+
+        lastWallMaxY = currentLineMaxY
 
         return walls
     }
-    
-    func createWall() -> WallNode {
-        let wallWidth = CGFloat(wallParameters.widthDistribution.nextInt())
-        let wallHeight = CGFloat(wallParameters.heightDistribution.nextInt())
-        
-        let wallSpacing = CGFloat(wallParameters.spacingDistribution.nextInt())
-        
-        let wallXPosition = CGFloat.random(in: frame.minX...frame.maxX)
-        
-        let wallYPosition = lastWallTopY + wallSpacing + wallHeight / 2
-        
-        let newWall = WallNode(size: CGSize(width: wallWidth, height: wallHeight), material: .normal)
-        newWall.position = CGPoint(x: wallXPosition, y: wallYPosition)
-        newWall.zPosition = 1
-        
-        lastWallTopY = wallYPosition + wallHeight / 2
 
-        return newWall
-    }
     
     func adjustWallParameters(forProgress progress: CGFloat) {
         let newMaxWidth = Int(GC.WALL.MIN_DIFFICULTY_WIDTH - progress * (GC.WALL.MIN_DIFFICULTY_WIDTH - GC.WALL.MAX_DIFFICULTY_WIDTH))

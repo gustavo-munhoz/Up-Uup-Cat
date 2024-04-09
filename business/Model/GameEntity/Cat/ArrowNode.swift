@@ -36,4 +36,8 @@ class ArrowNode: SKShapeNode {
         )
         .cgPath
     }
+    
+    func updateBasePosition(to newPosition: CGPoint) {
+        self.catPosition = newPosition
+    }
 }

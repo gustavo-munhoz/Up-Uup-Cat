@@ -12,7 +12,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     /// Transforms the CG expression to a relative value
     private lazy var t: CGAffineTransform = .init(scaleX: frame.width / 393, y: frame.height / 852)
     
+    var canStart = false
     var hasStarted = false
+    var hasGeneratedFirstWalls = false
     var isGameOver = false
     
     var cameraManager: CameraManager!
@@ -32,7 +34,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var pauseScreen: PauseScreen!
     var gameOverScreen: GameOverScreen!
     
+    var isGrabbingGlass = false
+    
     var touchStartedOnButton = false
+    
+    var cucumberShouldJump: Bool {
+        get {
+            if let vy = catEntity.spriteComponent.node.physicsBody?.velocity.dy, vy < -3000 ||
+                catEntity.spriteComponent.node.position.y < -frame.minY ||
+                catEntity.spriteComponent.node.position.x < -frame.width * 2 ||
+                catEntity.spriteComponent.node.position.x > frame.width * 2
+            {
+                return true
+            } 
+            else { return false }
+        }
+    }
     
     // MARK: - Scene setup
     override func didMove(to view: SKView) {
@@ -42,6 +59,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupPhysicsWorld()
         setupEntities()
         setupHUD()
+        
+        animateCameraIntro()
     }
     
     func setupBackground() {
@@ -73,7 +92,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func setupEntities() {
         setupCatEntity()
         setupCucumberEntity()
-        wallFactory = WallFactory(frame: frame, cameraPositionY: cameraManager.cameraNode.position.y, firstWallsHeight: frame.height * 0.5)
+        wallFactory = WallFactory(frame: frame, cameraPositionY: cameraManager.cameraNode.position.y, firstWallsHeight: frame.height/2)
     }
 
     func setupCatEntity() {
@@ -82,7 +101,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         catNode.position = CGPoint(x: frame.midX, y: frame.midY)
         catNode.zPosition = 2
         addChild(catNode)
-        catEntity.prepareForJump()
+        catEntity.prepareForJump(hasStarted: false)
         startingHeight = catEntity.spriteComponent.node.position.y
         catEntity.agentComponent.setPosition(catEntity.spriteComponent.node.position)
     }
@@ -138,10 +157,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         else {
-            guard catEntity.spriteComponent.currentWallMaterial != .none, !isPaused else { return }
+            guard catEntity.spriteComponent.currentWallMaterial != .none, !isPaused, canStart else { return }
             
             createArrowNode()
-            catEntity.prepareForJump()
+            catEntity.prepareForJump(hasStarted: hasStarted, isTouching: true)
+            
+            isGrabbingGlass = catEntity.spriteComponent.currentWallMaterial == .glass
         }
     }
 
@@ -167,7 +188,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 togglePause()
             }
             
-            else if gameOverScreen.restartButton.contains(location) {
+            else if gameOverScreen.restartButton.contains(location) && isGameOver {
                 GameManager.shared.resetGame()
             }
 
@@ -175,10 +196,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
         
-        if !hasStarted { hasStarted = true }
+        if !hasStarted {
+            if canStart { hasStarted = true }
+            else { return }
+        }
         
         catEntity.handleJump(from: start, to: location)
         
+        isGrabbingGlass = false
         arrowNode?.removeFromParent()
         arrowNode = nil
     }
@@ -186,18 +211,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
-        cameraManager.updateCameraPosition(catEntity: catEntity)
+        if canStart { cameraManager.updateCameraPosition(catEntity: catEntity) }
         
         if lastUpdateTime == 0 { lastUpdateTime = currentTime }
         
         if hasStarted { handleCucumberMovement(currentTime: currentTime) }
-        else { handleWallGeneration() }
+        else if !hasGeneratedFirstWalls {
+            for _ in 0..<30 { handleWallGeneration() }
+            
+            hasGeneratedFirstWalls = true
+        }
         
         guard catEntity.spriteComponent.node.physicsBody?.velocity != .zero else { return }
 
         handleCatMovement()
         
+        if isGrabbingGlass {
+            catEntity.spriteComponent.node.physicsBody?.applyForce(GC.GLASS_FORCE)
+        }
+        
         handleWallGeneration()
+        
+        if let arrow = arrowNode {
+            let newPosition = CGPoint(
+                x: catEntity.spriteComponent.node.position.x,
+                y: catEntity.spriteComponent.node.position.y + catEntity.spriteComponent.node.frame.height/2
+            )
+            arrow.updateBasePosition(to: newPosition)
+        }
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -217,6 +258,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
 // MARK: - Custom methods
 extension GameScene {
+    func animateCameraIntro() {
+        let startingPosition = CGPoint(x: frame.midX, y: cameraManager.cameraNode.position.y + frame.height * 10)
+        
+        cameraManager.cameraNode.position = startingPosition
+        cameraManager.cameraNode.setScale(3)
+        
+        let finalPosition = CGPoint(x: frame.midX, y: catEntity.spriteComponent.node.position.y + frame.height * 0.1)
+        
+        let moveAction = SKAction.move(to: finalPosition, duration: 3.0)
+        moveAction.timingMode = .easeInEaseOut
+
+        let scaleAction = SKAction.scale(to: 1, duration: 3.0)
+        scaleAction.timingMode = .easeInEaseOut
+        
+        cameraManager.cameraNode.run(.group([scaleAction, moveAction])) {
+            self.canStart = true
+        }
+    }
+    
     func handleCatMovement() {
         catEntity.handleMovement(startingHeight: startingHeight, walls: existingWalls)
         
@@ -242,11 +302,8 @@ extension GameScene {
     }
     
     func handleCucumberMovement(currentTime: TimeInterval) {
-        if let vy = catEntity.spriteComponent.node.physicsBody?.velocity.dy, vy < -2000 ||
-            catEntity.spriteComponent.node.position.y < -frame.minY
-        {
-            cucumberEntity.jumpAtPlayer(player: catEntity)
-        } 
+        if cucumberShouldJump { cucumberEntity.jumpAtPlayer(player: catEntity) }
+        
         else if !cucumberEntity.isJumpingAtPlayer {
             cucumberEntity.updateTarget(catEntity.agentComponent.agent)
             var deltaTime = currentTime - lastUpdateTime
