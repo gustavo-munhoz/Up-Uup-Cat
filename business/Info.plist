@@ -23,5 +23,30 @@
         <string>Urbanist-Thin.ttf</string>
         <string>Urbanist-ThinItalic.ttf</string>
     </array>
+    
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+      <key>CFBundleURLSchemes</key>
+      <array>
+        <string>fb1198389547851405</string>
+      </array>
+      </dict>
+    </array>
+    <key>FacebookAppID</key>
+    <string>1198389547851405</string>
+    <key>FacebookDisplayName</key>
+    <string>Up Uup Cat</string>
+    
+    <key>FacebookClientToken</key>
+    <string>4dbe24fe86b83ee3c959453ac1c30160</string>
+    <key>FacebookAdvertiserIDCollectionEnabled</key>
+    <false/>
+    <key>FacebookAutoLogAppEventsEnabled</key>
+    <false/>
+    <key>NSUserTrackingUsageDescription</key>
+    <string>Our app uses your data to improve your experience.</string>
+    <key>FIREBASE_ANALYTICS_COLLECTION_ENABLED</key>
+    <false/>
 </dict>
 </plist>

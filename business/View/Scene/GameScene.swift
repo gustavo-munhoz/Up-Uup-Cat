@@ -13,6 +13,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private lazy var t: CGAffineTransform = .init(scaleX: frame.width / 393, y: frame.height / 852)
     
     var hasStarted = false
+    var isGameOver = false
     
     var cameraManager: CameraManager!
     var touchStart: CGPoint?
@@ -28,7 +29,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var arrowNode: ArrowNode?
     var hud: HUDNode!
-    var pauseScreen: PauseNode!
+    var pauseScreen: PauseScreen!
+    var gameOverScreen: GameOverScreen!
     
     var touchStartedOnButton = false
     
@@ -43,9 +45,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func setupBackground() {
-        let backgroundImage = SKSpriteNode(imageNamed: "background_start")
+        let backgroundImage = SKSpriteNode(imageNamed: "roof_background_start")
         backgroundImage.position = CGPoint(x: frame.midX, y: frame.midY)
-        backgroundImage.size = self.frame.size
+        backgroundImage.size = CGSize(width: 4 * frame.width, height: frame.height)
         backgroundImage.zPosition = -1
         addChild(backgroundImage)
     }
@@ -100,11 +102,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hud.setup(withFrame: frame)
         cameraManager.cameraNode.addChild(hud)
         
-        pauseScreen = PauseNode()
+        pauseScreen = PauseScreen()
         pauseScreen.setup(withFrame: frame)
         pauseScreen.isHidden = true
-        
         cameraManager.cameraNode.addChild(pauseScreen)
+        
+        gameOverScreen = GameOverScreen()
+        gameOverScreen.setup(withFrame: frame)
+        gameOverScreen.isHidden = true
+        cameraManager.cameraNode.addChild(gameOverScreen)
     }
     
     // MARK: - Default methods
@@ -114,15 +120,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         guard let touchStart = touchStart else { return }
         
-        if hud.pauseButton.contains(touchStart) {
+        if hud.pauseButton.contains(touchStart) && !isGameOver {
             touchStartedOnButton = true
             hud.pauseButton.alpha = 0.5
             
-        } else if pauseScreen.continueButton.contains(touchStart) {
+        } 
+        
+        else if pauseScreen.continueButton.contains(touchStart) && !isGameOver {
             touchStartedOnButton = true
             pauseScreen.continueButton.alpha = 0.5
             
-        } else {
+        } 
+        
+        else if gameOverScreen.restartButton.contains(touchStart) {
+            touchStartedOnButton = true
+            gameOverScreen.restartButton.alpha = 0.5
+        }
+        
+        else {
             guard catEntity.spriteComponent.currentWallMaterial != .none, !isPaused else { return }
             
             createArrowNode()
@@ -142,12 +157,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let location = touch.location(in: cameraManager.cameraNode)
         
         if touchStartedOnButton {
-            if hud.pauseButton.contains(location) && !isPaused {
+            if hud.pauseButton.contains(location) && !isPaused && !isGameOver {
                 hud.pauseButton.alpha = 1
                 togglePause()
-            } else if pauseScreen.continueButton.contains(location) && isPaused {
+            } 
+            
+            else if pauseScreen.continueButton.contains(location) && isPaused && !isGameOver {
                 pauseScreen.continueButton.alpha = 1
                 togglePause()
+            }
+            
+            else if gameOverScreen.restartButton.contains(location) {
+                GameManager.shared.resetGame()
             }
 
             touchStartedOnButton = false
@@ -186,13 +207,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             || bodyA.node?.name == "enemyCucumber" && bodyB.node?.name == "cat"
         {
             cucumberEntity.isJumpingAtPlayer = false
-            GameManager.shared.resetGame()
+            
+            if gameOverScreen.isHidden {
+                showGameOverScreen()
+            }
         }
-    }
-    
-    func togglePause() {
-        isPaused.toggle()
-        pauseScreen.isHidden.toggle()
     }
 }
 
@@ -204,6 +223,7 @@ extension GameScene {
         if catEntity.currentHeight >= catEntity.maxHeight {
             hud.updateCurrentScore(catEntity.maxHeight)
             pauseScreen.update(withScore: catEntity.maxHeight)
+            gameOverScreen.update(withScore: catEntity.maxHeight)
         }
     }
     
@@ -250,5 +270,16 @@ extension GameScene {
         )
         
         addChild(arrowNode!)
+    }
+    
+    func togglePause() {
+        isPaused.toggle()
+        pauseScreen.isHidden.toggle()
+    }
+    
+    func showGameOverScreen() {
+        isPaused = true
+        isGameOver = true
+        gameOverScreen.isHidden = false
     }
 }

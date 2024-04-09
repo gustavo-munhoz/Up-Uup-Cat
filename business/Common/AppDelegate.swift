@@ -6,6 +6,13 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseCore
+
+import FacebookCore
+import AppTrackingTransparency
+import AdSupport
+import FirebaseAnalytics
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,8 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationController.navigationBar.isHidden = true
         
         window?.rootViewController = navigationController
-        
-        window?.makeKeyAndVisible()
+        window?.makeKeyAndVisible()        
         
         return true
     }
