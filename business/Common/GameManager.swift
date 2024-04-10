@@ -14,8 +14,13 @@ class GameManager {
     private(set) var shouldReset = PassthroughSubject<Bool, Never>()
     
     private(set) var currentScore: CurrentValueSubject<Int, Never> = CurrentValueSubject(0)
-    
     private(set) var personalBestScore: Int = 0
+    
+    private(set) var currentNigiriScore: CurrentValueSubject<Int, Never> = CurrentValueSubject(0)
+    private(set) var nigiriBalance: Int = 0
+    
+    
+    // MARK: - Public methods
     
     func resetGame() {
         if currentScore.value > personalBestScore {
@@ -23,19 +28,36 @@ class GameManager {
             saveHighScore(personalBestScore)
         }
         
+        saveNigiriBalance()
+        
         shouldReset.send(true)
         currentScore.value = 0
+        currentNigiriScore.value = 0
     }
     
     func updateHighScore(_ newValue: Int) {
         self.currentScore.value = newValue
     }
+
+    func increaseNigiriCount() {
+        currentNigiriScore.value += 1
+    }
     
-    func saveHighScore(_ highScore: Int) {
+    func loadStats() {
+        personalBestScore = UserDefaults.standard.integer(forKey: "highScoreKey")
+        nigiriBalance = UserDefaults.standard.integer(forKey: "nigirBalanceKey")
+    }
+    
+    // MARK: - Private methods
+    
+    private func saveHighScore(_ highScore: Int) {
         UserDefaults.standard.set(highScore, forKey: "highScoreKey")
     }
 
-    func loadHighScore() {
-        personalBestScore = UserDefaults.standard.integer(forKey: "highScoreKey")
+    
+    private func saveNigiriBalance() {
+        nigiriBalance += currentNigiriScore.value
+        
+        UserDefaults.standard.set(nigiriBalance, forKey: "nigiriBalanceKey")
     }
 }

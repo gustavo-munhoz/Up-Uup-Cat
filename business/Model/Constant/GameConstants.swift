@@ -13,7 +13,7 @@ import SpriteKit
 struct GC {
     
     static let GRAVITY: CGVector = CGVector(dx: 0, dy: -9.8)
-    static let GLASS_FORCE: CGVector = CGVector(dx: 0, dy: 9)
+    static let GLASS_FORCE: CGVector = CGVector(dx: 0, dy: 75)
     
     // MARK: - PLAYER
     
@@ -36,6 +36,11 @@ struct GC {
                     SKAction.wait(forDuration: 1/5),
                     SKAction.setTexture(GC.PLAYER.TEXTURE.JUMP_FRAME_2),
                 ])
+                
+                static let GLASS_JUMP = SKAction.sequence([
+                    SKAction.wait(forDuration: 0.1),
+                    SKAction.setTexture(GC.PLAYER.TEXTURE.JUMP_FRAME_2),
+                ])
             }
         }
     }
@@ -43,8 +48,10 @@ struct GC {
     // MARK: - CUCUMBER
     
     struct CUCUMBER {
-        static let DEFAULT_MAX_SPEED: Float = 600
-        static let DEFAULT_MAX_ACCELERATION: Float = 150
+        static let DEFAULT_MAX_SPEED: Float = 750
+        static let DEFAULT_MIN_SPEED: Float = 100
+        static let DEFAULT_MAX_ACCELERATION: Float = 300
+        static let DEFAULT_MIN_ACCELERATION: Float = 150
         static let DEFAULT_MASS: Float = 0.5
         
         static let JUMPING_SPEED: Float = 6000
@@ -62,12 +69,17 @@ struct GC {
         static let MAX_DIFFICULTY_WIDTH: CGFloat = 100
         static let MIN_DIFFICULTY_HEIGHT: CGFloat = 500
         static let MAX_DIFFICULTY_HEIGHT: CGFloat = 40
-        static let MIN_DIFFICULTY_SPACING: CGFloat = 50
+        static let MIN_DIFFICULTY_SPACING: CGFloat = 15
         static let MAX_DIFFICULTY_SPACING: CGFloat = 150
         
         struct MATERIAL_PROBABILITY {
             static let NORMAL: CGFloat = 0.8
             static let GLASS: CGFloat = 0.2
+        }
+        
+        struct COLLECTIBLE_PROBABILITY {
+            static let NIGIRI: CGFloat = 0.1
+            static let CATNIP: CGFloat = 0.00
         }
         
         struct TEXTURE {
@@ -81,6 +93,8 @@ struct GC {
             struct GLASS {
                 static let TALL = SKTexture(imageNamed: "glass_tall")
                 static let SQUARE = SKTexture(imageNamed: "glass_square")
+                static let LONG = SKTexture(imageNamed: "glass_long")
+                static let REGULAR = SKTexture(imageNamed: "glass_regular")
             }
         }
     }
@@ -88,7 +102,7 @@ struct GC {
     // MARK: - DIFFICULTY
     
     struct DIFFICULTY {
-        static let MAX_DIFFICULTY_HEIGHT: CGFloat = 1000
+        static let MAX_DIFFICULTY_HEIGHT: CGFloat = 750
     }
     
     

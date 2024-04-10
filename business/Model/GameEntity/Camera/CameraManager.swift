@@ -12,6 +12,7 @@ class CameraManager {
     var frame: CGRect
     var minimumHeight: CGFloat
     var currentScale: CGFloat
+    var isZoomedOut = false
 
     init(frame: CGRect, minimumHeight: CGFloat) {
         self.frame = frame
@@ -22,7 +23,7 @@ class CameraManager {
     
     func updateCameraPosition(catEntity: CatEntity) {
         let catPosition = catEntity.spriteComponent.node.position
-        currentScale = adjustScale(progress: catEntity.calculateProgress())
+        adjustScale(progress: catEntity.calculateProgress())
         
         let lerpFactor: CGFloat = 0.2
         let smoothedPosition = CGPoint(
@@ -42,19 +43,22 @@ class CameraManager {
     }
     
     func zoomOut() {
-        let zoomOutAction = SKAction.scale(to: 1.5, duration: 0.5)
+        isZoomedOut = true
+        let zoomOutAction = SKAction.scale(to: max(GC.CAMERA.MAX_CAMERA_SCALE,  1.5), duration: 0.5)
         zoomOutAction.timingMode = .easeInEaseOut
         cameraNode.run(zoomOutAction)
     }
     
-    func adjustScale(progress: CGFloat) -> CGFloat {
-        let scale = GC.CAMERA.MIN_CAMERA_SCALE + progress * (GC.CAMERA.MAX_CAMERA_SCALE - GC.CAMERA.MIN_CAMERA_SCALE)
-        cameraNode.setScale(scale)
+    func adjustScale(progress: CGFloat) {
+        currentScale = GC.CAMERA.MIN_CAMERA_SCALE + progress * (GC.CAMERA.MAX_CAMERA_SCALE - GC.CAMERA.MIN_CAMERA_SCALE)
         
-        return scale
+        if !isZoomedOut {
+            cameraNode.setScale(currentScale)
+        }
     }
     
     func resetZoom() {
+        isZoomedOut = false
         let resetZoomAction = SKAction.scale(to: currentScale, duration: 0.5)
         resetZoomAction.timingMode = .easeInEaseOut
         cameraNode.run(resetZoomAction)

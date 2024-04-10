@@ -32,7 +32,7 @@ class ArrowNode: SKShapeNode {
             from: catPosition,
             to: arrowTip,
             headLength: 30,
-            maxLength: 200
+            maxLength: 150
         )
         .cgPath
     }

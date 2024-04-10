@@ -25,7 +25,8 @@ class CatSpriteComponent: GKComponent {
         node.physicsBody = SKPhysicsBody(rectangleOf: size * 0.8)
         node.physicsBody?.isDynamic = true
         node.physicsBody?.categoryBitMask = PhysicsCategory.player
-        node.physicsBody?.contactTestBitMask = PhysicsCategory.wall | PhysicsCategory.enemy
+        node.physicsBody?.contactTestBitMask = PhysicsCategory.wall | PhysicsCategory.enemy | PhysicsCategory.collectible
+        node.physicsBody?.collisionBitMask = 0
         node.physicsBody?.usesPreciseCollisionDetection = true
         node.physicsBody?.mass = GC.PLAYER.DEFAULT_MASS
         

@@ -41,7 +41,6 @@ class CatEntity: GKEntity {
             GameManager.shared.updateHighScore(maxHeight)
         }
     }
-
     
     func calculateProgress() -> CGFloat {
         return min(CGFloat(maxHeight) / GC.DIFFICULTY.MAX_DIFFICULTY_HEIGHT, 1.0)
@@ -52,7 +51,8 @@ extension CatEntity {
     func handleMovement(startingHeight: CGFloat, walls: [WallNode]) {
         self.updateHeight(newHeight: Int((self.spriteComponent.node.position.y - startingHeight) / 50))
         
-        if spriteComponent.node.texture == GC.PLAYER.TEXTURE.HOLDING_WALL || spriteComponent.node.texture == GC.PLAYER.TEXTURE.PREPARE {
+        if spriteComponent.node.texture == GC.PLAYER.TEXTURE.HOLDING_WALL || spriteComponent.node.texture == GC.PLAYER.TEXTURE.PREPARE
+        {
             spriteComponent.node.run(GC.PLAYER.TEXTURE.ANIMATION.JUMP)
         }
         
@@ -96,28 +96,54 @@ extension CatEntity {
             
             if spriteComponent.currentWallMaterial == .glass {
                 spriteComponent.node.physicsBody?.applyForce(GC.GLASS_FORCE)
+                spriteComponent.node.texture = GC.PLAYER.TEXTURE.JUMP_FRAME_1
             }
         }
     }
     
     func handleJump(from start: CGPoint, to end: CGPoint) {
         guard spriteComponent.canJump else { return }
-        
+
         var dx = start.x - end.x
         var dy = start.y - end.y
-        
+
         let magnitude = sqrt(dx * dx + dy * dy)
         let maxMagnitude: CGFloat = GC.PLAYER.DEFAULT_BOOST_MAX
-        let minMagnitude: CGFloat = GC.PLAYER.DEFAULT_BOOST_MIN
-        let clampedMagnitude = min(maxMagnitude, max(minMagnitude, magnitude))
         
-        dx /= magnitude
-        dy /= magnitude
-        dx *= clampedMagnitude
-        dy *= clampedMagnitude
+        let normalizedMagnitude = min(1, magnitude / maxMagnitude)
         
+        let adjustedMagnitude = pow(2, normalizedMagnitude) - 1
+        
+        let scaledMagnitude = adjustedMagnitude * maxMagnitude
+
+        if magnitude != 0 {
+            dx /= magnitude
+            dy /= magnitude
+        }
+        dx *= scaledMagnitude
+        dy *= scaledMagnitude
+
         spriteComponent.node.physicsBody?.isDynamic = true
         spriteComponent.node.physicsBody?.applyImpulse(CGVector(dx: dx, dy: dy))
+        
+        if spriteComponent.node.texture == GC.PLAYER.TEXTURE.JUMP_FRAME_1 {
+            spriteComponent.node.run(GC.PLAYER.TEXTURE.ANIMATION.GLASS_JUMP)
+        }
+    }
+    
+    func collectItem(c: Collectible, execute callClosure: @escaping () -> Void = {}) {
+        switch c {
+            case .catnip:
+                break
+                
+            case .nigiri:
+                GameManager.shared.increaseNigiriCount()
+                for i in 1...3 { UIImpactFeedbackGenerator(style: .soft).impactOccurred(intensity: CGFloat(i)/3) }
+                break
+        }
+        
+        
+        callClosure()
     }
 }
 

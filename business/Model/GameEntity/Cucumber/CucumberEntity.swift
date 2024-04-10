@@ -37,6 +37,19 @@ class CucumberEntity: GKEntity {
         behavior.setWeight(1, for: goal)
         agentComponent.agent.behavior = behavior
     }
+    
+    func updateSpeedAndAcceleration(basedOnProgress progress: CGFloat) {
+        let clampedProgress = min(max(progress, 0.0), 1.0)
+
+        let speedRange = GC.CUCUMBER.DEFAULT_MAX_SPEED - GC.CUCUMBER.DEFAULT_MIN_SPEED
+        let newMaxSpeed = GC.CUCUMBER.DEFAULT_MIN_SPEED + Float(clampedProgress) * speedRange
+
+        let accelerationRange = GC.CUCUMBER.DEFAULT_MAX_ACCELERATION - GC.CUCUMBER.DEFAULT_MIN_ACCELERATION
+        let newMaxAcceleration = GC.CUCUMBER.DEFAULT_MIN_ACCELERATION + Float(clampedProgress) * accelerationRange
+
+        agentComponent.agent.maxSpeed = newMaxSpeed
+        agentComponent.agent.maxAcceleration = newMaxAcceleration
+    }
 }
 
 extension CucumberEntity: GKAgentDelegate {

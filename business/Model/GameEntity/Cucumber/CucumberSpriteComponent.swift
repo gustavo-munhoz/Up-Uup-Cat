@@ -27,6 +27,7 @@ class CucumberSpriteComponent: GKComponent, GKAgentDelegate {
         node.physicsBody?.affectedByGravity = false
         node.physicsBody?.categoryBitMask = PhysicsCategory.enemy
         node.physicsBody?.contactTestBitMask = PhysicsCategory.player
+        node.physicsBody?.collisionBitMask = 0
         
         node.name = "enemyCucumber"
         

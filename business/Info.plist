@@ -3,50 +3,25 @@
 <plist version="1.0">
 <dict>
 	<key>UIAppFonts</key>
-    <array>
-        <string>Urbanist-Black.ttf</string>
-        <string>Urbanist-BlackItalic.ttf</string>
-        <string>Urbanist-Bold.ttf</string>
-        <string>Urbanist-BoldItalic.ttf</string>
-        <string>Urbanist-ExtraBold.ttf</string>
-        <string>Urbanist-ExtraBoldItalic.ttf</string>
-        <string>Urbanist-ExtraLight.ttf</string>
-        <string>Urbanist-ExtraLightItalic.ttf</string>
-        <string>Urbanist-Italic.ttf</string>
-        <string>Urbanist-Light.ttf</string>
-        <string>Urbanist-LightItalic.ttf</string>
-        <string>Urbanist-Medium.ttf</string>
-        <string>Urbanist-MediumItalic.ttf</string>
-        <string>Urbanist-Regular.ttf</string>
-        <string>Urbanist-SemiBold.ttf</string>
-        <string>Urbanist-SemiBoldItalic.ttf</string>
-        <string>Urbanist-Thin.ttf</string>
-        <string>Urbanist-ThinItalic.ttf</string>
-    </array>
-    
-<!--    <key>CFBundleURLTypes</key>-->
-<!--    <array>-->
-<!--      <dict>-->
-<!--      <key>CFBundleURLSchemes</key>-->
-<!--      <array>-->
-<!--        <string>fb1198389547851405</string>-->
-<!--      </array>-->
-<!--      </dict>-->
-<!--    </array>-->
-<!--    <key>FacebookAppID</key>-->
-<!--    <string>1198389547851405</string>-->
-<!--    <key>FacebookDisplayName</key>-->
-<!--    <string>Up Uup Cat</string>-->
-<!--    -->
-<!--    <key>FacebookClientToken</key>-->
-<!--    <string>4dbe24fe86b83ee3c959453ac1c30160</string>-->
-<!--    <key>FacebookAdvertiserIDCollectionEnabled</key>-->
-<!--    <false/>-->
-<!--    <key>FacebookAutoLogAppEventsEnabled</key>-->
-<!--    <false/>-->
-<!--    <key>NSUserTrackingUsageDescription</key>-->
-<!--    <string>Our app uses your data to improve your experience.</string>-->
-<!--    <key>FIREBASE_ANALYTICS_COLLECTION_ENABLED</key>-->
-<!--    <false/>-->
+	<array>
+		<string>Urbanist-Black.ttf</string>
+		<string>Urbanist-BlackItalic.ttf</string>
+		<string>Urbanist-Bold.ttf</string>
+		<string>Urbanist-BoldItalic.ttf</string>
+		<string>Urbanist-ExtraBold.ttf</string>
+		<string>Urbanist-ExtraBoldItalic.ttf</string>
+		<string>Urbanist-ExtraLight.ttf</string>
+		<string>Urbanist-ExtraLightItalic.ttf</string>
+		<string>Urbanist-Italic.ttf</string>
+		<string>Urbanist-Light.ttf</string>
+		<string>Urbanist-LightItalic.ttf</string>
+		<string>Urbanist-Medium.ttf</string>
+		<string>Urbanist-MediumItalic.ttf</string>
+		<string>Urbanist-Regular.ttf</string>
+		<string>Urbanist-SemiBold.ttf</string>
+		<string>Urbanist-SemiBoldItalic.ttf</string>
+		<string>Urbanist-Thin.ttf</string>
+		<string>Urbanist-ThinItalic.ttf</string>
+	</array>
 </dict>
 </plist>

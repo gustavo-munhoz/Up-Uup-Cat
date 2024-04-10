@@ -38,9 +38,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var touchStartedOnButton = false
     
+    var zoomOutTimer: Timer?
+    
     var cucumberShouldJump: Bool {
         get {
-            if let vy = catEntity.spriteComponent.node.physicsBody?.velocity.dy, vy < -3000 ||
+            if let vy = catEntity.spriteComponent.node.physicsBody?.velocity.dy, vy < -2250 ||
                 catEntity.spriteComponent.node.position.y < -frame.minY ||
                 catEntity.spriteComponent.node.position.x < -frame.width * 2 ||
                 catEntity.spriteComponent.node.position.x > frame.width * 2
@@ -93,6 +95,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupCatEntity()
         setupCucumberEntity()
         wallFactory = WallFactory(frame: frame, cameraPositionY: cameraManager.cameraNode.position.y, firstWallsHeight: frame.height/2)
+        
+ 
     }
 
     func setupCatEntity() {
@@ -142,8 +146,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if hud.pauseButton.contains(touchStart) && !isGameOver {
             touchStartedOnButton = true
             hud.pauseButton.alpha = 0.5
-            
-        } 
+        }
         
         else if pauseScreen.continueButton.contains(touchStart) && !isGameOver {
             touchStartedOnButton = true
@@ -158,6 +161,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         else {
             guard catEntity.spriteComponent.currentWallMaterial != .none, !isPaused, canStart else { return }
+            
+            zoomOutTimer?.invalidate()
+            zoomOutTimer = Timer.scheduledTimer(withTimeInterval: 1.25, repeats: false) { [weak self] _ in
+                self?.cameraManager.zoomOut()
+            }
             
             createArrowNode()
             catEntity.prepareForJump(hasStarted: hasStarted, isTouching: true)
@@ -201,6 +209,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             else { return }
         }
         
+        if zoomOutTimer != nil {
+            zoomOutTimer?.invalidate()
+            zoomOutTimer = nil
+        }
+        
         catEntity.handleJump(from: start, to: location)
         
         isGrabbingGlass = false
@@ -211,9 +224,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
-        if canStart { cameraManager.updateCameraPosition(catEntity: catEntity) }
+        if canStart  { cameraManager.updateCameraPosition(catEntity: catEntity) }
         
         if lastUpdateTime == 0 { lastUpdateTime = currentTime }
+        
+        if zoomOutTimer == nil && hasStarted {
+            cameraManager.resetZoom()
+        }
         
         if hasStarted { handleCucumberMovement(currentTime: currentTime) }
         else if !hasGeneratedFirstWalls {
@@ -244,14 +261,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         let (bodyA, bodyB) = (contact.bodyA, contact.bodyB)
         
-        if bodyA.node?.name == "cat" && bodyB.node?.name == "enemyCucumber"
-            || bodyA.node?.name == "enemyCucumber" && bodyB.node?.name == "cat"
-        {
+        let bodies = [bodyA, bodyB]
+        
+        let cat = bodies.first { $0.categoryBitMask == PhysicsCategory.player }
+        let cucumber = bodies.first { $0.categoryBitMask == PhysicsCategory.enemy }
+        let collectibleNode = bodies.first { $0.categoryBitMask == PhysicsCategory.collectible }
+        
+        guard let _ = cat else { return }
+        
+        if let _ = cucumber {
             cucumberEntity.isJumpingAtPlayer = false
             
             if gameOverScreen.isHidden {
                 showGameOverScreen()
             }
+            
+            return
+        }
+        
+        if let collectibleNode = collectibleNode?.node as? CollectibleNode {
+            catEntity.collectItem(c: collectibleNode.type) {
+                if collectibleNode.type == .nigiri {
+                    self.hud.updateNigiriScore(GameManager.shared.currentNigiriScore.value)
+                }
+                collectibleNode.removeFromParent()
+            }
+            return
         }
     }
 }
@@ -284,6 +319,7 @@ extension GameScene {
             hud.updateCurrentScore(catEntity.maxHeight)
             pauseScreen.update(withScore: catEntity.maxHeight)
             gameOverScreen.update(withScore: catEntity.maxHeight)
+            cucumberEntity.updateSpeedAndAcceleration(basedOnProgress: catEntity.calculateProgress())
         }
     }
     

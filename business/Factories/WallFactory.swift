@@ -20,14 +20,14 @@ class WallFactory {
     
     func createWalls() -> [WallNode] {
         var walls: [WallNode] = []
-        let numberOfWalls = Int.random(in: 1...3)
+        let numberOfWalls = Int.random(in: 1...5)
         var currentLineMaxY: CGFloat = lastWallMaxY
 
         for _ in 0..<numberOfWalls {
             let wallWidth = CGFloat(wallParameters.widthDistribution.nextInt())
             let wallHeight = CGFloat(wallParameters.heightDistribution.nextInt())
             
-            let wallXPosition = CGFloat.random(in: (-frame.maxX * 0.75)...(frame.maxX * 0.75))
+            let wallXPosition = CGFloat.random(in: (-frame.maxX * 0.75)...(frame.maxX))
             
             let spacing = CGFloat(wallParameters.spacingDistribution.nextInt())
             let wallYPosition = lastWallMaxY + spacing + wallHeight / 2
@@ -53,6 +53,14 @@ class WallFactory {
                 }
                 
                 let newWall = WallNode(size: CGSize(width: wallWidth, height: wallHeight), material: material)
+                
+                let collectibleRoll = CGFloat.random(in: 0..<1)
+                if collectibleRoll < GC.WALL.COLLECTIBLE_PROBABILITY.NIGIRI {
+                    newWall.addCollectible(.nigiri)
+                } else if collectibleRoll < (GC.WALL.COLLECTIBLE_PROBABILITY.NIGIRI + GC.WALL.COLLECTIBLE_PROBABILITY.CATNIP) {
+                    newWall.addCollectible(.catnip)
+                }
+                
                 newWall.position = CGPoint(x: wallXPosition, y: wallYPosition)
                 newWall.zPosition = 1
                 walls.append(newWall)

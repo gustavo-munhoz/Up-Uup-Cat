@@ -23,7 +23,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        GameManager.shared.loadHighScore()
+        GameManager.shared.loadStats()
         
         setupSubscriptions()
     }

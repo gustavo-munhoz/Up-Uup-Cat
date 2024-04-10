@@ -57,6 +57,7 @@
 		B3E248022BC47C4A002D5098 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = B3E248012BC47C4A002D5098 /* FacebookCore */; };
 		B3E248052BC47D5D002D5098 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3E248042BC47D5D002D5098 /* AdSupport.framework */; };
 		B3E248072BC47D66002D5098 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3E248062BC47D66002D5098 /* AppTrackingTransparency.framework */; };
+		B3E2480A2BC6096F002D5098 /* Collectible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248092BC6096F002D5098 /* Collectible.swift */; };
 		B3F30C992BBDC09500A734F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3F30C982BBDC09400A734F8 /* GoogleService-Info.plist */; };
 		B3F30CAB2BBDC82A00A734F8 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B3F30CAA2BBDC82A00A734F8 /* FirebaseAnalytics */; };
 		B3F30CAD2BBDC82A00A734F8 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B3F30CAC2BBDC82A00A734F8 /* FirebaseAnalyticsSwift */; };
@@ -121,6 +122,7 @@
 		B3E247FE2BC09CB9002D5098 /* GameOverScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScreen.swift; sourceTree = "<group>"; };
 		B3E248042BC47D5D002D5098 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		B3E248062BC47D66002D5098 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
+		B3E248092BC6096F002D5098 /* Collectible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collectible.swift; sourceTree = "<group>"; };
 		B3F30C982BBDC09400A734F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B3F30CB62BBDC86400A734F8 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		B3F30CB92BBDCB6800A734F8 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 		B31A3C942BAA5852005728C8 /* GameEntity */ = {
 			isa = PBXGroup;
 			children = (
+				B3E248082BC60967002D5098 /* Collectible */,
 				B3DEF4822BBF36AC0022A977 /* HUD */,
 				B3434B902BB4971200F9D401 /* Camera */,
 				B3434B8F2BB4970700F9D401 /* GKAgent */,
@@ -357,6 +360,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B3E248082BC60967002D5098 /* Collectible */ = {
+			isa = PBXGroup;
+			children = (
+				B3E248092BC6096F002D5098 /* Collectible.swift */,
+			);
+			path = Collectible;
+			sourceTree = "<group>";
+		};
 		B3F30CA82BBDC7D000A734F8 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -491,6 +502,7 @@
 				B3434B862BB1E51B00F9D401 /* CatSpriteComponent.swift in Sources */,
 				B31A3C812BAA264D005728C8 /* GameViewController.swift in Sources */,
 				B39B02E82BB9071B00924FCA /* UIBezierPath+ext.swift in Sources */,
+				B3E2480A2BC6096F002D5098 /* Collectible.swift in Sources */,
 				B3E247FF2BC09CB9002D5098 /* GameOverScreen.swift in Sources */,
 				B31A3C792BAA264D005728C8 /* AppDelegate.swift in Sources */,
 				B3F30CC02BBDEBF100A734F8 /* GameView.swift in Sources */,

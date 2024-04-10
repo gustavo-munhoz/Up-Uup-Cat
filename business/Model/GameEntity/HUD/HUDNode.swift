@@ -31,6 +31,12 @@ class HUDNode: SKSpriteNode {
     func updateCurrentScore(_ score: Int) {
         currentScoreLabel.text = "\(score) m"
     }
+    
+    func updateNigiriScore(_ score: Int) {
+        let str = score < 10 ? "0\(score)" : "\(score)"
+        
+        nigiriCountLabel.text = str
+    }
 }
 
 extension HUDNode {

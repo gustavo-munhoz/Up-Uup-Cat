@@ -10,6 +10,9 @@ import SpriteKit
 class WallNode: SKSpriteNode {
     var material: WallMaterial = .normal
     
+    var hasNigiri = false
+    var hasCatnip = false
+    
     init(size: CGSize, material: WallMaterial) {
         self.material = material
         super.init(texture: nil, color: .clear, size: size)
@@ -26,7 +29,7 @@ class WallNode: SKSpriteNode {
                     break
                     
                 case .glass:
-//                    texture = GC.WALL.TEXTURE.GLASS.LONG
+                    texture = GC.WALL.TEXTURE.GLASS.LONG
                     break
                     
                 case .sticky:
@@ -69,7 +72,7 @@ class WallNode: SKSpriteNode {
                     texture = GC.WALL.TEXTURE.NORMAL.REGULAR
                     break
                 case .glass:
-//                    texture = GC.WALL.TEXTURE.GLASS.REGULAR
+                    texture = GC.WALL.TEXTURE.GLASS.REGULAR
                     break
                 case .sticky:
 //                    texture = GC.WALL.TEXTURE.STICKY.REGULAR
@@ -83,5 +86,15 @@ class WallNode: SKSpriteNode {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func addCollectible(_ c: Collectible) {
+        let collectible = CollectibleNode(collectible: c)
+        
+        let xPos = CGFloat.random(in: -(size.width / 2)..<(size.width / 2))
+        let yPos = CGFloat.random(in: -(size.height / 2)..<(size.height / 2))
+        collectible.position = CGPoint(x: xPos, y: yPos)
+
+        addChild(collectible)
     }
 }
