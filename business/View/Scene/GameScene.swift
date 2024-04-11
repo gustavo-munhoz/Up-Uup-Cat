@@ -8,14 +8,33 @@
 import SpriteKit
 import GameplayKit
 
+import FirebaseAnalytics
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     /// Transforms the CG expression to a relative value
     private lazy var t: CGAffineTransform = .init(scaleX: frame.width / 393, y: frame.height / 852)
     
     var canStart = false
-    var hasStarted = false
+    
+    var hasStarted = false {
+        didSet {
+            if hasStarted { AnalyticsService.logEventGameStarted() }
+        }
+    }
+    
+    override var isPaused: Bool {
+        didSet {
+            if isPaused { AnalyticsService.logEventGamePaused() }
+        }
+    }
+    
+    var isGameOver = false {
+        didSet {
+            if isGameOver { AnalyticsService.logEventGameOver() }
+        }
+    }
+    
     var hasGeneratedFirstWalls = false
-    var isGameOver = false
     
     var cameraManager: CameraManager!
     var touchStart: CGPoint?
@@ -95,8 +114,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupCatEntity()
         setupCucumberEntity()
         wallFactory = WallFactory(frame: frame, cameraPositionY: cameraManager.cameraNode.position.y, firstWallsHeight: frame.height/2)
-        
- 
     }
 
     func setupCatEntity() {
@@ -197,6 +214,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             
             else if gameOverScreen.restartButton.contains(location) && isGameOver {
+                AnalyticsService.logEventPressedRestart()
                 GameManager.shared.resetGame()
             }
 
@@ -371,8 +389,16 @@ extension GameScene {
     }
     
     func showGameOverScreen() {
-        isPaused = true
+        gameOverScreen?.removeFromParent()
+        
+        gameOverScreen = GameOverScreen()
+        gameOverScreen.setup(withFrame: frame, isHighScore: GameManager.shared.currentScore.value > GameManager.shared.personalBestScore)
+        
         isGameOver = true
         gameOverScreen.isHidden = false
+        
+        cameraManager.cameraNode.addChild(gameOverScreen)
+        
+        GameManager.shared.saveStats()
     }
 }

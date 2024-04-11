@@ -51,16 +51,6 @@ class PauseScreen: SKSpriteNode {
     
 }
 
-class ContinueButtonNode: SKSpriteNode {
-    init(size: CGSize) {
-        super.init(texture: SKTexture(imageNamed: "continueButton"), color: .clear, size: size)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 extension PauseScreen {
     private func setupForIphone(withFrame frame: CGRect) {
         let t: CGAffineTransform = .init(scaleX: frame.width / 393, y: frame.height / 852)

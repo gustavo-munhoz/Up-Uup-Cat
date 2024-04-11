@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import FirebaseAnalytics
 
 class GameManager {
     public static var shared = GameManager()
@@ -22,14 +23,19 @@ class GameManager {
     
     // MARK: - Public methods
     
-    func resetGame() {
+    func saveStats() {
+        AnalyticsService.logEventPostScore(currentScore.value)
+        AnalyticsService.logEventEarnVirtualCurrency(type: .nigiri, currentNigiriScore.value)
+        
         if currentScore.value > personalBestScore {
             personalBestScore = currentScore.value
             saveHighScore(personalBestScore)
         }
         
         saveNigiriBalance()
-        
+    }
+    
+    func resetGame() {
         shouldReset.send(true)
         currentScore.value = 0
         currentNigiriScore.value = 0

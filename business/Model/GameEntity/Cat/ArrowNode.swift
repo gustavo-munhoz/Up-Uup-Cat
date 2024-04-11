@@ -15,7 +15,7 @@ class ArrowNode: SKShapeNode {
         super.init()
         
         strokeColor = .white
-        lineWidth = 5
+        lineWidth = 2.5
         zPosition = 10
         
     }
@@ -31,7 +31,7 @@ class ArrowNode: SKShapeNode {
         path = UIBezierPath.arrow(
             from: catPosition,
             to: arrowTip,
-            headLength: 30,
+            headLength: 15,
             maxLength: 150
         )
         .cgPath
