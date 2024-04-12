@@ -734,7 +734,7 @@
 				DEVELOPMENT_TEAM = 7U55BCTM6U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = business/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Up Uup Cat";
+				INFOPLIST_KEY_CFBundleDisplayName = "Uuup Up Cat";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -772,7 +772,7 @@
 				DEVELOPMENT_TEAM = 7U55BCTM6U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = business/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Up Uup Cat";
+				INFOPLIST_KEY_CFBundleDisplayName = "Uuup Up Cat";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

@@ -22,12 +22,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    override var isPaused: Bool {
-        didSet {
-            if isPaused { AnalyticsService.logEventGamePaused() }
-        }
-    }
-    
     var isGameOver = false {
         didSet {
             if isGameOver { AnalyticsService.logEventGameOver() }
@@ -171,6 +165,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         } 
         
+        else if gameOverScreen.watchAdButton.contains(touchStart) {
+            touchStartedOnButton = true
+            gameOverScreen.watchAdButton.alpha = 0.5
+        }
+        
         else if gameOverScreen.restartButton.contains(touchStart) {
             touchStartedOnButton = true
             gameOverScreen.restartButton.alpha = 0.5
@@ -204,6 +203,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if touchStartedOnButton {
             if hud.pauseButton.contains(location) && !isPaused && !isGameOver {
+                AnalyticsService.logEventGamePaused()
                 hud.pauseButton.alpha = 1
                 togglePause()
             } 
@@ -211,6 +211,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             else if pauseScreen.continueButton.contains(location) && isPaused && !isGameOver {
                 pauseScreen.continueButton.alpha = 1
                 togglePause()
+            }
+            
+            else if gameOverScreen.watchAdButton.contains(location) && isGameOver {
+                GameManager.shared.requestDoubleNigiriAd()
             }
             
             else if gameOverScreen.restartButton.contains(location) && isGameOver {

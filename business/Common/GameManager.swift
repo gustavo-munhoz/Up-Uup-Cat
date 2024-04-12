@@ -20,8 +20,24 @@ class GameManager {
     private(set) var currentNigiriScore: CurrentValueSubject<Int, Never> = CurrentValueSubject(0)
     private(set) var nigiriBalance: Int = 0
     
+    private(set) var shouldShowRewardAd = PassthroughSubject<Bool, Never>()
+    private(set) var shouldShowIntersticialAd = PassthroughSubject<Bool, Never>()
+    private(set) var sessionGameCounts = 1 {
+        didSet {
+            if sessionGameCounts == 4 {
+                shouldShowIntersticialAd.send(true)
+                sessionGameCounts = 1
+            }
+        }
+    }
     
-    // MARK: - Public methods
+    // MARK: - Ad Methods
+    
+    func requestDoubleNigiriAd() {
+        shouldShowRewardAd.send(true)
+    }
+    
+    // MARK: - Game Methods
     
     func saveStats() {
         AnalyticsService.logEventPostScore(currentScore.value)
@@ -36,6 +52,8 @@ class GameManager {
     }
     
     func resetGame() {
+        sessionGameCounts += 1
+        
         shouldReset.send(true)
         currentScore.value = 0
         currentNigiriScore.value = 0
@@ -54,7 +72,7 @@ class GameManager {
         nigiriBalance = UserDefaults.standard.integer(forKey: "nigirBalanceKey")
     }
     
-    // MARK: - Private methods
+    // MARK: - User Defaults Methods
     
     private func saveHighScore(_ highScore: Int) {
         UserDefaults.standard.set(highScore, forKey: "highScoreKey")

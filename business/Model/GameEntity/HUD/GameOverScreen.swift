@@ -74,10 +74,10 @@ extension GameOverScreen {
     private func setupForIphone(withFrame frame: CGRect) {
         let t: CGAffineTransform = .init(scaleX: frame.width / 393, y: frame.height / 852)
         
-        nigiriBalanceLabel = SKLabelNode(attributedText: NSAttributedString(
-            string: "\(GameManager.shared.nigiriBalance)",
-            attributes: <#T##[NSAttributedString.Key : Any]?#>))
-        
+//        nigiriBalanceLabel = SKLabelNode(attributedText: NSAttributedString(
+//            string: "\(GameManager.shared.nigiriBalance)",
+//            attributes: <#T##[NSAttributedString.Key : Any]?#>))
+//        
         gameLabel = SKLabelNode(attributedText: NSAttributedString(
             string: isHighScore ? "congrats!" : "Game",
             attributes: [
