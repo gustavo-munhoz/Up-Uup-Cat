@@ -19,6 +19,8 @@ class CameraManager {
         self.cameraNode = SKCameraNode()
         self.currentScale = GC.CAMERA.MIN_CAMERA_SCALE
         self.minimumHeight = minimumHeight
+        
+        cameraNode.position = CGPoint(x: -frame.midX, y: -frame.midY)
     }
     
     func updateCameraPosition(catEntity: CatEntity) {

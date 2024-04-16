@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import GameKit
 
-class MenuViewController: UIViewController, UINavigationControllerDelegate {
+class MenuViewController: UIViewController, UINavigationControllerDelegate, GKGameCenterControllerDelegate {
 
     private var menuView = MenuView()
     
@@ -24,21 +25,34 @@ class MenuViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-            if operation == .push {
+        if operation == .push || operation == .pop {
                 return CustomNavigationAnimator()
             } else {
                 return nil
             }
-        }
+    }
     
     func didPressPlayButton() {
         navigationController?.pushViewController(GameViewController(), animated: true)
     }
     
     func didPressRankingButton() {
-        let alertController = UIAlertController(title: "Hang tight!", message: "Rankings will be available soon!", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        
-        present(alertController, animated: true, completion: nil)
+        if GKLocalPlayer.local.isAuthenticated {
+            GameCenterService.shared.presentGameCenter(from: self)
+        }
+        else {
+            let alertController = UIAlertController(
+                title: "Not connected!",
+                message: "Connect to Game Center to view rankings!",
+                preferredStyle: .alert)
+            
+            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            
+            present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismiss(animated: true)
     }
 }

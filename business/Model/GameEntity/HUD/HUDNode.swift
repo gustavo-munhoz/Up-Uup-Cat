@@ -42,10 +42,20 @@ class HUDNode: SKSpriteNode {
 extension HUDNode {
     private func setupForIphone(withFrame frame: CGRect) {
         let t: CGAffineTransform = .init(scaleX: frame.width / 393, y: frame.height / 852)
+        
+        let leftMargin = -frame.midX * 0.9
+        let topMargin = frame.midY * 0.85
+        let rightMargin = frame.midX * 0.9
+        let verticalSpacing: CGFloat = 45
+        
         pauseButton = PauseButtonNode(imageNamed: "pauseButton", size: CGSize(width: 56, height: 46).applying(t))
-        pauseButton.position = CGPoint(x: -frame.midX * 0.75, y: frame.midY * 0.82).applying(t)
-        pauseButton.zPosition = 100
-        pauseButton.name = "pauseButton"
+        pauseButton.zPosition = 101
+        pauseButton.constraints = [
+            .positionX(SKRange(constantValue: leftMargin + pauseButton.size.width/2)),
+            .positionY(SKRange(constantValue: topMargin - pauseButton.size.height/2))
+        ]
+        
+        
         addChild(pauseButton)
         
         currentScoreLabel = SKLabelNode(fontNamed: "Urbanist-Black")
@@ -53,9 +63,14 @@ extension HUDNode {
         currentScoreLabel.fontColor = .white
         currentScoreLabel.horizontalAlignmentMode = .right
         currentScoreLabel.verticalAlignmentMode = .top
-        currentScoreLabel.position = CGPoint(x: frame.midX * 0.9, y: pauseButton.position.y + 12).applying(t)
         currentScoreLabel.text = "0 m"
         currentScoreLabel.zPosition = 100
+        
+        currentScoreLabel.constraints = [
+            .positionX(SKRange(constantValue: rightMargin)),
+            .positionY(SKRange(constantValue: topMargin - currentScoreLabel.frame.height/2))
+        ]
+        
         addChild(currentScoreLabel)
         
         personalBestLabel = SKLabelNode(fontNamed: "Urbanist-Medium")
@@ -65,14 +80,23 @@ extension HUDNode {
         personalBestLabel.verticalAlignmentMode = .top
         personalBestLabel.text = "\(GameManager.shared.personalBestScore) m"
         personalBestLabel.zPosition = 100
-        personalBestLabel.position = CGPoint(x: currentScoreLabel.position.x, y: currentScoreLabel.position.y * 0.9).applying(t)
+        
+        personalBestLabel.constraints = [
+            .positionX(SKRange(constantValue: rightMargin)),
+            .positionY(SKRange(constantValue: topMargin - verticalSpacing - personalBestLabel.frame.height/2)),
+        ]
+        
+        addChild(personalBestLabel)
         
         let crownTexture = SKTexture(imageNamed: "crown.fill")
         crownSprite = SKSpriteNode(texture: crownTexture, size: CGSize(width: 13, height: 13).applying(t))
         crownSprite.zPosition = 100
-        crownSprite.position = CGPoint(x: personalBestLabel.frame.minX - crownSprite.frame.width, y: personalBestLabel.frame.midY).applying(t)
         
-        addChild(personalBestLabel)
+        crownSprite.constraints = [
+            .positionX(SKRange(constantValue: rightMargin - personalBestLabel.frame.width - crownSprite.size.width)),
+            .positionY(SKRange(constantValue: topMargin - verticalSpacing - personalBestLabel.frame.height/2 - crownSprite.size.height/2 ))
+        ]
+            
         addChild(crownSprite)
         
         
@@ -80,14 +104,26 @@ extension HUDNode {
         nigiriCountLabel.fontSize = 32
         nigiriCountLabel.fontColor = .white
         nigiriCountLabel.text = "00"
-        nigiriCountLabel.position = CGPoint(x: personalBestLabel.position.x * 0.9, y: personalBestLabel.position.y * 0.81)
+        nigiriCountLabel.horizontalAlignmentMode = .right
         nigiriCountLabel.zPosition = 100
+        
+        nigiriCountLabel.constraints = [
+            .positionX(SKRange(constantValue: rightMargin)),
+            .positionY(SKRange(constantValue: topMargin - 2.5 * verticalSpacing))
+        ]
+        
         addChild(nigiriCountLabel)
         
         nigiriSprite = SKSpriteNode(imageNamed: "nigiri_score")
         nigiriSprite.size = CGSize(width: 56, height: 38).applying(t)
-        nigiriSprite.position = CGPoint(x: nigiriCountLabel.frame.minX - nigiriSprite.frame.width/2, y: nigiriCountLabel.frame.midY).applying(t)
         nigiriSprite.zPosition = 100
+        
+        nigiriSprite.constraints = [
+            .positionX(SKRange(constantValue: rightMargin - nigiriCountLabel.frame.width - nigiriSprite.size.width/2)),
+            .positionY(SKRange(constantValue: topMargin - 2.25 * verticalSpacing))
+        ]
+        
+        
         addChild(nigiriSprite)
     }
     

@@ -117,4 +117,12 @@ struct GC {
         static let PAUSE_BUTTON: String = "pauseButton"
         static let HUD_NAME: String = "HUD"
     }
+    
+    // MARK: - GAME CENTER
+    
+    struct GAME_CENTER {
+        struct LEADERBOARDS {
+            static let HIGHEST_HEIGHTS_ID = "Leaderboards_01"
+        }
+    }
 }

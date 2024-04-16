@@ -84,7 +84,7 @@ class MenuView: UIView {
         ])
         
         NSLayoutConstraint.activate([
-            playButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -275),
+            playButton.topAnchor.constraint(equalTo: centerYAnchor, constant: UIScreen.main.bounds.height/10),
             playButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -70),
             playButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 70),
             playButton.heightAnchor.constraint(equalToConstant: 64)

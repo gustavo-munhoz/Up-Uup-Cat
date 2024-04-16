@@ -28,7 +28,7 @@ class CollectibleNode: SKSpriteNode {
         physicsBody?.categoryBitMask = PhysicsCategory.collectible
         physicsBody?.contactTestBitMask = PhysicsCategory.player
         physicsBody?.collisionBitMask = 0
-        physicsBody?.isDynamic = false
+        physicsBody?.isDynamic = false 
         
         name = c.rawValue
     }

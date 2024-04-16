@@ -9,7 +9,7 @@ import SpriteKit
 
 class WatchAdButtonNode: SKSpriteNode {
     init(size: CGSize, isHighScore: Bool) {
-        super.init(texture: SKTexture(imageNamed: "restartButton"), color: .clear, size: size)
+        super.init(texture: SKTexture(imageNamed: "watchAdButton"), color: .clear, size: size)
     }
     
     required init?(coder aDecoder: NSCoder) {

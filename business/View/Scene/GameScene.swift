@@ -69,6 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: - Scene setup
     override func didMove(to view: SKView) {
         super.didMove(to: view)
+  
         setupBackground()
         setupCamera()
         setupPhysicsWorld()
@@ -94,6 +95,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func setupCamera() {
         cameraManager = CameraManager(frame: frame, minimumHeight: frame.midY * 1.05)
         self.camera = cameraManager.cameraNode
+        self.camera?.position = CGPoint(x: -frame.midX, y: -frame.midY)
         addChild(cameraManager.cameraNode)
         
         let background = SKSpriteNode(imageNamed: "background_gradient")
@@ -124,7 +126,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func setupCucumberEntity() {
         cucumberEntity = CucumberEntity(size: CGSize(width: 62, height: 84).applying(t))
         guard let cucumberNode = cucumberEntity.component(ofType: CucumberSpriteComponent.self)?.node else { return }
-        cucumberNode.position = CGPoint(x: frame.minX + 50, y: -frame.height * 0.5)
+        cucumberNode.position = CGPoint(x: 0, y: frame.midY - 50)
         cucumberNode.zPosition = 5
         cucumberEntity.agentComponent.setPosition(cucumberEntity.spriteComponent.node.position)
         
@@ -165,14 +167,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         } 
         
-        else if gameOverScreen.watchAdButton.contains(touchStart) {
+        else if pauseScreen.homeButton.contains(touchStart) && !isGameOver {
+            touchStartedOnButton = true
+            pauseScreen.homeButton.alpha = 0.5
+        }
+        
+        else if gameOverScreen.watchAdButton.contains(touchStart) && isGameOver {
             touchStartedOnButton = true
             gameOverScreen.watchAdButton.alpha = 0.5
         }
         
-        else if gameOverScreen.restartButton.contains(touchStart) {
+        else if gameOverScreen.restartButton.contains(touchStart) && isGameOver {
             touchStartedOnButton = true
             gameOverScreen.restartButton.alpha = 0.5
+        }
+        
+        else if gameOverScreen.homeButton.contains(touchStart) && isGameOver {
+            touchStartedOnButton = true
+            gameOverScreen.homeButton.alpha = 0.5
         }
         
         else {
@@ -203,7 +215,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if touchStartedOnButton {
             if hud.pauseButton.contains(location) && !isPaused && !isGameOver {
-                AnalyticsService.logEventGamePaused()
                 hud.pauseButton.alpha = 1
                 togglePause()
             } 
@@ -213,6 +224,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 togglePause()
             }
             
+            else if pauseScreen.homeButton.contains(location) && isPaused && !isGameOver {
+                pauseScreen.homeButton.alpha = 1
+                GameManager.shared.navigateBackToMenu()
+            }
+            
             else if gameOverScreen.watchAdButton.contains(location) && isGameOver {
                 GameManager.shared.requestDoubleNigiriAd()
             }
@@ -220,6 +236,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             else if gameOverScreen.restartButton.contains(location) && isGameOver {
                 AnalyticsService.logEventPressedRestart()
                 GameManager.shared.resetGame()
+            }
+            
+            else if gameOverScreen.homeButton.contains(location) && isGameOver {
+                GameManager.shared.navigateBackToMenu()
             }
 
             touchStartedOnButton = false

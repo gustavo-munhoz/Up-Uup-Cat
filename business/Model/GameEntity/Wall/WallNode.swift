@@ -95,6 +95,17 @@ class WallNode: SKSpriteNode {
         let yPos = CGFloat.random(in: -(size.height / 2)..<(size.height / 2))
         collectible.position = CGPoint(x: xPos, y: yPos)
 
+        let animation = SKAction.repeatForever(.sequence([
+            .moveTo(y: yPos + 5, duration: .random(in: 0.25...0.5)),
+            .moveTo(y: yPos - 5, duration: .random(in: 0.25...0.5)),
+        ]))
+        
+        animation.timingMode = .easeInEaseOut
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .random(in: 0...0.7)) {
+            collectible.run(animation)
+        }
+        
         addChild(collectible)
     }
 }

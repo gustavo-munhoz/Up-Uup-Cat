@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 import FirebaseAnalytics
+import GameKit
 
 class GameManager {
     public static var shared = GameManager()
@@ -22,6 +23,8 @@ class GameManager {
     
     private(set) var shouldShowRewardAd = PassthroughSubject<Bool, Never>()
     private(set) var shouldShowIntersticialAd = PassthroughSubject<Bool, Never>()
+    private(set) var shouldPopToMenuViewController = PassthroughSubject<Bool, Never>()
+    
     private(set) var sessionGameCounts = 1 {
         didSet {
             if sessionGameCounts == 4 {
@@ -37,7 +40,15 @@ class GameManager {
         shouldShowRewardAd.send(true)
     }
     
+    func doubleNigiriCount() {
+        currentNigiriScore.value *= 2
+    }
+    
     // MARK: - Game Methods
+    
+    func navigateBackToMenu() {
+        shouldPopToMenuViewController.send(true)
+    }
     
     func saveStats() {
         AnalyticsService.logEventPostScore(currentScore.value)
@@ -46,6 +57,15 @@ class GameManager {
         if currentScore.value > personalBestScore {
             personalBestScore = currentScore.value
             saveHighScore(personalBestScore)
+            
+            if GKLocalPlayer.local.isAuthenticated {
+                GameCenterService.shared.submitScore(
+                    personalBestScore,
+                    ids: [GC.GAME_CENTER.LEADERBOARDS.HIGHEST_HEIGHTS_ID])
+                {
+                    print("Score submitted to GameCenter: \(self.personalBestScore)")
+                }
+            }
         }
         
         saveNigiriBalance()

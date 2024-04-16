@@ -33,6 +33,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseConfiguration.shared.setLoggerLevel(.min)
         FirebaseApp.configure()
         
+        GameCenterService.shared.authenticate { _ in
+            return
+        }
+        
         return true
     }
 
