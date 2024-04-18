@@ -32,14 +32,21 @@ struct GC {
             
             struct ANIMATION {
                 static let JUMP = SKAction.sequence([
-                    SKAction.setTexture(GC.PLAYER.TEXTURE.JUMP_FRAME_1),
-                    SKAction.wait(forDuration: 1/5),
-                    SKAction.setTexture(GC.PLAYER.TEXTURE.JUMP_FRAME_2),
+                    .setTexture(GC.PLAYER.TEXTURE.JUMP_FRAME_1),
+                    .wait(forDuration: 1.0/5.0),
+                    .setTexture(GC.PLAYER.TEXTURE.JUMP_FRAME_2),
                 ])
                 
                 static let GLASS_JUMP = SKAction.sequence([
-                    SKAction.wait(forDuration: 0.1),
-                    SKAction.setTexture(GC.PLAYER.TEXTURE.JUMP_FRAME_2),
+                    .wait(forDuration: 0.1),
+                    .setTexture(GC.PLAYER.TEXTURE.JUMP_FRAME_2),
+                ])
+                
+                
+                static let DEATH = SKAction.sequence([
+                    .setTexture(GC.PLAYER.TEXTURE.SCARED),
+                    .moveBy(x: 0, y: 50, duration: 0.2),
+                    .moveBy(x: 0, y: -200, duration: 0.5),
                 ])
             }
         }

@@ -7,7 +7,7 @@
 
 import SpriteKit
 import GameplayKit
-
+import Combine
 import FirebaseAnalytics
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -16,9 +16,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var canStart = false
     
+    var cancellables = Set<AnyCancellable>()
+    
     var hasStarted = false {
         didSet {
-            if hasStarted { AnalyticsService.logEventGameStarted() }
+            if hasStarted {
+                AnalyticsService.logEventGameStarted()
+                cucumberEntity.spriteComponent.node.isHidden = false
+            }
         }
     }
     
@@ -31,7 +36,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var hasGeneratedFirstWalls = false
     
     var cameraManager: CameraManager!
-    var touchStart: CGPoint?
     
     var wallFactory: WallFactory!
     var existingWalls: [WallNode] = []
@@ -49,9 +53,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var isGrabbingGlass = false
     
-    var touchStartedOnButton = false
-    
     var zoomOutTimer: Timer?
+    
+    var sceneSetupManager: SceneSetupManager!
+    var sceneTouchManager: SceneTouchManager!
+    var sceneContactManager: SceneContactManager!
+    var sceneUpdateManager: SceneUpdateManager!
     
     var cucumberShouldJump: Bool {
         get {
@@ -69,289 +76,82 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: - Scene setup
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-  
-        setupBackground()
-        setupCamera()
-        setupPhysicsWorld()
-        setupEntities()
-        setupHUD()
         
-        animateCameraIntro()
-    }
-    
-    func setupBackground() {
-        let backgroundImage = SKSpriteNode(imageNamed: "roof_background_start")
-        backgroundImage.position = CGPoint(x: frame.midX, y: frame.midY)
-        backgroundImage.size = CGSize(width: 4 * frame.width, height: frame.height)
-        backgroundImage.zPosition = -1
-        addChild(backgroundImage)
-    }
-
-    func setupPhysicsWorld() {
-        physicsWorld.gravity = GC.GRAVITY
-        physicsWorld.contactDelegate = self
-    }
-
-    func setupCamera() {
-        cameraManager = CameraManager(frame: frame, minimumHeight: frame.midY * 1.05)
-        self.camera = cameraManager.cameraNode
-        self.camera?.position = CGPoint(x: -frame.midX, y: -frame.midY)
-        addChild(cameraManager.cameraNode)
+        self.sceneSetupManager = SceneSetupManager(scene: self, frame: frame)
+        self.sceneTouchManager = SceneTouchManager(scene: self)
+        self.sceneContactManager = SceneContactManager(scene: self)
+        self.sceneUpdateManager = SceneUpdateManager(scene: self)
         
-        let background = SKSpriteNode(imageNamed: "background_gradient")
-        background.size = frame.size
-        background.position = CGPoint(x: frame.minX, y: frame.minY)
-        background.zPosition = -2
+        sceneSetupManager.setupScene()
+        sceneSetupManager.animateCameraIntro()
         
-        cameraManager.cameraNode.addChild(background)
-    }
-
-    func setupEntities() {
-        setupCatEntity()
-        setupCucumberEntity()
-        wallFactory = WallFactory(frame: frame, cameraPositionY: cameraManager.cameraNode.position.y, firstWallsHeight: frame.height/2)
-    }
-
-    func setupCatEntity() {
-        catEntity = CatEntity(size: CGSize(width: 76, height: 109).applying(t))
-        guard let catNode = catEntity.component(ofType: CatSpriteComponent.self)?.node else { return }
-        catNode.position = CGPoint(x: frame.midX, y: frame.midY)
-        catNode.zPosition = 2
-        addChild(catNode)
-        catEntity.prepareForJump(hasStarted: false)
-        startingHeight = catEntity.spriteComponent.node.position.y
-        catEntity.agentComponent.setPosition(catEntity.spriteComponent.node.position)
-    }
-
-    func setupCucumberEntity() {
-        cucumberEntity = CucumberEntity(size: CGSize(width: 62, height: 84).applying(t))
-        guard let cucumberNode = cucumberEntity.component(ofType: CucumberSpriteComponent.self)?.node else { return }
-        cucumberNode.position = CGPoint(x: 0, y: frame.midY - 50)
-        cucumberNode.zPosition = 5
-        cucumberEntity.agentComponent.setPosition(cucumberEntity.spriteComponent.node.position)
+        setupSubscriptions()
         
-        addChild(cucumberNode)        
-    }
-    
-    func setupHUD() {
-        hud = HUDNode()
-        hud.setup(withFrame: frame)
-        cameraManager.cameraNode.addChild(hud)
-        
-        pauseScreen = PauseScreen()
-        pauseScreen.setup(withFrame: frame)
-        pauseScreen.isHidden = true
-        cameraManager.cameraNode.addChild(pauseScreen)
-        
-        gameOverScreen = GameOverScreen()
-        gameOverScreen.setup(withFrame: frame)
-        gameOverScreen.isHidden = true
-        cameraManager.cameraNode.addChild(gameOverScreen)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(appDidBecomeActive),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
+            
     }
     
     // MARK: - Default methods
+
+    @objc func appDidBecomeActive() {
+        // TODO: FIX LEAVING THE APP AND COMING BACK
+//        if !isPaused {
+//            togglePause()
+//        }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        touchStart = touch.location(in: cameraManager.cameraNode)
-        
-        guard let touchStart = touchStart else { return }
-        
-        if hud.pauseButton.contains(touchStart) && !isGameOver {
-            touchStartedOnButton = true
-            hud.pauseButton.alpha = 0.5
-        }
-        
-        else if pauseScreen.continueButton.contains(touchStart) && !isGameOver {
-            touchStartedOnButton = true
-            pauseScreen.continueButton.alpha = 0.5
-            
-        } 
-        
-        else if pauseScreen.homeButton.contains(touchStart) && !isGameOver {
-            touchStartedOnButton = true
-            pauseScreen.homeButton.alpha = 0.5
-        }
-        
-        else if gameOverScreen.watchAdButton.contains(touchStart) && isGameOver {
-            touchStartedOnButton = true
-            gameOverScreen.watchAdButton.alpha = 0.5
-        }
-        
-        else if gameOverScreen.restartButton.contains(touchStart) && isGameOver {
-            touchStartedOnButton = true
-            gameOverScreen.restartButton.alpha = 0.5
-        }
-        
-        else if gameOverScreen.homeButton.contains(touchStart) && isGameOver {
-            touchStartedOnButton = true
-            gameOverScreen.homeButton.alpha = 0.5
-        }
-        
-        else {
-            guard catEntity.spriteComponent.currentWallMaterial != .none, !isPaused, canStart else { return }
-            
-            zoomOutTimer?.invalidate()
-            zoomOutTimer = Timer.scheduledTimer(withTimeInterval: 1.25, repeats: false) { [weak self] _ in
-                self?.cameraManager.zoomOut()
-            }
-            
-            createArrowNode()
-            catEntity.prepareForJump(hasStarted: hasStarted, isTouching: true)
-            
-            isGrabbingGlass = catEntity.spriteComponent.currentWallMaterial == .glass
-        }
+        sceneTouchManager.touchesBegan(touches, with: event)
     }
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard !touchStartedOnButton, let touch = touches.first, let start = touchStart else { return }
-        let touchLocation = touch.location(in: cameraManager.cameraNode)
-        arrowNode?.update(start: start, end: touchLocation)
+        sceneTouchManager.touchesMoved(touches, with: event)
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first, let start = touchStart else { return }
-        
-        let location = touch.location(in: cameraManager.cameraNode)
-        
-        if touchStartedOnButton {
-            if hud.pauseButton.contains(location) && !isPaused && !isGameOver {
-                hud.pauseButton.alpha = 1
-                togglePause()
-            } 
-            
-            else if pauseScreen.continueButton.contains(location) && isPaused && !isGameOver {
-                pauseScreen.continueButton.alpha = 1
-                togglePause()
-            }
-            
-            else if pauseScreen.homeButton.contains(location) && isPaused && !isGameOver {
-                pauseScreen.homeButton.alpha = 1
-                GameManager.shared.navigateBackToMenu()
-            }
-            
-            else if gameOverScreen.watchAdButton.contains(location) && isGameOver {
-                GameManager.shared.requestDoubleNigiriAd()
-            }
-            
-            else if gameOverScreen.restartButton.contains(location) && isGameOver {
-                AnalyticsService.logEventPressedRestart()
-                GameManager.shared.resetGame()
-            }
-            
-            else if gameOverScreen.homeButton.contains(location) && isGameOver {
-                GameManager.shared.navigateBackToMenu()
-            }
-
-            touchStartedOnButton = false
-            return
-        }
-        
-        if !hasStarted {
-            if canStart { hasStarted = true }
-            else { return }
-        }
-        
-        if zoomOutTimer != nil {
-            zoomOutTimer?.invalidate()
-            zoomOutTimer = nil
-        }
-        
-        catEntity.handleJump(from: start, to: location)
-        
-        isGrabbingGlass = false
-        arrowNode?.removeFromParent()
-        arrowNode = nil
+        sceneTouchManager.touchesEnded(touches, with: event)
     }
-
 
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
-        if canStart  { cameraManager.updateCameraPosition(catEntity: catEntity) }
         
-        if lastUpdateTime == 0 { lastUpdateTime = currentTime }
-        
-        if zoomOutTimer == nil && hasStarted {
-            cameraManager.resetZoom()
-        }
-        
-        if hasStarted { handleCucumberMovement(currentTime: currentTime) }
-        else if !hasGeneratedFirstWalls {
-            for _ in 0..<30 { handleWallGeneration() }
-            
-            hasGeneratedFirstWalls = true
-        }
-        
-        guard catEntity.spriteComponent.node.physicsBody?.velocity != .zero else { return }
-
-        handleCatMovement()
-        
-        if isGrabbingGlass {
-            catEntity.spriteComponent.node.physicsBody?.applyForce(GC.GLASS_FORCE)
-        }
-        
-        handleWallGeneration()
-        
-        if let arrow = arrowNode {
-            let newPosition = CGPoint(
-                x: catEntity.spriteComponent.node.position.x,
-                y: catEntity.spriteComponent.node.position.y + catEntity.spriteComponent.node.frame.height/2
-            )
-            arrow.updateBasePosition(to: newPosition)
-        }
+        sceneUpdateManager.handleUpdate(currentTime: currentTime)
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        let (bodyA, bodyB) = (contact.bodyA, contact.bodyB)
-        
-        let bodies = [bodyA, bodyB]
-        
-        let cat = bodies.first { $0.categoryBitMask == PhysicsCategory.player }
-        let cucumber = bodies.first { $0.categoryBitMask == PhysicsCategory.enemy }
-        let collectibleNode = bodies.first { $0.categoryBitMask == PhysicsCategory.collectible }
-        
-        guard let _ = cat else { return }
-        
-        if let _ = cucumber {
-            cucumberEntity.isJumpingAtPlayer = false
-            
-            if gameOverScreen.isHidden {
-                showGameOverScreen()
-            }
-            
-            return
-        }
-        
-        if let collectibleNode = collectibleNode?.node as? CollectibleNode {
-            catEntity.collectItem(c: collectibleNode.type) {
-                if collectibleNode.type == .nigiri {
-                    self.hud.updateNigiriScore(GameManager.shared.currentNigiriScore.value)
-                }
-                collectibleNode.removeFromParent()
-            }
-            return
-        }
+        sceneContactManager.handleContact(contact)
     }
 }
 
 // MARK: - Custom methods
 extension GameScene {
-    func animateCameraIntro() {
-        let startingPosition = CGPoint(x: frame.midX, y: cameraManager.cameraNode.position.y + frame.height * 10)
-        
-        cameraManager.cameraNode.position = startingPosition
-        cameraManager.cameraNode.setScale(3)
-        
-        let finalPosition = CGPoint(x: frame.midX, y: catEntity.spriteComponent.node.position.y + frame.height * 0.1)
-        
-        let moveAction = SKAction.move(to: finalPosition, duration: 3.0)
-        moveAction.timingMode = .easeInEaseOut
-
-        let scaleAction = SKAction.scale(to: 1, duration: 3.0)
-        scaleAction.timingMode = .easeInEaseOut
-        
-        cameraManager.cameraNode.run(.group([scaleAction, moveAction])) {
-            self.canStart = true
+    func setupSubscriptions() {
+        GameManager.shared.shouldAnimateDoubleNigiris.sink { values in
+            self.animateDoubleNigiri(start: values[0], end: values[1])
         }
+        .store(in: &cancellables)
+    }
+    
+    func animateDoubleNigiri(start startValue: Int, end endValue: Int) {
+        let steps = abs(endValue - startValue)
+        let timePerStep = 2 / Double(steps)
+        
+        var currentStep = 0
+        let action = SKAction.run {
+            self.gameOverScreen.nigiriBalanceLabel.text = "\(startValue + currentStep)"
+            currentStep += 1
+        }
+        
+        let wait = SKAction.wait(forDuration: timePerStep)
+        let sequence = SKAction.sequence([action, wait])
+        let repeatAction = SKAction.repeat(sequence, count: steps)
+        
+        gameOverScreen.nigiriBalanceLabel.run(repeatAction)
     }
     
     func handleCatMovement() {
@@ -396,17 +196,6 @@ extension GameScene {
         }
     }
     
-    private func createArrowNode() {
-        arrowNode = ArrowNode(
-            catPosition: CGPoint(
-                x: catEntity.spriteComponent.node.position.x,
-                y: catEntity.spriteComponent.node.position.y + catEntity.spriteComponent.node.frame.height/2
-            )
-        )
-        
-        addChild(arrowNode!)
-    }
-    
     func togglePause() {
         isPaused.toggle()
         pauseScreen.isHidden.toggle()
@@ -424,5 +213,14 @@ extension GameScene {
         cameraManager.cameraNode.addChild(gameOverScreen)
         
         GameManager.shared.saveStats()
+    }
+    
+    func handleCatDeath() {
+        let deathSequence = GC.PLAYER.TEXTURE.ANIMATION.DEATH
+        deathSequence.timingMode = .easeInEaseOut
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.showGameOverScreen()
+        }
     }
 }

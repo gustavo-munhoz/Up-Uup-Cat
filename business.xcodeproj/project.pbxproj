@@ -69,6 +69,10 @@
 		B3E248212BC9AC6B002D5098 /* AdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248202BC9AC6B002D5098 /* AdViewController.swift */; };
 		B3E248232BCDC5F7002D5098 /* HomeButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248222BCDC5F6002D5098 /* HomeButtonNode.swift */; };
 		B3E248252BCEE9D7002D5098 /* GameCenterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248242BCEE9D7002D5098 /* GameCenterService.swift */; };
+		B3E248282BCF1B79002D5098 /* SceneSetupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248272BCF1B79002D5098 /* SceneSetupManager.swift */; };
+		B3E2482B2BD05865002D5098 /* SceneTouchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2482A2BD05865002D5098 /* SceneTouchManager.swift */; };
+		B3E2482D2BD05E89002D5098 /* SceneContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2482C2BD05E89002D5098 /* SceneContactManager.swift */; };
+		B3E2482F2BD063B3002D5098 /* SceneUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2482E2BD063B3002D5098 /* SceneUpdateManager.swift */; };
 		B3F30C992BBDC09500A734F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3F30C982BBDC09400A734F8 /* GoogleService-Info.plist */; };
 		B3F30CAB2BBDC82A00A734F8 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B3F30CAA2BBDC82A00A734F8 /* FirebaseAnalytics */; };
 		B3F30CAD2BBDC82A00A734F8 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B3F30CAC2BBDC82A00A734F8 /* FirebaseAnalyticsSwift */; };
@@ -145,6 +149,10 @@
 		B3E248222BCDC5F6002D5098 /* HomeButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonNode.swift; sourceTree = "<group>"; };
 		B3E248242BCEE9D7002D5098 /* GameCenterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterService.swift; sourceTree = "<group>"; };
 		B3E248262BCEF631002D5098 /* business.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = business.entitlements; sourceTree = "<group>"; };
+		B3E248272BCF1B79002D5098 /* SceneSetupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneSetupManager.swift; sourceTree = "<group>"; };
+		B3E2482A2BD05865002D5098 /* SceneTouchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneTouchManager.swift; sourceTree = "<group>"; };
+		B3E2482C2BD05E89002D5098 /* SceneContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneContactManager.swift; sourceTree = "<group>"; };
+		B3E2482E2BD063B3002D5098 /* SceneUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneUpdateManager.swift; sourceTree = "<group>"; };
 		B3F30C982BBDC09400A734F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B3F30CB62BBDC86400A734F8 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		B3F30CB92BBDCB6800A734F8 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -254,6 +262,7 @@
 		B3434B722BACB7A200F9D401 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				B3E248292BD05858002D5098 /* LogicManager */,
 				B31A3C7C2BAA264D005728C8 /* Actions.sks */,
 				B31A3C7E2BAA264D005728C8 /* GameScene.swift */,
 				B31A3C7A2BAA264D005728C8 /* GameScene.sks */,
@@ -418,6 +427,17 @@
 			path = Buttons;
 			sourceTree = "<group>";
 		};
+		B3E248292BD05858002D5098 /* LogicManager */ = {
+			isa = PBXGroup;
+			children = (
+				B3E248272BCF1B79002D5098 /* SceneSetupManager.swift */,
+				B3E2482A2BD05865002D5098 /* SceneTouchManager.swift */,
+				B3E2482C2BD05E89002D5098 /* SceneContactManager.swift */,
+				B3E2482E2BD063B3002D5098 /* SceneUpdateManager.swift */,
+			);
+			path = LogicManager;
+			sourceTree = "<group>";
+		};
 		B3F30CA82BBDC7D000A734F8 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -566,12 +586,14 @@
 				B31A3C932BAA55C9005728C8 /* WallMaterial.swift in Sources */,
 				B3DEF4862BBF3B9F0022A977 /* PauseButtonNode.swift in Sources */,
 				B3E248252BCEE9D7002D5098 /* GameCenterService.swift in Sources */,
+				B3E2482B2BD05865002D5098 /* SceneTouchManager.swift in Sources */,
 				B3434B842BB1E50200F9D401 /* CatEntity.swift in Sources */,
 				B3434B922BB4972E00F9D401 /* CameraManager.swift in Sources */,
 				B3DEF4882BC071850022A977 /* PauseScreen.swift in Sources */,
 				B3434B7E2BB1E3B500F9D401 /* AgentComponent.swift in Sources */,
 				B39B02E42BB8B18100924FCA /* CGPoint+ext.swift in Sources */,
 				B3F30CB72BBDC86400A734F8 /* MenuView.swift in Sources */,
+				B3E2482D2BD05E89002D5098 /* SceneContactManager.swift in Sources */,
 				B39B02E62BB8D7A700924FCA /* ArrowNode.swift in Sources */,
 				B3E248132BC84EDD002D5098 /* WatchAdButtonNode.swift in Sources */,
 				B3DEF4842BBF36B50022A977 /* HUDNode.swift in Sources */,
@@ -592,7 +614,9 @@
 				B3F30CC02BBDEBF100A734F8 /* GameView.swift in Sources */,
 				B31A3C962BAA5862005728C8 /* WallNode.swift in Sources */,
 				B3E248162BC84EEF002D5098 /* RestartButtonNode.swift in Sources */,
+				B3E248282BCF1B79002D5098 /* SceneSetupManager.swift in Sources */,
 				B31A3C982BAA5AF6005728C8 /* PhysicsCategory.swift in Sources */,
+				B3E2482F2BD063B3002D5098 /* SceneUpdateManager.swift in Sources */,
 				B3434B782BB10A8600F9D401 /* GameManager.swift in Sources */,
 				B3E248102BC74583002D5098 /* AnalyticsService.swift in Sources */,
 				B3E2481D2BC85DE9002D5098 /* AdMobService.swift in Sources */,

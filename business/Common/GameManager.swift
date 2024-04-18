@@ -24,6 +24,7 @@ class GameManager {
     private(set) var shouldShowRewardAd = PassthroughSubject<Bool, Never>()
     private(set) var shouldShowIntersticialAd = PassthroughSubject<Bool, Never>()
     private(set) var shouldPopToMenuViewController = PassthroughSubject<Bool, Never>()
+    private(set) var shouldAnimateDoubleNigiris = PassthroughSubject<[Int], Never>()
     
     private(set) var sessionGameCounts = 1 {
         didSet {
@@ -40,7 +41,13 @@ class GameManager {
         shouldShowRewardAd.send(true)
     }
     
+    func requestAnimateDoubleNigiriLabel() {
+        shouldAnimateDoubleNigiris.send([currentNigiriScore.value, currentNigiriScore.value * 2])
+    }
+    
     func doubleNigiriCount() {
+        requestAnimateDoubleNigiriLabel()
+        
         currentNigiriScore.value *= 2
     }
     
