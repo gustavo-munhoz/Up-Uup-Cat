@@ -157,7 +157,7 @@ extension GameScene {
     func handleCatMovement() {
         catEntity.handleMovement(startingHeight: startingHeight, walls: existingWalls)
         
-        if catEntity.currentHeight >= catEntity.maxHeight {
+        if !isGameOver, catEntity.currentHeight >= catEntity.maxHeight {
             hud.updateCurrentScore(catEntity.maxHeight)
             pauseScreen.update(withScore: catEntity.maxHeight)
             gameOverScreen.update(withScore: catEntity.maxHeight)
@@ -180,7 +180,7 @@ extension GameScene {
     }
     
     func handleCucumberMovement(currentTime: TimeInterval) {
-        if cucumberShouldJump { cucumberEntity.jumpAtPlayer(player: catEntity) }
+        if cucumberShouldJump && !isGameOver { cucumberEntity.jumpAtPlayer(player: catEntity) }
         
         else if !cucumberEntity.isJumpingAtPlayer {
             cucumberEntity.updateTarget(catEntity.agentComponent.agent)
@@ -205,9 +205,11 @@ extension GameScene {
         gameOverScreen?.removeFromParent()
         
         gameOverScreen = GameOverScreen()
-        gameOverScreen.setup(withFrame: frame, isHighScore: GameManager.shared.currentScore.value > GameManager.shared.personalBestScore)
+        gameOverScreen.setup(
+            withFrame: frame,
+            isHighScore: GameManager.shared.currentScore.value > GameManager.shared.personalBestScore
+        )
         
-        isGameOver = true
         gameOverScreen.isHidden = false
         
         cameraManager.cameraNode.addChild(gameOverScreen)
@@ -216,11 +218,17 @@ extension GameScene {
     }
     
     func handleCatDeath() {
-        let deathSequence = GC.PLAYER.TEXTURE.ANIMATION.DEATH
-        deathSequence.timingMode = .easeInEaseOut
+        guard !isGameOver else { return }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        let deathSequence = GC.PLAYER.TEXTURE.ANIMATION().DEATH
+        
+        // Avoid that other animations interfere with cat texture
+        catEntity.spriteComponent.node.removeAllActions()
+        
+        catEntity.spriteComponent.node.run(deathSequence) {
             self.showGameOverScreen()
         }
+        
+        isGameOver = true
     }
 }

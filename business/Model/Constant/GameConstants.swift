@@ -11,7 +11,6 @@ import SpriteKit
 /// This structure  is destined to keep all the important constant values
 /// that are used throughout the game.
 struct GC {
-    
     static let GRAVITY: CGVector = CGVector(dx: 0, dy: -9.8)
     static let GLASS_FORCE: CGVector = CGVector(dx: 0, dy: 75)
     
@@ -42,12 +41,31 @@ struct GC {
                     .setTexture(GC.PLAYER.TEXTURE.JUMP_FRAME_2),
                 ])
                 
-                
-                static let DEATH = SKAction.sequence([
-                    .setTexture(GC.PLAYER.TEXTURE.SCARED),
-                    .moveBy(x: 0, y: 50, duration: 0.2),
-                    .moveBy(x: 0, y: -200, duration: 0.5),
-                ])
+                let DEATH: SKAction = {
+                    let deltaX: Double = [-350, -250, 250, 350].randomElement()!
+                    let deltaY: Double = [750, 850, 950, 1050].randomElement()!
+                    
+                    let rotateAction: SKAction = .customAction(withDuration: 1, actionBlock: { node, elapsedTime in
+                        if let sprite = node as? SKSpriteNode {
+                            sprite.zRotation = -CGFloat.pi * 2 * elapsedTime
+                        }
+                    })
+                    
+                    let moveUp = SKAction.moveBy(x: deltaX, y: deltaY, duration: 0.75)
+                    moveUp.timingMode = .easeOut
+                    
+                    let moveDown = SKAction.moveBy(x: deltaX, y: -1000, duration: 0.4)
+                    moveDown.timingMode = .easeIn
+                    
+                    return .group([
+                        .sequence([
+                            .setTexture(GC.PLAYER.TEXTURE.SCARED),
+                            moveUp, moveDown
+                        ]),
+                        rotateAction
+                    ])
+                }()
+
             }
         }
     }

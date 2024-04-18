@@ -24,7 +24,17 @@ class MenuViewController: UIViewController, UINavigationControllerDelegate, GKGa
         menuView.handleRankingTouch = didPressRankingButton
     }
     
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    override func viewWillAppear(_ animated: Bool) {
+        animateImageViewInfinitely(imageView: menuView.backgroundPaws)
+    }
+    
+    func navigationController(
+        _ navigationController: UINavigationController,
+        animationControllerFor operation: UINavigationController.Operation,
+        from fromVC: UIViewController,
+        to toVC: UIViewController
+    ) -> UIViewControllerAnimatedTransitioning? 
+    {
         if operation == .push || operation == .pop {
                 return CustomNavigationAnimator()
             } else {
@@ -55,4 +65,19 @@ class MenuViewController: UIViewController, UINavigationControllerDelegate, GKGa
     func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
         gameCenterViewController.dismiss(animated: true)
     }
+    
+    func animateImageViewInfinitely(imageView: UIImageView) {
+        imageView.transform = CGAffineTransform(translationX: 0, y: 0)
+        
+        UIView.animate(withDuration: 20,
+                       delay: 0,
+                       options: [.curveLinear, .repeat, .transitionCrossDissolve],
+                       animations: {
+            imageView.transform = CGAffineTransform(
+                translationX: -imageView.frame.size.width / 8,
+                y: -imageView.frame.size.height / 12
+            )
+        })
+    }
+
 }

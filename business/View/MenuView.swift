@@ -23,7 +23,36 @@ class MenuView: UIView {
     }
     
     private(set) lazy var backgroundImageView: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "background_menu"))
+        let view = UIImageView(image: UIImage(named: "home_bg"))
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    private(set) lazy var backgroundGradient: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "bg_gradient"))
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    private(set) lazy var gameLogo: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "game_logo"))
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleAspectFit
+        
+        return view
+    }()
+    
+    private(set) lazy var backgroundPaws: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "home_bg_paws"))
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    private(set) lazy var backgroundBuildings: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "home_bg_buildings"))
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -75,12 +104,49 @@ class MenuView: UIView {
         handleRankingTouch()
     }
     
+    func addSubviews() {
+        addSubview(backgroundImageView)
+        backgroundImageView.addSubview(backgroundPaws)
+        backgroundImageView.addSubview(backgroundBuildings)
+        backgroundImageView.addSubview(backgroundGradient)
+        backgroundImageView.addSubview(gameLogo)
+        addSubview(playButton)
+        addSubview(rankingButton)
+    }
+    
     func setupConstraints() {
         NSLayoutConstraint.activate([
             backgroundImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             backgroundImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             backgroundImageView.topAnchor.constraint(equalTo: topAnchor),
             backgroundImageView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            backgroundGradient.trailingAnchor.constraint(equalTo: trailingAnchor),
+            backgroundGradient.leadingAnchor.constraint(equalTo: leadingAnchor),
+            backgroundGradient.topAnchor.constraint(equalTo: topAnchor),
+            backgroundGradient.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            backgroundPaws.heightAnchor.constraint(equalTo: heightAnchor),
+            backgroundPaws.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 2),
+            backgroundPaws.topAnchor.constraint(equalTo: topAnchor),
+            backgroundPaws.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            gameLogo.centerYAnchor.constraint(equalTo: backgroundImageView.centerYAnchor, constant: -UIScreen.main.bounds.height/10),
+            gameLogo.widthAnchor.constraint(equalTo: backgroundImageView.widthAnchor, multiplier: 0.9),
+            gameLogo.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor),
+        ])
+        
+        NSLayoutConstraint.activate([
+            backgroundBuildings.bottomAnchor.constraint(equalTo: backgroundImageView.bottomAnchor),
+            backgroundBuildings.widthAnchor.constraint(equalTo: backgroundImageView.widthAnchor),
+            backgroundBuildings.heightAnchor.constraint(equalTo: backgroundImageView.heightAnchor, multiplier: 0.45),
+            backgroundBuildings.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor),
         ])
         
         NSLayoutConstraint.activate([
@@ -96,12 +162,6 @@ class MenuView: UIView {
             rankingButton.widthAnchor.constraint(equalTo: playButton.widthAnchor),
             rankingButton.heightAnchor.constraint(equalTo: playButton.heightAnchor)
         ])
-    }
-    
-    func addSubviews() {
-        addSubview(backgroundImageView)
-        addSubview(playButton)
-        addSubview(rankingButton)
     }
 }
 

@@ -73,6 +73,8 @@
 		B3E2482B2BD05865002D5098 /* SceneTouchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2482A2BD05865002D5098 /* SceneTouchManager.swift */; };
 		B3E2482D2BD05E89002D5098 /* SceneContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2482C2BD05E89002D5098 /* SceneContactManager.swift */; };
 		B3E2482F2BD063B3002D5098 /* SceneUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2482E2BD063B3002D5098 /* SceneUpdateManager.swift */; };
+		B3E248322BD1CA86002D5098 /* LaunchTransitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248312BD1CA86002D5098 /* LaunchTransitionView.swift */; };
+		B3E248342BD1CD3E002D5098 /* LaunchTransitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248332BD1CD3E002D5098 /* LaunchTransitionViewController.swift */; };
 		B3F30C992BBDC09500A734F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3F30C982BBDC09400A734F8 /* GoogleService-Info.plist */; };
 		B3F30CAB2BBDC82A00A734F8 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B3F30CAA2BBDC82A00A734F8 /* FirebaseAnalytics */; };
 		B3F30CAD2BBDC82A00A734F8 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B3F30CAC2BBDC82A00A734F8 /* FirebaseAnalyticsSwift */; };
@@ -153,6 +155,8 @@
 		B3E2482A2BD05865002D5098 /* SceneTouchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneTouchManager.swift; sourceTree = "<group>"; };
 		B3E2482C2BD05E89002D5098 /* SceneContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneContactManager.swift; sourceTree = "<group>"; };
 		B3E2482E2BD063B3002D5098 /* SceneUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneUpdateManager.swift; sourceTree = "<group>"; };
+		B3E248312BD1CA86002D5098 /* LaunchTransitionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTransitionView.swift; sourceTree = "<group>"; };
+		B3E248332BD1CD3E002D5098 /* LaunchTransitionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTransitionViewController.swift; sourceTree = "<group>"; };
 		B3F30C982BBDC09400A734F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B3F30CB62BBDC86400A734F8 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		B3F30CB92BBDCB6800A734F8 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -200,6 +204,7 @@
 		B31A3C772BAA264D005728C8 /* business */ = {
 			isa = PBXGroup;
 			children = (
+				B3E248352BD1DA8F002D5098 /* Shared */,
 				B3E248262BCEF631002D5098 /* business.entitlements */,
 				B3E2480E2BC7456A002D5098 /* Network */,
 				B3434B732BACB7B200F9D401 /* Common */,
@@ -347,6 +352,7 @@
 				B3F30CB92BBDCB6800A734F8 /* MenuViewController.swift */,
 				B3E2480C2BC72480002D5098 /* CustomNavigationAnimator.swift */,
 				B3E248202BC9AC6B002D5098 /* AdViewController.swift */,
+				B3E248332BD1CD3E002D5098 /* LaunchTransitionViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -438,6 +444,13 @@
 			path = LogicManager;
 			sourceTree = "<group>";
 		};
+		B3E248352BD1DA8F002D5098 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		B3F30CA82BBDC7D000A734F8 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -445,6 +458,7 @@
 				B3434B742BACB7B900F9D401 /* Storyboards */,
 				B3F30CB62BBDC86400A734F8 /* MenuView.swift */,
 				B3F30CBF2BBDEBF100A734F8 /* GameView.swift */,
+				B3E248312BD1CA86002D5098 /* LaunchTransitionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -618,6 +632,8 @@
 				B31A3C982BAA5AF6005728C8 /* PhysicsCategory.swift in Sources */,
 				B3E2482F2BD063B3002D5098 /* SceneUpdateManager.swift in Sources */,
 				B3434B782BB10A8600F9D401 /* GameManager.swift in Sources */,
+				B3E248322BD1CA86002D5098 /* LaunchTransitionView.swift in Sources */,
+				B3E248342BD1CD3E002D5098 /* LaunchTransitionViewController.swift in Sources */,
 				B3E248102BC74583002D5098 /* AnalyticsService.swift in Sources */,
 				B3E2481D2BC85DE9002D5098 /* AdMobService.swift in Sources */,
 				B3434B7A2BB1E0E500F9D401 /* CGVector+ext.swift in Sources */,

@@ -51,7 +51,8 @@ extension CatEntity {
     func handleMovement(startingHeight: CGFloat, walls: [WallNode]) {
         self.updateHeight(newHeight: Int((self.spriteComponent.node.position.y - startingHeight) / 50))
         
-        if spriteComponent.node.texture == GC.PLAYER.TEXTURE.HOLDING_WALL || spriteComponent.node.texture == GC.PLAYER.TEXTURE.PREPARE
+        if spriteComponent.node.texture == GC.PLAYER.TEXTURE.HOLDING_WALL ||
+            spriteComponent.node.texture == GC.PLAYER.TEXTURE.PREPARE
         {
             spriteComponent.node.run(GC.PLAYER.TEXTURE.ANIMATION.JUMP)
         }

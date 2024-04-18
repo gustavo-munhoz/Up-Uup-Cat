@@ -26,7 +26,7 @@ class CatSpriteComponent: GKComponent {
         node.physicsBody?.isDynamic = true
         node.physicsBody?.categoryBitMask = PhysicsCategory.player
         node.physicsBody?.contactTestBitMask = PhysicsCategory.wall | PhysicsCategory.enemy | PhysicsCategory.collectible
-        node.physicsBody?.collisionBitMask = 0
+        node.physicsBody?.collisionBitMask = PhysicsCategory.enemy
         node.physicsBody?.usesPreciseCollisionDetection = true
         node.physicsBody?.mass = GC.PLAYER.DEFAULT_MASS
         
