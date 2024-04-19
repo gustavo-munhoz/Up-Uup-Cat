@@ -53,15 +53,21 @@ class LaunchTransitionView: UIView {
             cucumberImage.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.316),
         ])
     }
-    // TODO: corrigir ordem animacoes
+    
     func startAnimation(completion: @escaping () -> Void) {
         animateCucumberEntering(completion: {
             self.animateCucumberFullyVisible(completion: {
                 self.backgroundImage.image = UIImage(named: "launch_transition_2")
+                SoundEffect.snore.stop()
+                SoundEffect.surprise.play()
                 
-                self.animateCucumberDisappears {
-                    self.backgroundImage.image = UIImage(named: "launch_transition_3")
-                    completion()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.animateCucumberDisappears {
+                        self.backgroundImage.image = UIImage(named: "launch_transition_3")
+                        SoundEffect.surprise.stop()
+                        SoundEffect.cucumberMove.stop()
+                        completion()
+                    }
                 }
             })
         })
@@ -90,8 +96,10 @@ class LaunchTransitionView: UIView {
     }
     
     private func animateCucumberDisappears(completion: @escaping () -> Void) {
+        SoundEffect.cucumberMove.play()
+        
         UIView.animate(withDuration: 0.4,
-                       delay: 2,
+                       delay: 0,
                        animations: {
             self.cucumberImage.transform = .identity
         }, completion: { _ in

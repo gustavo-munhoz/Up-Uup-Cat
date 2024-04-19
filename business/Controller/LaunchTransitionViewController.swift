@@ -20,11 +20,14 @@ class LaunchTransitionViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        SoundEffect.snore.play()
+        
         launchTransitionView.startAnimation {
+            BackgroundAudio.catNipDaze.play()
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.navigationController?.pushViewController(MenuViewController(), animated: true)
             }
         }
     }
 }
-

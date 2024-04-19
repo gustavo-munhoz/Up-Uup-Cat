@@ -51,7 +51,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var pauseScreen: PauseScreen!
     var gameOverScreen: GameOverScreen!
     
-    var isGrabbingGlass = false
+    var isGrabbingGlass = false {
+        didSet {
+            if isGrabbingGlass {
+                SoundEffect.squeakingGlass.play()
+            } else {
+                SoundEffect.squeakingGlass.stop()
+            }
+        }
+    }
     
     var zoomOutTimer: Timer?
     
@@ -225,6 +233,8 @@ extension GameScene {
         // Avoid that other animations interfere with cat texture
         catEntity.spriteComponent.node.removeAllActions()
         
+        
+        SoundEffect.catScream.play()
         catEntity.spriteComponent.node.run(deathSequence) {
             self.showGameOverScreen()
         }

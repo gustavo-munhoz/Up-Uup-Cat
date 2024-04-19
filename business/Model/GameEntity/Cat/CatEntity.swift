@@ -105,6 +105,11 @@ extension CatEntity {
     func handleJump(from start: CGPoint, to end: CGPoint) {
         guard spriteComponent.canJump else { return }
 
+        let effect = [SoundEffect.jump1, SoundEffect.jump2, SoundEffect.jump3,
+                      SoundEffect.jump4, SoundEffect.jump5, SoundEffect.jump6].randomElement()!
+        
+        effect.play()
+        
         var dx = start.x - end.x
         var dy = start.y - end.y
 
@@ -138,8 +143,9 @@ extension CatEntity {
                 break
                 
             case .nigiri:
+                SoundEffect.pickUpNigiri.play()
                 GameManager.shared.increaseNigiriCount()
-                for i in 1...3 { UIImpactFeedbackGenerator(style: .soft).impactOccurred(intensity: CGFloat(i)/3) }
+                UIImpactFeedbackGenerator(style: .soft).impactOccurred(intensity: 1)
                 break
         }
         

@@ -17,7 +17,9 @@ class SceneUpdateManager {
     func handleUpdate(currentTime: TimeInterval) {
         guard let scene = scene else { return }
         
-        if scene.canStart  { scene.cameraManager.updateCameraPosition(catEntity: scene.catEntity) }
+        if scene.canStart && !scene.isGameOver  {
+            scene.cameraManager.updateCameraPosition(catEntity: scene.catEntity)   
+        }
         
         if scene.lastUpdateTime == 0 { scene.lastUpdateTime = currentTime }
         

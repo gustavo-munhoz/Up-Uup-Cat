@@ -13,7 +13,7 @@ import GoogleMobileAds
 
 class GameViewController: AdViewController {
     private var cancellables = Set<AnyCancellable>()
-    private var gameView = GameView()
+    private var gameView = GameView()        
     
     override func loadView() {
         view = gameView

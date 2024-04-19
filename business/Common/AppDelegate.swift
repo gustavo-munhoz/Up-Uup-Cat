@@ -30,6 +30,11 @@ import FirebaseAnalytics
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         
+        
+        AudioManager.shared.loadSoundEffects(
+            effects: [.snore, .cucumberMove, .surprise, .pop]
+        )
+        
         FirebaseConfiguration.shared.setLoggerLevel(.min)
         FirebaseApp.configure()
         
@@ -47,6 +52,7 @@ import FirebaseAnalytics
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+        AudioManager.shared.pauseBackgroundMusic()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -55,6 +61,7 @@ import FirebaseAnalytics
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        AudioManager.shared.resumeBackgroundMusic()
     }
 }
 

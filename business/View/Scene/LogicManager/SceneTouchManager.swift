@@ -66,16 +66,19 @@ class SceneTouchManager {
         
         if isTouchingButton {
             if scene.hud.pauseButton.contains(location) && !scene.isPaused && !scene.isGameOver {
+                SoundEffect.pop.play()
                 scene.hud.pauseButton.alpha = 1
                 scene.togglePause()
             }
             
             else if scene.pauseScreen.continueButton.contains(location) && scene.isPaused && !scene.isGameOver {
+                SoundEffect.pop.play()
                 scene.pauseScreen.continueButton.alpha = 1
                 scene.togglePause()
             }
             
             else if scene.pauseScreen.homeButton.contains(location) && scene.isPaused && !scene.isGameOver {
+                SoundEffect.pop.play()
                 scene.pauseScreen.homeButton.alpha = 1
                 GameManager.shared.navigateBackToMenu()
             }
@@ -85,11 +88,14 @@ class SceneTouchManager {
             }
             
             else if scene.gameOverScreen.restartButton.contains(location) && scene.isGameOver {
+                SoundEffect.pop.play()
                 AnalyticsService.logEventPressedRestart()
                 GameManager.shared.resetGame()
             }
             
             else if scene.gameOverScreen.homeButton.contains(location) && scene.isGameOver {
+                SoundEffect.pop.play()
+                AudioManager.shared.resetBackgroundMusicVolume()
                 GameManager.shared.navigateBackToMenu()
             }
 
@@ -116,6 +122,11 @@ class SceneTouchManager {
     private func prepareForJumpIfNeeded() {
         guard let scene = scene, scene.catEntity.spriteComponent.currentWallMaterial != .none,
               !scene.isPaused, scene.canStart else { return }
+        
+        if scene.hasStarted {
+            let effect = [SoundEffect.claws1, SoundEffect.claws2, SoundEffect.claws3].randomElement()!
+            effect.play()
+        }
         
         scene.zoomOutTimer?.invalidate()
         scene.zoomOutTimer = Timer.scheduledTimer(withTimeInterval: 1.25, repeats: false) { _ in

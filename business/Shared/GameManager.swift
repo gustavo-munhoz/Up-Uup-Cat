@@ -35,6 +35,8 @@ class GameManager {
         }
     }
     
+    private init() {}
+    
     // MARK: - Ad Methods
     
     func requestDoubleNigiriAd() {

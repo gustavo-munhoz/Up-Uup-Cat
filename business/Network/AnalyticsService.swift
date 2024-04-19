@@ -8,6 +8,20 @@
 import FirebaseAnalytics
 
 class AnalyticsService {
+    private init() {}
+    
+    static func logEventShopButtonPressed() {
+        Analytics.logEvent("shop_pressed", parameters: [:])
+    }
+    
+    static func logEventRankingButtonPressed() {
+        Analytics.logEvent("ranking_pressed", parameters: [:])
+    }
+    
+    static func logEventTutorialButtonPressed() {
+        Analytics.logEvent("tutorial_pressed", parameters: [:])
+    }
+    
     static func logEventGameStarted() {
         Analytics.logEvent(AnalyticsEventLevelStart, parameters: [:])
     }

@@ -75,6 +75,10 @@
 		B3E2482F2BD063B3002D5098 /* SceneUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2482E2BD063B3002D5098 /* SceneUpdateManager.swift */; };
 		B3E248322BD1CA86002D5098 /* LaunchTransitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248312BD1CA86002D5098 /* LaunchTransitionView.swift */; };
 		B3E248342BD1CD3E002D5098 /* LaunchTransitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248332BD1CD3E002D5098 /* LaunchTransitionViewController.swift */; };
+		B3E248372BD1DAEE002D5098 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248362BD1DAEE002D5098 /* AudioManager.swift */; };
+		B3E248502BD1E0AD002D5098 /* BackgroundAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2484F2BD1E0AD002D5098 /* BackgroundAudio.swift */; };
+		B3E248522BD1E7EC002D5098 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248512BD1E7EC002D5098 /* SoundEffect.swift */; };
+		B3E2485E2BD1EA8C002D5098 /* Media in Resources */ = {isa = PBXBuildFile; fileRef = B3E2485D2BD1EA8C002D5098 /* Media */; };
 		B3F30C992BBDC09500A734F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3F30C982BBDC09400A734F8 /* GoogleService-Info.plist */; };
 		B3F30CAB2BBDC82A00A734F8 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B3F30CAA2BBDC82A00A734F8 /* FirebaseAnalytics */; };
 		B3F30CAD2BBDC82A00A734F8 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B3F30CAC2BBDC82A00A734F8 /* FirebaseAnalyticsSwift */; };
@@ -157,6 +161,10 @@
 		B3E2482E2BD063B3002D5098 /* SceneUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneUpdateManager.swift; sourceTree = "<group>"; };
 		B3E248312BD1CA86002D5098 /* LaunchTransitionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTransitionView.swift; sourceTree = "<group>"; };
 		B3E248332BD1CD3E002D5098 /* LaunchTransitionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTransitionViewController.swift; sourceTree = "<group>"; };
+		B3E248362BD1DAEE002D5098 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		B3E2484F2BD1E0AD002D5098 /* BackgroundAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundAudio.swift; sourceTree = "<group>"; };
+		B3E248512BD1E7EC002D5098 /* SoundEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
+		B3E2485D2BD1EA8C002D5098 /* Media */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Media; sourceTree = "<group>"; };
 		B3F30C982BBDC09400A734F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B3F30CB62BBDC86400A734F8 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		B3F30CB92BBDCB6800A734F8 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -204,6 +212,7 @@
 		B31A3C772BAA264D005728C8 /* business */ = {
 			isa = PBXGroup;
 			children = (
+				B3E2485D2BD1EA8C002D5098 /* Media */,
 				B3E248352BD1DA8F002D5098 /* Shared */,
 				B3E248262BCEF631002D5098 /* business.entitlements */,
 				B3E2480E2BC7456A002D5098 /* Network */,
@@ -279,7 +288,6 @@
 			isa = PBXGroup;
 			children = (
 				B31A3C782BAA264D005728C8 /* AppDelegate.swift */,
-				B3434B772BB10A8600F9D401 /* GameManager.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -447,8 +455,28 @@
 		B3E248352BD1DA8F002D5098 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				B3E2484D2BD1DE18002D5098 /* Audio */,
+				B3434B772BB10A8600F9D401 /* GameManager.swift */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		B3E2484D2BD1DE18002D5098 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				B3E2484E2BD1E09F002D5098 /* Constants */,
+				B3E248362BD1DAEE002D5098 /* AudioManager.swift */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		B3E2484E2BD1E09F002D5098 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				B3E2484F2BD1E0AD002D5098 /* BackgroundAudio.swift */,
+				B3E248512BD1E7EC002D5098 /* SoundEffect.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		B3F30CA82BBDC7D000A734F8 /* View */ = {
@@ -537,6 +565,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3E2485E2BD1EA8C002D5098 /* Media in Resources */,
 				B39B03022BBB56BC00924FCA /* Urbanist-ExtraLightItalic.ttf in Resources */,
 				B39B03062BBB56BC00924FCA /* Urbanist-SemiBoldItalic.ttf in Resources */,
 				B3F30C992BBDC09500A734F8 /* GoogleService-Info.plist in Resources */,
@@ -601,6 +630,7 @@
 				B3DEF4862BBF3B9F0022A977 /* PauseButtonNode.swift in Sources */,
 				B3E248252BCEE9D7002D5098 /* GameCenterService.swift in Sources */,
 				B3E2482B2BD05865002D5098 /* SceneTouchManager.swift in Sources */,
+				B3E248502BD1E0AD002D5098 /* BackgroundAudio.swift in Sources */,
 				B3434B842BB1E50200F9D401 /* CatEntity.swift in Sources */,
 				B3434B922BB4972E00F9D401 /* CameraManager.swift in Sources */,
 				B3DEF4882BC071850022A977 /* PauseScreen.swift in Sources */,
@@ -630,7 +660,9 @@
 				B3E248162BC84EEF002D5098 /* RestartButtonNode.swift in Sources */,
 				B3E248282BCF1B79002D5098 /* SceneSetupManager.swift in Sources */,
 				B31A3C982BAA5AF6005728C8 /* PhysicsCategory.swift in Sources */,
+				B3E248372BD1DAEE002D5098 /* AudioManager.swift in Sources */,
 				B3E2482F2BD063B3002D5098 /* SceneUpdateManager.swift in Sources */,
+				B3E248522BD1E7EC002D5098 /* SoundEffect.swift in Sources */,
 				B3434B782BB10A8600F9D401 /* GameManager.swift in Sources */,
 				B3E248322BD1CA86002D5098 /* LaunchTransitionView.swift in Sources */,
 				B3E248342BD1CD3E002D5098 /* LaunchTransitionViewController.swift in Sources */,
@@ -802,7 +834,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mnhz.business;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -841,7 +873,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mnhz.business;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
