@@ -21,6 +21,10 @@ struct GC {
         static let DEFAULT_BOOST_MIN: CGFloat = 5.0
         static let DEFAULT_MASS: CGFloat = 0.075
         
+        static let PUMPED_BOOST_MAX: CGFloat = 200
+        static let PUMPED_BOOST_MIN: CGFloat = 5
+        
+        
         struct TEXTURE {
             static let START = SKTexture(imageNamed: "cat_start")
             static let PREPARE = SKTexture(imageNamed: "cat_start_prepare")
@@ -75,11 +79,11 @@ struct GC {
     struct CUCUMBER {
         static let DEFAULT_MAX_SPEED: Float = 750
         static let DEFAULT_MIN_SPEED: Float = 100
-        static let DEFAULT_MAX_ACCELERATION: Float = 300
+        static let DEFAULT_MAX_ACCELERATION: Float = 200
         static let DEFAULT_MIN_ACCELERATION: Float = 150
         static let DEFAULT_MASS: Float = 0.5
         
-        static let JUMPING_SPEED: Float = 6000
+        static let JUMPING_SPEED: Float = 10e6
         
         struct TEXTURE {
             static let CHASING_FRAME_1 = SKTexture(imageNamed: "cucumber_chasing_1")
@@ -90,7 +94,7 @@ struct GC {
     // MARK: - WALLS
     
     struct WALL {
-        static let MIN_DIFFICULTY_WIDTH: CGFloat = 400
+        static let MIN_DIFFICULTY_WIDTH: CGFloat = 700
         static let MAX_DIFFICULTY_WIDTH: CGFloat = 100
         static let MIN_DIFFICULTY_HEIGHT: CGFloat = 500
         static let MAX_DIFFICULTY_HEIGHT: CGFloat = 40
@@ -104,7 +108,7 @@ struct GC {
         
         struct COLLECTIBLE_PROBABILITY {
             static let NIGIRI: CGFloat = 0.1
-            static let CATNIP: CGFloat = 0.00
+            static let CATNIP: CGFloat = 0.025
         }
         
         struct TEXTURE {
@@ -127,13 +131,13 @@ struct GC {
     // MARK: - DIFFICULTY
     
     struct DIFFICULTY {
-        static let MAX_DIFFICULTY_HEIGHT: CGFloat = 750
+        static let MAX_DIFFICULTY_HEIGHT: CGFloat = 1500
     }
     
     
     // MARK: - CAMERA
     struct CAMERA {
-        static let MIN_CAMERA_SCALE: CGFloat = 1
+        static let MIN_CAMERA_SCALE: CGFloat = 1.25
         static let MAX_CAMERA_SCALE: CGFloat = 2.25
     }
     

@@ -10,12 +10,36 @@ import AVFoundation
 class AudioManager {
     static let shared = AudioManager()
 
+    var backgroundMusicVolume: Float = UserPreferences.shared.backgroundMusicVolume {
+        didSet {
+            UserPreferences.shared.backgroundMusicVolume = backgroundMusicVolume
+            backgroundMusicPlayer?.volume = backgroundMusicVolume
+        }
+    }
+    
     private var backgroundMusicPlayer: AVAudioPlayer?
     private var soundEffectPlayers: [String: AVAudioPlayer] = [:]
 
-    private init() {}
+    private init() {
+        configureAudioSession()
+    }
+    
+    private func configureAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+        } catch {
+            print("Failed to configure audio session: \(error.localizedDescription)")
+        }
+    }
+    
+    func loadUserAudioPreferences() {
+        backgroundMusicVolume = UserPreferences.shared.backgroundMusicVolume
+        loadBackgroundMusic(track: UserPreferences.shared.selectedBackgroundMusic)
+    }
 
-    func loadBackgroundMusic(track: BackgroundAudio) {
+    func loadBackgroundMusic(track: BackgroundMusic) {
         guard let bundlePath = Bundle.main.path(
             forResource: track.filename,
             ofType: "mp3",
@@ -56,7 +80,7 @@ class AudioManager {
     }
 
     
-    func playBackgroundMusic(track: BackgroundAudio) {
+    func playBackgroundMusic(track: BackgroundMusic) {
         if let player = backgroundMusicPlayer {
             player.play()
             
@@ -79,14 +103,6 @@ class AudioManager {
                 print("Could not load background music file: \(error)")
             }
         }
-    }
-    
-    func reduceBackgroundMusicVolume() {
-        backgroundMusicPlayer?.setVolume(0.4, fadeDuration: 0.75)
-    }
-    
-    func resetBackgroundMusicVolume() {
-        backgroundMusicPlayer?.setVolume(1, fadeDuration: 0.75)
     }
 
     func pauseBackgroundMusic() {

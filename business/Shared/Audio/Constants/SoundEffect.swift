@@ -1,5 +1,5 @@
 //
-//  AudioEffects.swift
+//  SoundEffect.swift
 //  business
 //
 //  Created by Gustavo Munhoz Correa on 18/04/24.
@@ -13,6 +13,7 @@ enum SoundEffect: String {
     case cucumberMove = "cucumber-move"
     case pop = "pop"
     case pickUpNigiri = "nigiri-pickup-pop"
+    case pickUpCatnip = "catnip-pickup"
     case claws1 = "claws-1"
     case claws2 = "claws-2"
     case claws3 = "claws-3"
@@ -37,8 +38,10 @@ extension SoundEffect {
         }
     }
     
-    func play(_ completion: @escaping () -> Void = {}) {
-        AudioManager.shared.playSoundEffect(effect: self)
+    func playIfAllowed(_ completion: @escaping () -> Void = {}) {
+        if UserPreferences.shared.isSoundEffectsEnabled {
+            AudioManager.shared.playSoundEffect(effect: self)
+        }
         
         completion()
     }

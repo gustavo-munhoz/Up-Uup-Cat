@@ -18,6 +18,8 @@ class HUDNode: SKSpriteNode {
     var nigiriCountLabel: SKLabelNode!
     var nigiriSprite: SKSpriteNode!
     
+    var catnipTimerWorkItem: DispatchWorkItem?
+    
     func setup(withFrame frame: CGRect) {
         self.name = GC.HUD.HUD_NAME
         
@@ -36,6 +38,20 @@ class HUDNode: SKSpriteNode {
         let str = score < 10 ? "0\(score)" : "\(score)"
         
         nigiriCountLabel.text = str
+    }
+    
+    func handleCatnipPickup() {
+        catnipTimerWorkItem?.cancel()
+        
+        currentScoreLabel.fontColor = .catnipGreen
+        
+        let workItem = DispatchWorkItem {
+            self.currentScoreLabel.fontColor = .white
+        }
+        
+        catnipTimerWorkItem = workItem
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: workItem)
     }
 }
 

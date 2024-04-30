@@ -6,21 +6,49 @@
 //
 
 import UIKit
+
 import Firebase
 import FirebaseCore
 
 import FacebookCore
-import AppTrackingTransparency
-import AdSupport
 import FirebaseAnalytics
 
+import AppTrackingTransparency
+import AdSupport
+
+import GoogleMobileAds
+
 @main
-    class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
+        
+        GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = [ "eb86b528a4b2a025260c549401222408" ]
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
+        
+        FirebaseConfiguration.shared.setLoggerLevel(.min)
+        FirebaseApp.configure()
+
+        
+        GameManager.shared.loadStats()
+        AudioManager.shared.loadUserAudioPreferences()
+        
+        AudioManager.shared.loadSoundEffects(
+            effects: [.snore, .cucumberMove, .surprise, .pop]
+        )
+        
+        GameCenterService.shared.authenticateAndSyncData { errorDescription in
+            DispatchQueue.main.async {
+                if let error = errorDescription {
+                    print("Game Center Sync Error: \(error)")
+                } else {
+                    print("Game Center Sync: Synchronization successful")
+                }
+            }
+        }
         
         let startViewController = LaunchTransitionViewController()
         
@@ -29,18 +57,6 @@ import FirebaseAnalytics
         
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
-        
-        
-        AudioManager.shared.loadSoundEffects(
-            effects: [.snore, .cucumberMove, .surprise, .pop]
-        )
-        
-        FirebaseConfiguration.shared.setLoggerLevel(.min)
-        FirebaseApp.configure()
-        
-        GameCenterService.shared.authenticate { _ in
-            return
-        }
         
         return true
     }

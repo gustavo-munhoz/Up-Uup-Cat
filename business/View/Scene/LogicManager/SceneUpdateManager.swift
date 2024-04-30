@@ -18,14 +18,13 @@ class SceneUpdateManager {
         guard let scene = scene else { return }
         
         if scene.canStart && !scene.isGameOver  {
-            scene.cameraManager.updateCameraPosition(catEntity: scene.catEntity)   
+            scene.cameraManager.updateCameraPosition(
+                catEntity: scene.catEntity,
+                shouldAdjustScale: !scene.catEntity.isPumpedUpByCatnip.value
+            )
         }
         
         if scene.lastUpdateTime == 0 { scene.lastUpdateTime = currentTime }
-        
-        if scene.zoomOutTimer == nil && scene.hasStarted {
-            scene.cameraManager.resetZoom()
-        }
         
         if scene.hasStarted { scene.handleCucumberMovement(currentTime: currentTime) }
         else if !scene.hasGeneratedFirstWalls {

@@ -27,26 +27,6 @@ class SceneTouchManager {
             handleButtonTouch(scene.hud.pauseButton)
         }
         
-        else if scene.pauseScreen.continueButton.contains(touchStart) && !scene.isGameOver {
-            handleButtonTouch(scene.pauseScreen.continueButton)
-        }
-        
-        else if scene.pauseScreen.homeButton.contains(touchStart) && !scene.isGameOver {
-            handleButtonTouch(scene.pauseScreen.homeButton)
-        }
-        
-        else if scene.gameOverScreen.watchAdButton.contains(touchStart) && scene.isGameOver {
-            handleButtonTouch(scene.gameOverScreen.watchAdButton)
-        }
-        
-        else if scene.gameOverScreen.restartButton.contains(touchStart) && scene.isGameOver {
-            handleButtonTouch(scene.gameOverScreen.restartButton)
-        }
-        
-        else if scene.gameOverScreen.homeButton.contains(touchStart) && scene.isGameOver {
-            handleButtonTouch(scene.gameOverScreen.homeButton)
-        }
-        
         else {
             prepareForJumpIfNeeded()
         }
@@ -66,38 +46,12 @@ class SceneTouchManager {
         
         if isTouchingButton {
             if scene.hud.pauseButton.contains(location) && !scene.isPaused && !scene.isGameOver {
-                SoundEffect.pop.play()
+                GameManager.shared.pauseGame()
+                SoundEffect.pop.playIfAllowed()
                 scene.hud.pauseButton.alpha = 1
-                scene.togglePause()
+                scene.isPaused = true
             }
             
-            else if scene.pauseScreen.continueButton.contains(location) && scene.isPaused && !scene.isGameOver {
-                SoundEffect.pop.play()
-                scene.pauseScreen.continueButton.alpha = 1
-                scene.togglePause()
-            }
-            
-            else if scene.pauseScreen.homeButton.contains(location) && scene.isPaused && !scene.isGameOver {
-                SoundEffect.pop.play()
-                scene.pauseScreen.homeButton.alpha = 1
-                GameManager.shared.navigateBackToMenu()
-            }
-            
-            else if scene.gameOverScreen.watchAdButton.contains(location) && scene.isGameOver {
-                GameManager.shared.requestDoubleNigiriAd()
-            }
-            
-            else if scene.gameOverScreen.restartButton.contains(location) && scene.isGameOver {
-                SoundEffect.pop.play()
-                AnalyticsService.logEventPressedRestart()
-                GameManager.shared.resetGame()
-            }
-            
-            else if scene.gameOverScreen.homeButton.contains(location) && scene.isGameOver {
-                SoundEffect.pop.play()
-                AudioManager.shared.resetBackgroundMusicVolume()
-                GameManager.shared.navigateBackToMenu()
-            }
 
             isTouchingButton = false
             return
@@ -111,6 +65,9 @@ class SceneTouchManager {
         if scene.zoomOutTimer != nil {
             scene.zoomOutTimer?.invalidate()
             scene.zoomOutTimer = nil
+            if !scene.catEntity.isPumpedUpByCatnip.value {
+                scene.cameraManager.resetZoom()
+            }
         }
         
         scene.catEntity.handleJump(from: start, to: location)
@@ -124,13 +81,14 @@ class SceneTouchManager {
               !scene.isPaused, scene.canStart else { return }
         
         if scene.hasStarted {
-            let effect = [SoundEffect.claws1, SoundEffect.claws2, SoundEffect.claws3].randomElement()!
-            effect.play()
+            SoundEffect.claws2.playIfAllowed()
         }
         
         scene.zoomOutTimer?.invalidate()
-        scene.zoomOutTimer = Timer.scheduledTimer(withTimeInterval: 1.25, repeats: false) { _ in
-            scene.cameraManager.zoomOut()
+        scene.zoomOutTimer = Timer.scheduledTimer(withTimeInterval: 0.75, repeats: false) { _ in
+            if !scene.catEntity.isPumpedUpByCatnip.value {
+                scene.cameraManager.zoomOut()
+            }
         }
         
         createArrowNodeInScene()

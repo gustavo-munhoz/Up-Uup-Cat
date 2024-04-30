@@ -7,6 +7,7 @@
 
 import Foundation
 import GameKit
+import FirebaseAuth
 
 /// A service responsible for managing Game Center functionalities such as player authentication,
 /// rewarding achievements, and controlling the access point's visibility.
@@ -21,32 +22,78 @@ class GameCenterService {
     /// Represents the local player instance from GameKit, which will be used for authentication.
     let player = GKLocalPlayer.local
     
-    func authenticate(completion: @escaping (_ error: String?) -> Void) {
-        player.authenticateHandler = { viewController, error in
+    func authenticateAndSyncData(completion: @escaping (_ error: String?) -> Void) {
+        player.authenticateHandler = { [weak self] viewController, error in
+            guard let self = self else { return }
+
             DispatchQueue.main.async {
                 if let vc = viewController {
-                    let scenes = UIApplication.shared.connectedScenes
-                    let windowScene = scenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
-                    let rootViewController = windowScene?.windows.first(where: { $0.isKeyWindow })?.rootViewController
-                    
-                    rootViewController?.present(vc, animated: true, completion: nil)
+                    self.presentGameCenterAuth(vc)
                     return
                 } else if let error = error {
-                    // Handle the error appropriately
-                    print("Game Center Authentication Error: \(error.localizedDescription)")
-                    completion(error.localizedDescription)
+                    completion("Game Center Authentication Error: \(error.localizedDescription)")
+                    return
                 } else if self.player.isAuthenticated {
-                    // Player is authenticated
-                    print("Player is authenticated with Game Center")
-                    completion(nil)
+                    self.syncDataWithFirestore(completion: completion)
+                    UserPreferences.shared.playerId = self.player.gamePlayerID
+                    
                 } else {
-                    // Authentication failed with no error, handle appropriately
                     completion("Game Center Authentication failed")
                 }
             }
         }
     }
+    
+    private func presentGameCenterAuth(_ viewController: UIViewController) {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
+        let rootViewController = windowScene?.windows.first(where: { $0.isKeyWindow })?.rootViewController
 
+        rootViewController?.present(viewController, animated: true, completion: nil)
+    }
+    
+    private func authenticateWithFirebase(completion: @escaping (_ error: String?) -> Void) {
+        GameCenterAuthProvider.getCredential { credential, error in
+            guard let credential = credential, error == nil else {
+                print("Error obtaining Game Center credential: \(error?.localizedDescription ?? "Unknown error")")
+                completion(error?.localizedDescription ?? "Failed to get Game Center credential")
+                return
+            }
+            
+            Auth.auth().signIn(with: credential) { authResult, error in
+                if let error = error {
+                    print("Firebase authentication error: \(error.localizedDescription)")
+                    completion(error.localizedDescription)
+                } else {
+                    completion(nil)
+                }
+            }
+        }
+    }
+    
+    private func syncDataWithFirestore(completion: @escaping (_ error: String?) -> Void) {
+        FirestoreService.shared.loadSettings(for: player.gamePlayerID) { (remoteSettings: AppSettings?) in
+            guard let localSettings = UserPreferences.shared.loadLocalSettings() else {
+                completion("Local settings not found")
+                return
+            }
+
+            if let remoteSettings = remoteSettings,
+               let localLastUpdated = localSettings.lastUpdated,
+               let remoteLastUpdated = remoteSettings.lastUpdated,
+               remoteLastUpdated > localLastUpdated {
+                // Remote settings are newer
+                UserPreferences.shared.updateSettings(with: remoteSettings)
+                print("Remote settings are newer, replacing local settings.")
+            } else {
+                // Local settings are newer or no valid remote settings
+                FirestoreService.shared.saveSettings(data: localSettings, for: self.player.gamePlayerID) { _ in }
+                
+                print("Local settings are newer or no valid remote settings, saving to Firestore.")
+            }
+            completion(nil)
+        }
+    }
     
     func presentGameCenter(from viewController: UIViewController) {
         guard player.isAuthenticated else {

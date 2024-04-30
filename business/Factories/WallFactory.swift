@@ -20,14 +20,14 @@ class WallFactory {
     
     func createWalls() -> [WallNode] {
         var walls: [WallNode] = []
-        let numberOfWalls = Int.random(in: 1...5)
+        let numberOfWalls = Int.random(in: 3...12)
         var currentLineMaxY: CGFloat = lastWallMaxY
 
         for _ in 0..<numberOfWalls {
             let wallWidth = CGFloat(wallParameters.widthDistribution.nextInt())
             let wallHeight = CGFloat(wallParameters.heightDistribution.nextInt())
             
-            let wallXPosition = CGFloat.random(in: (-frame.maxX * 0.75)...(frame.maxX))
+            let wallXPosition = CGFloat.random(in: (-1.5 * frame.maxX)...(1.5 * frame.maxX))
             
             let spacing = CGFloat(wallParameters.spacingDistribution.nextInt())
             let wallYPosition = lastWallMaxY + spacing + wallHeight / 2

@@ -51,23 +51,15 @@
 		B39B03102BBB7A1D00924FCA /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B39B030F2BBB7A1D00924FCA /* PrivacyInfo.xcprivacy */; };
 		B3DEF4812BBE54790022A977 /* CGSize+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DEF4802BBE54790022A977 /* CGSize+ext.swift */; };
 		B3DEF4842BBF36B50022A977 /* HUDNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DEF4832BBF36B50022A977 /* HUDNode.swift */; };
-		B3DEF4862BBF3B9F0022A977 /* PauseButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DEF4852BBF3B9F0022A977 /* PauseButtonNode.swift */; };
-		B3DEF4882BC071850022A977 /* PauseScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DEF4872BC071850022A977 /* PauseScreen.swift */; };
-		B3E247FF2BC09CB9002D5098 /* GameOverScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E247FE2BC09CB9002D5098 /* GameOverScreen.swift */; };
 		B3E248022BC47C4A002D5098 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = B3E248012BC47C4A002D5098 /* FacebookCore */; };
 		B3E248052BC47D5D002D5098 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3E248042BC47D5D002D5098 /* AdSupport.framework */; };
 		B3E248072BC47D66002D5098 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3E248062BC47D66002D5098 /* AppTrackingTransparency.framework */; };
 		B3E2480A2BC6096F002D5098 /* Collectible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248092BC6096F002D5098 /* Collectible.swift */; };
 		B3E2480D2BC72480002D5098 /* CustomNavigationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2480C2BC72480002D5098 /* CustomNavigationAnimator.swift */; };
 		B3E248102BC74583002D5098 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2480F2BC74583002D5098 /* AnalyticsService.swift */; };
-		B3E248132BC84EDD002D5098 /* WatchAdButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248122BC84EDD002D5098 /* WatchAdButtonNode.swift */; };
-		B3E248162BC84EEF002D5098 /* RestartButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248152BC84EEF002D5098 /* RestartButtonNode.swift */; };
-		B3E248182BC84F04002D5098 /* ContinueButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248172BC84F04002D5098 /* ContinueButtonNode.swift */; };
-		B3E2481B2BC858E4002D5098 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = B3E2481A2BC858E4002D5098 /* GoogleMobileAds */; };
 		B3E2481D2BC85DE9002D5098 /* AdMobService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2481C2BC85DE9002D5098 /* AdMobService.swift */; };
 		B3E2481F2BC85FC7002D5098 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2481E2BC85FC7002D5098 /* Secrets.swift */; };
 		B3E248212BC9AC6B002D5098 /* AdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248202BC9AC6B002D5098 /* AdViewController.swift */; };
-		B3E248232BCDC5F7002D5098 /* HomeButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248222BCDC5F6002D5098 /* HomeButtonNode.swift */; };
 		B3E248252BCEE9D7002D5098 /* GameCenterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248242BCEE9D7002D5098 /* GameCenterService.swift */; };
 		B3E248282BCF1B79002D5098 /* SceneSetupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248272BCF1B79002D5098 /* SceneSetupManager.swift */; };
 		B3E2482B2BD05865002D5098 /* SceneTouchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2482A2BD05865002D5098 /* SceneTouchManager.swift */; };
@@ -76,7 +68,7 @@
 		B3E248322BD1CA86002D5098 /* LaunchTransitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248312BD1CA86002D5098 /* LaunchTransitionView.swift */; };
 		B3E248342BD1CD3E002D5098 /* LaunchTransitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248332BD1CD3E002D5098 /* LaunchTransitionViewController.swift */; };
 		B3E248372BD1DAEE002D5098 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248362BD1DAEE002D5098 /* AudioManager.swift */; };
-		B3E248502BD1E0AD002D5098 /* BackgroundAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2484F2BD1E0AD002D5098 /* BackgroundAudio.swift */; };
+		B3E248502BD1E0AD002D5098 /* BackgroundMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2484F2BD1E0AD002D5098 /* BackgroundMusic.swift */; };
 		B3E248522BD1E7EC002D5098 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E248512BD1E7EC002D5098 /* SoundEffect.swift */; };
 		B3E2485E2BD1EA8C002D5098 /* Media in Resources */ = {isa = PBXBuildFile; fileRef = B3E2485D2BD1EA8C002D5098 /* Media */; };
 		B3F30C992BBDC09500A734F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3F30C982BBDC09400A734F8 /* GoogleService-Info.plist */; };
@@ -89,6 +81,35 @@
 		B3F30CB72BBDC86400A734F8 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F30CB62BBDC86400A734F8 /* MenuView.swift */; };
 		B3F30CBA2BBDCB6800A734F8 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F30CB92BBDCB6800A734F8 /* MenuViewController.swift */; };
 		B3F30CC02BBDEBF100A734F8 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F30CBF2BBDEBF100A734F8 /* GameView.swift */; };
+		B3FE90A12BD887FD008EBBA9 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = B3FE90A02BD887FD008EBBA9 /* GoogleMobileAds */; };
+		B3FE90A32BD9A4AC008EBBA9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90A22BD9A4AC008EBBA9 /* SettingsView.swift */; };
+		B3FE90A52BDB176A008EBBA9 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90A42BDB176A008EBBA9 /* UserPreferences.swift */; };
+		B3FE90A72BDB1E6F008EBBA9 /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90A62BDB1E6F008EBBA9 /* HapticsManager.swift */; };
+		B3FE90A92BDB27F4008EBBA9 /* JukeboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90A82BDB27F4008EBBA9 /* JukeboxView.swift */; };
+		B3FE90AB2BDB2BC1008EBBA9 /* JukeboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90AA2BDB2BC1008EBBA9 /* JukeboxViewController.swift */; };
+		B3FE90AE2BDC07D5008EBBA9 /* MusicPaddedLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90AD2BDC07D5008EBBA9 /* MusicPaddedLabelCell.swift */; };
+		B3FE90B12BDC2539008EBBA9 /* PauseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90B02BDC2539008EBBA9 /* PauseView.swift */; };
+		B3FE90B32BDC3AE6008EBBA9 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90B22BDC3AE6008EBBA9 /* GameOverView.swift */; };
+		B3FE90B62BDCCDE5008EBBA9 /* UIView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90B52BDCCDE5008EBBA9 /* UIView+ext.swift */; };
+		B3FE90B82BDCDB78008EBBA9 /* PauseButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90B72BDCDB78008EBBA9 /* PauseButtonNode.swift */; };
+		B3FE90BB2BDEC5F4008EBBA9 /* ItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90BA2BDEC5F4008EBBA9 /* ItemsView.swift */; };
+		B3FE90C02BDEC689008EBBA9 /* ItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90BF2BDEC689008EBBA9 /* ItemsViewController.swift */; };
+		B3FE90C42BDEC70E008EBBA9 /* InAppPurchasesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90C32BDEC70E008EBBA9 /* InAppPurchasesView.swift */; };
+		B3FE90C62BDEC71D008EBBA9 /* InAppPurchasesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90C52BDEC71D008EBBA9 /* InAppPurchasesViewController.swift */; };
+		B3FE90C82BDEC830008EBBA9 /* ShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90C72BDEC830008EBBA9 /* ShopViewController.swift */; };
+		B3FE90CD2BDF4844008EBBA9 /* ShopItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90CC2BDF4844008EBBA9 /* ShopItem.swift */; };
+		B3FE90D02BDF4864008EBBA9 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90CF2BDF4864008EBBA9 /* ItemCell.swift */; };
+		B3FE90D22BDF63D0008EBBA9 /* IAPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90D12BDF63D0008EBBA9 /* IAPService.swift */; };
+		B3FE90D52BDF6E80008EBBA9 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B3FE90D42BDF6E80008EBBA9 /* Localizable.xcstrings */; };
+		B3FE90D82BE010C9008EBBA9 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90D72BE010C9008EBBA9 /* UserDefaultsKeys.swift */; };
+		B3FE90DF2BE01926008EBBA9 /* SwiftyGif in Frameworks */ = {isa = PBXBuildFile; productRef = B3FE90DE2BE01926008EBBA9 /* SwiftyGif */; };
+		B3FE90E42BE01C2A008EBBA9 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90E32BE01C2A008EBBA9 /* TutorialView.swift */; };
+		B3FE90E62BE01D4E008EBBA9 /* tutorial-gif.gif in Resources */ = {isa = PBXBuildFile; fileRef = B3FE90E52BE01D4E008EBBA9 /* tutorial-gif.gif */; };
+		B3FE90E82BE03D1B008EBBA9 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B3FE90E72BE03D1B008EBBA9 /* FirebaseAuth */; };
+		B3FE90EA2BE03D1B008EBBA9 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B3FE90E92BE03D1B008EBBA9 /* FirebaseMessaging */; };
+		B3FE90EE2BE04991008EBBA9 /* FirestoreSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90ED2BE04991008EBBA9 /* FirestoreSerializable.swift */; };
+		B3FE90F02BE049F4008EBBA9 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90EF2BE049F4008EBBA9 /* FirestoreService.swift */; };
+		B3FE90F22BE04AC9008EBBA9 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FE90F12BE04AC9008EBBA9 /* AppSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -138,21 +159,14 @@
 		B39B030F2BBB7A1D00924FCA /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B3DEF4802BBE54790022A977 /* CGSize+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+ext.swift"; sourceTree = "<group>"; };
 		B3DEF4832BBF36B50022A977 /* HUDNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDNode.swift; sourceTree = "<group>"; };
-		B3DEF4852BBF3B9F0022A977 /* PauseButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseButtonNode.swift; sourceTree = "<group>"; };
-		B3DEF4872BC071850022A977 /* PauseScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseScreen.swift; sourceTree = "<group>"; };
-		B3E247FE2BC09CB9002D5098 /* GameOverScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScreen.swift; sourceTree = "<group>"; };
 		B3E248042BC47D5D002D5098 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		B3E248062BC47D66002D5098 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		B3E248092BC6096F002D5098 /* Collectible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collectible.swift; sourceTree = "<group>"; };
 		B3E2480C2BC72480002D5098 /* CustomNavigationAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationAnimator.swift; sourceTree = "<group>"; };
 		B3E2480F2BC74583002D5098 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
-		B3E248122BC84EDD002D5098 /* WatchAdButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchAdButtonNode.swift; sourceTree = "<group>"; };
-		B3E248152BC84EEF002D5098 /* RestartButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestartButtonNode.swift; sourceTree = "<group>"; };
-		B3E248172BC84F04002D5098 /* ContinueButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueButtonNode.swift; sourceTree = "<group>"; };
 		B3E2481C2BC85DE9002D5098 /* AdMobService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdMobService.swift; sourceTree = "<group>"; };
 		B3E2481E2BC85FC7002D5098 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		B3E248202BC9AC6B002D5098 /* AdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdViewController.swift; sourceTree = "<group>"; };
-		B3E248222BCDC5F6002D5098 /* HomeButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonNode.swift; sourceTree = "<group>"; };
 		B3E248242BCEE9D7002D5098 /* GameCenterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterService.swift; sourceTree = "<group>"; };
 		B3E248262BCEF631002D5098 /* business.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = business.entitlements; sourceTree = "<group>"; };
 		B3E248272BCF1B79002D5098 /* SceneSetupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneSetupManager.swift; sourceTree = "<group>"; };
@@ -162,13 +176,38 @@
 		B3E248312BD1CA86002D5098 /* LaunchTransitionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTransitionView.swift; sourceTree = "<group>"; };
 		B3E248332BD1CD3E002D5098 /* LaunchTransitionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTransitionViewController.swift; sourceTree = "<group>"; };
 		B3E248362BD1DAEE002D5098 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
-		B3E2484F2BD1E0AD002D5098 /* BackgroundAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundAudio.swift; sourceTree = "<group>"; };
+		B3E2484F2BD1E0AD002D5098 /* BackgroundMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundMusic.swift; sourceTree = "<group>"; };
 		B3E248512BD1E7EC002D5098 /* SoundEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
 		B3E2485D2BD1EA8C002D5098 /* Media */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Media; sourceTree = "<group>"; };
 		B3F30C982BBDC09400A734F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B3F30CB62BBDC86400A734F8 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		B3F30CB92BBDCB6800A734F8 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		B3F30CBF2BBDEBF100A734F8 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		B3FE90A22BD9A4AC008EBBA9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B3FE90A42BDB176A008EBBA9 /* UserPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
+		B3FE90A62BDB1E6F008EBBA9 /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
+		B3FE90A82BDB27F4008EBBA9 /* JukeboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JukeboxView.swift; sourceTree = "<group>"; };
+		B3FE90AA2BDB2BC1008EBBA9 /* JukeboxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JukeboxViewController.swift; sourceTree = "<group>"; };
+		B3FE90AD2BDC07D5008EBBA9 /* MusicPaddedLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPaddedLabelCell.swift; sourceTree = "<group>"; };
+		B3FE90B02BDC2539008EBBA9 /* PauseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseView.swift; sourceTree = "<group>"; };
+		B3FE90B22BDC3AE6008EBBA9 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
+		B3FE90B52BDCCDE5008EBBA9 /* UIView+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ext.swift"; sourceTree = "<group>"; };
+		B3FE90B72BDCDB78008EBBA9 /* PauseButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseButtonNode.swift; sourceTree = "<group>"; };
+		B3FE90BA2BDEC5F4008EBBA9 /* ItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsView.swift; sourceTree = "<group>"; };
+		B3FE90BF2BDEC689008EBBA9 /* ItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewController.swift; sourceTree = "<group>"; };
+		B3FE90C32BDEC70E008EBBA9 /* InAppPurchasesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchasesView.swift; sourceTree = "<group>"; };
+		B3FE90C52BDEC71D008EBBA9 /* InAppPurchasesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchasesViewController.swift; sourceTree = "<group>"; };
+		B3FE90C72BDEC830008EBBA9 /* ShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewController.swift; sourceTree = "<group>"; };
+		B3FE90CC2BDF4844008EBBA9 /* ShopItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopItem.swift; sourceTree = "<group>"; };
+		B3FE90CF2BDF4864008EBBA9 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
+		B3FE90D12BDF63D0008EBBA9 /* IAPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPService.swift; sourceTree = "<group>"; };
+		B3FE90D42BDF6E80008EBBA9 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		B3FE90D72BE010C9008EBBA9 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
+		B3FE90E32BE01C2A008EBBA9 /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
+		B3FE90E52BE01D4E008EBBA9 /* tutorial-gif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "tutorial-gif.gif"; sourceTree = "<group>"; };
+		B3FE90ED2BE04991008EBBA9 /* FirestoreSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreSerializable.swift; sourceTree = "<group>"; };
+		B3FE90EF2BE049F4008EBBA9 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
+		B3FE90F12BE04AC9008EBBA9 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,11 +216,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3F30CAF2BBDC82A00A734F8 /* FirebaseCrashlytics in Frameworks */,
+				B3FE90DF2BE01926008EBBA9 /* SwiftyGif in Frameworks */,
 				B3E248052BC47D5D002D5098 /* AdSupport.framework in Frameworks */,
-				B3E2481B2BC858E4002D5098 /* GoogleMobileAds in Frameworks */,
+				B3FE90A12BD887FD008EBBA9 /* GoogleMobileAds in Frameworks */,
 				B3F30CB12BBDC82A00A734F8 /* FirebaseFirestore in Frameworks */,
 				B3E248072BC47D66002D5098 /* AppTrackingTransparency.framework in Frameworks */,
 				B3E248022BC47C4A002D5098 /* FacebookCore in Frameworks */,
+				B3FE90E82BE03D1B008EBBA9 /* FirebaseAuth in Frameworks */,
+				B3FE90EA2BE03D1B008EBBA9 /* FirebaseMessaging in Frameworks */,
 				B3F30CAD2BBDC82A00A734F8 /* FirebaseAnalyticsSwift in Frameworks */,
 				B3F30CB32BBDC82A00A734F8 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				B3F30CAB2BBDC82A00A734F8 /* FirebaseAnalytics in Frameworks */,
@@ -212,6 +254,7 @@
 		B31A3C772BAA264D005728C8 /* business */ = {
 			isa = PBXGroup;
 			children = (
+				B3FE90E02BE01ACE008EBBA9 /* gif */,
 				B3E2485D2BD1EA8C002D5098 /* Media */,
 				B3E248352BD1DA8F002D5098 /* Shared */,
 				B3E248262BCEF631002D5098 /* business.entitlements */,
@@ -233,6 +276,8 @@
 		B31A3C8F2BAA5058005728C8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B3FE90EC2BE0497D008EBBA9 /* Firestore */,
+				B3FE90CB2BDF483C008EBBA9 /* Shop */,
 				B3434B8D2BB496DA00F9D401 /* Constant */,
 				B3434B6E2BAB655700F9D401 /* +ext */,
 				B31A3C942BAA5852005728C8 /* GameEntity */,
@@ -356,8 +401,9 @@
 		B3434B932BB4A0C400F9D401 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				B3FE90C22BDEC6FD008EBBA9 /* Shop */,
+				B3FE90C12BDEC6AC008EBBA9 /* Menu */,
 				B31A3C802BAA264D005728C8 /* GameViewController.swift */,
-				B3F30CB92BBDCB6800A734F8 /* MenuViewController.swift */,
 				B3E2480C2BC72480002D5098 /* CustomNavigationAnimator.swift */,
 				B3E248202BC9AC6B002D5098 /* AdViewController.swift */,
 				B3E248332BD1CD3E002D5098 /* LaunchTransitionViewController.swift */,
@@ -393,10 +439,8 @@
 		B3DEF4822BBF36AC0022A977 /* HUD */ = {
 			isa = PBXGroup;
 			children = (
-				B3E248142BC84EE2002D5098 /* Buttons */,
 				B3DEF4832BBF36B50022A977 /* HUDNode.swift */,
-				B3DEF4872BC071850022A977 /* PauseScreen.swift */,
-				B3E247FE2BC09CB9002D5098 /* GameOverScreen.swift */,
+				B3FE90B72BDCDB78008EBBA9 /* PauseButtonNode.swift */,
 			);
 			path = HUD;
 			sourceTree = "<group>";
@@ -425,20 +469,10 @@
 				B3E2480F2BC74583002D5098 /* AnalyticsService.swift */,
 				B3E2481C2BC85DE9002D5098 /* AdMobService.swift */,
 				B3E248242BCEE9D7002D5098 /* GameCenterService.swift */,
+				B3FE90D12BDF63D0008EBBA9 /* IAPService.swift */,
+				B3FE90EF2BE049F4008EBBA9 /* FirestoreService.swift */,
 			);
 			path = Network;
-			sourceTree = "<group>";
-		};
-		B3E248142BC84EE2002D5098 /* Buttons */ = {
-			isa = PBXGroup;
-			children = (
-				B3E248122BC84EDD002D5098 /* WatchAdButtonNode.swift */,
-				B3DEF4852BBF3B9F0022A977 /* PauseButtonNode.swift */,
-				B3E248152BC84EEF002D5098 /* RestartButtonNode.swift */,
-				B3E248172BC84F04002D5098 /* ContinueButtonNode.swift */,
-				B3E248222BCDC5F6002D5098 /* HomeButtonNode.swift */,
-			);
-			path = Buttons;
 			sourceTree = "<group>";
 		};
 		B3E248292BD05858002D5098 /* LogicManager */ = {
@@ -457,6 +491,10 @@
 			children = (
 				B3E2484D2BD1DE18002D5098 /* Audio */,
 				B3434B772BB10A8600F9D401 /* GameManager.swift */,
+				B3FE90A42BDB176A008EBBA9 /* UserPreferences.swift */,
+				B3FE90A62BDB1E6F008EBBA9 /* HapticsManager.swift */,
+				B3FE90D42BDF6E80008EBBA9 /* Localizable.xcstrings */,
+				B3FE90D72BE010C9008EBBA9 /* UserDefaultsKeys.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -473,7 +511,7 @@
 		B3E2484E2BD1E09F002D5098 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				B3E2484F2BD1E0AD002D5098 /* BackgroundAudio.swift */,
+				B3E2484F2BD1E0AD002D5098 /* BackgroundMusic.swift */,
 				B3E248512BD1E7EC002D5098 /* SoundEffect.swift */,
 			);
 			path = Constants;
@@ -482,13 +520,115 @@
 		B3F30CA82BBDC7D000A734F8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B3FE90BC2BDEC60B008EBBA9 /* Shop */,
+				B3FE90B92BDEC5DD008EBBA9 /* Menu */,
+				B3FE90B42BDCCDD8008EBBA9 /* +ext */,
+				B3FE90AF2BDC251F008EBBA9 /* Game */,
+				B3FE90AC2BDC07C9008EBBA9 /* TableView */,
 				B3434B722BACB7A200F9D401 /* Scene */,
 				B3434B742BACB7B900F9D401 /* Storyboards */,
-				B3F30CB62BBDC86400A734F8 /* MenuView.swift */,
-				B3F30CBF2BBDEBF100A734F8 /* GameView.swift */,
 				B3E248312BD1CA86002D5098 /* LaunchTransitionView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		B3FE90AC2BDC07C9008EBBA9 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				B3FE90AD2BDC07D5008EBBA9 /* MusicPaddedLabelCell.swift */,
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
+		B3FE90AF2BDC251F008EBBA9 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				B3F30CBF2BBDEBF100A734F8 /* GameView.swift */,
+				B3FE90B02BDC2539008EBBA9 /* PauseView.swift */,
+				B3FE90B22BDC3AE6008EBBA9 /* GameOverView.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		B3FE90B42BDCCDD8008EBBA9 /* +ext */ = {
+			isa = PBXGroup;
+			children = (
+				B3FE90B52BDCCDE5008EBBA9 /* UIView+ext.swift */,
+			);
+			path = "+ext";
+			sourceTree = "<group>";
+		};
+		B3FE90B92BDEC5DD008EBBA9 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				B3F30CB62BBDC86400A734F8 /* MenuView.swift */,
+				B3FE90A22BD9A4AC008EBBA9 /* SettingsView.swift */,
+				B3FE90A82BDB27F4008EBBA9 /* JukeboxView.swift */,
+				B3FE90E32BE01C2A008EBBA9 /* TutorialView.swift */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		B3FE90BC2BDEC60B008EBBA9 /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				B3FE90CE2BDF485D008EBBA9 /* Cells */,
+				B3FE90BA2BDEC5F4008EBBA9 /* ItemsView.swift */,
+				B3FE90C32BDEC70E008EBBA9 /* InAppPurchasesView.swift */,
+			);
+			path = Shop;
+			sourceTree = "<group>";
+		};
+		B3FE90C12BDEC6AC008EBBA9 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				B3FE90AA2BDB2BC1008EBBA9 /* JukeboxViewController.swift */,
+				B3F30CB92BBDCB6800A734F8 /* MenuViewController.swift */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		B3FE90C22BDEC6FD008EBBA9 /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				B3FE90BF2BDEC689008EBBA9 /* ItemsViewController.swift */,
+				B3FE90C52BDEC71D008EBBA9 /* InAppPurchasesViewController.swift */,
+				B3FE90C72BDEC830008EBBA9 /* ShopViewController.swift */,
+			);
+			path = Shop;
+			sourceTree = "<group>";
+		};
+		B3FE90CB2BDF483C008EBBA9 /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				B3FE90CC2BDF4844008EBBA9 /* ShopItem.swift */,
+			);
+			path = Shop;
+			sourceTree = "<group>";
+		};
+		B3FE90CE2BDF485D008EBBA9 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				B3FE90CF2BDF4864008EBBA9 /* ItemCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		B3FE90E02BE01ACE008EBBA9 /* gif */ = {
+			isa = PBXGroup;
+			children = (
+				B3FE90E52BE01D4E008EBBA9 /* tutorial-gif.gif */,
+			);
+			path = gif;
+			sourceTree = "<group>";
+		};
+		B3FE90EC2BE0497D008EBBA9 /* Firestore */ = {
+			isa = PBXGroup;
+			children = (
+				B3FE90ED2BE04991008EBBA9 /* FirestoreSerializable.swift */,
+				B3FE90F12BE04AC9008EBBA9 /* AppSettings.swift */,
+			);
+			path = Firestore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -516,7 +656,10 @@
 				B3F30CB22BBDC82A00A734F8 /* FirebaseFirestoreCombine-Community */,
 				B3F30CB42BBDC82A00A734F8 /* FirebaseFirestoreSwift */,
 				B3E248012BC47C4A002D5098 /* FacebookCore */,
-				B3E2481A2BC858E4002D5098 /* GoogleMobileAds */,
+				B3FE90A02BD887FD008EBBA9 /* GoogleMobileAds */,
+				B3FE90DE2BE01926008EBBA9 /* SwiftyGif */,
+				B3FE90E72BE03D1B008EBBA9 /* FirebaseAuth */,
+				B3FE90E92BE03D1B008EBBA9 /* FirebaseMessaging */,
 			);
 			productName = business;
 			productReference = B31A3C752BAA264D005728C8 /* business.app */;
@@ -544,12 +687,14 @@
 			knownRegions = (
 				en,
 				Base,
+				"pt-BR",
 			);
 			mainGroup = B31A3C6C2BAA264D005728C8;
 			packageReferences = (
 				B3F30CA92BBDC82A00A734F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B3E248002BC47C4A002D5098 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
-				B3E248192BC858E4002D5098 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				B3FE909F2BD887FD008EBBA9 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				B3FE90D92BE01643008EBBA9 /* XCRemoteSwiftPackageReference "SwiftyGif" */,
 			);
 			productRefGroup = B31A3C762BAA264D005728C8 /* Products */;
 			projectDirPath = "";
@@ -571,6 +716,7 @@
 				B3F30C992BBDC09500A734F8 /* GoogleService-Info.plist in Resources */,
 				B39B02FD2BBB56BC00924FCA /* Urbanist-LightItalic.ttf in Resources */,
 				B39B02FC2BBB56BC00924FCA /* Urbanist-ExtraBoldItalic.ttf in Resources */,
+				B3FE90D52BDF6E80008EBBA9 /* Localizable.xcstrings in Resources */,
 				B31A3C7B2BAA264D005728C8 /* GameScene.sks in Resources */,
 				B39B03102BBB7A1D00924FCA /* PrivacyInfo.xcprivacy in Resources */,
 				B39B030D2BBB56BC00924FCA /* Urbanist-SemiBold.ttf in Resources */,
@@ -587,6 +733,7 @@
 				B39B03042BBB56BC00924FCA /* Urbanist-Light.ttf in Resources */,
 				B39B02FF2BBB56BC00924FCA /* Urbanist-Bold.ttf in Resources */,
 				B31A3C892BAA264F005728C8 /* LaunchScreen.storyboard in Resources */,
+				B3FE90E62BE01D4E008EBBA9 /* tutorial-gif.gif in Resources */,
 				B39B03012BBB56BC00924FCA /* Urbanist-Medium.ttf in Resources */,
 				B31A3C7D2BAA264D005728C8 /* Actions.sks in Resources */,
 				B39B03072BBB56BC00924FCA /* Urbanist-ExtraBold.ttf in Resources */,
@@ -627,49 +774,65 @@
 			buildActionMask = 2147483647;
 			files = (
 				B31A3C932BAA55C9005728C8 /* WallMaterial.swift in Sources */,
-				B3DEF4862BBF3B9F0022A977 /* PauseButtonNode.swift in Sources */,
 				B3E248252BCEE9D7002D5098 /* GameCenterService.swift in Sources */,
+				B3FE90CD2BDF4844008EBBA9 /* ShopItem.swift in Sources */,
 				B3E2482B2BD05865002D5098 /* SceneTouchManager.swift in Sources */,
-				B3E248502BD1E0AD002D5098 /* BackgroundAudio.swift in Sources */,
+				B3E248502BD1E0AD002D5098 /* BackgroundMusic.swift in Sources */,
 				B3434B842BB1E50200F9D401 /* CatEntity.swift in Sources */,
 				B3434B922BB4972E00F9D401 /* CameraManager.swift in Sources */,
-				B3DEF4882BC071850022A977 /* PauseScreen.swift in Sources */,
+				B3FE90BB2BDEC5F4008EBBA9 /* ItemsView.swift in Sources */,
+				B3FE90E42BE01C2A008EBBA9 /* TutorialView.swift in Sources */,
 				B3434B7E2BB1E3B500F9D401 /* AgentComponent.swift in Sources */,
+				B3FE90A32BD9A4AC008EBBA9 /* SettingsView.swift in Sources */,
 				B39B02E42BB8B18100924FCA /* CGPoint+ext.swift in Sources */,
 				B3F30CB72BBDC86400A734F8 /* MenuView.swift in Sources */,
+				B3FE90C82BDEC830008EBBA9 /* ShopViewController.swift in Sources */,
+				B3FE90C62BDEC71D008EBBA9 /* InAppPurchasesViewController.swift in Sources */,
 				B3E2482D2BD05E89002D5098 /* SceneContactManager.swift in Sources */,
 				B39B02E62BB8D7A700924FCA /* ArrowNode.swift in Sources */,
-				B3E248132BC84EDD002D5098 /* WatchAdButtonNode.swift in Sources */,
 				B3DEF4842BBF36B50022A977 /* HUDNode.swift in Sources */,
 				B3434B702BACAEE000F9D401 /* WallFactory.swift in Sources */,
 				B3434B822BB1E45700F9D401 /* CucumberEntity.swift in Sources */,
 				B3434B8C2BB33B8600F9D401 /* GameConstants.swift in Sources */,
 				B3F30CBA2BBDCB6800A734F8 /* MenuViewController.swift in Sources */,
-				B3E248232BCDC5F7002D5098 /* HomeButtonNode.swift in Sources */,
+				B3FE90B12BDC2539008EBBA9 /* PauseView.swift in Sources */,
+				B3FE90F22BE04AC9008EBBA9 /* AppSettings.swift in Sources */,
 				B31A3C7F2BAA264D005728C8 /* GameScene.swift in Sources */,
 				B3E2481F2BC85FC7002D5098 /* Secrets.swift in Sources */,
+				B3FE90B62BDCCDE5008EBBA9 /* UIView+ext.swift in Sources */,
 				B3434B862BB1E51B00F9D401 /* CatSpriteComponent.swift in Sources */,
+				B3FE90D82BE010C9008EBBA9 /* UserDefaultsKeys.swift in Sources */,
+				B3FE90EE2BE04991008EBBA9 /* FirestoreSerializable.swift in Sources */,
 				B31A3C812BAA264D005728C8 /* GameViewController.swift in Sources */,
+				B3FE90AB2BDB2BC1008EBBA9 /* JukeboxViewController.swift in Sources */,
 				B39B02E82BB9071B00924FCA /* UIBezierPath+ext.swift in Sources */,
+				B3FE90C02BDEC689008EBBA9 /* ItemsViewController.swift in Sources */,
 				B3E2480A2BC6096F002D5098 /* Collectible.swift in Sources */,
+				B3FE90B82BDCDB78008EBBA9 /* PauseButtonNode.swift in Sources */,
+				B3FE90C42BDEC70E008EBBA9 /* InAppPurchasesView.swift in Sources */,
 				B3E2480D2BC72480002D5098 /* CustomNavigationAnimator.swift in Sources */,
-				B3E247FF2BC09CB9002D5098 /* GameOverScreen.swift in Sources */,
+				B3FE90A72BDB1E6F008EBBA9 /* HapticsManager.swift in Sources */,
 				B31A3C792BAA264D005728C8 /* AppDelegate.swift in Sources */,
 				B3F30CC02BBDEBF100A734F8 /* GameView.swift in Sources */,
 				B31A3C962BAA5862005728C8 /* WallNode.swift in Sources */,
-				B3E248162BC84EEF002D5098 /* RestartButtonNode.swift in Sources */,
 				B3E248282BCF1B79002D5098 /* SceneSetupManager.swift in Sources */,
 				B31A3C982BAA5AF6005728C8 /* PhysicsCategory.swift in Sources */,
+				B3FE90F02BE049F4008EBBA9 /* FirestoreService.swift in Sources */,
+				B3FE90AE2BDC07D5008EBBA9 /* MusicPaddedLabelCell.swift in Sources */,
 				B3E248372BD1DAEE002D5098 /* AudioManager.swift in Sources */,
 				B3E2482F2BD063B3002D5098 /* SceneUpdateManager.swift in Sources */,
 				B3E248522BD1E7EC002D5098 /* SoundEffect.swift in Sources */,
+				B3FE90D02BDF4864008EBBA9 /* ItemCell.swift in Sources */,
 				B3434B782BB10A8600F9D401 /* GameManager.swift in Sources */,
 				B3E248322BD1CA86002D5098 /* LaunchTransitionView.swift in Sources */,
 				B3E248342BD1CD3E002D5098 /* LaunchTransitionViewController.swift in Sources */,
+				B3FE90B32BDC3AE6008EBBA9 /* GameOverView.swift in Sources */,
 				B3E248102BC74583002D5098 /* AnalyticsService.swift in Sources */,
 				B3E2481D2BC85DE9002D5098 /* AdMobService.swift in Sources */,
+				B3FE90A92BDB27F4008EBBA9 /* JukeboxView.swift in Sources */,
+				B3FE90D22BDF63D0008EBBA9 /* IAPService.swift in Sources */,
+				B3FE90A52BDB176A008EBBA9 /* UserPreferences.swift in Sources */,
 				B3434B7A2BB1E0E500F9D401 /* CGVector+ext.swift in Sources */,
-				B3E248182BC84F04002D5098 /* ContinueButtonNode.swift in Sources */,
 				B3E248212BC9AC6B002D5098 /* AdViewController.swift in Sources */,
 				B3DEF4812BBE54790022A977 /* CGSize+ext.swift in Sources */,
 				B3434B802BB1E3EE00F9D401 /* CucumberSpriteComponent.swift in Sources */,
@@ -695,6 +858,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -758,6 +922,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -823,8 +988,9 @@
 				INFOPLIST_FILE = business/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Up Uup Cat";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Track for ads";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
@@ -862,8 +1028,9 @@
 				INFOPLIST_FILE = business/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Up Uup Cat";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Track for ads";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
@@ -874,6 +1041,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mnhz.business;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -918,20 +1086,28 @@
 				minimumVersion = 14.1.0;
 			};
 		};
-		B3E248192BC858E4002D5098 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 11.2.0;
-			};
-		};
 		B3F30CA92BBDC82A00A734F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 10.23.1;
+			};
+		};
+		B3FE909F2BD887FD008EBBA9 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.3.0;
+			};
+		};
+		B3FE90D92BE01643008EBBA9 /* XCRemoteSwiftPackageReference "SwiftyGif" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kirualex/SwiftyGif.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.4.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -941,11 +1117,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B3E248002BC47C4A002D5098 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
 			productName = FacebookCore;
-		};
-		B3E2481A2BC858E4002D5098 /* GoogleMobileAds */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B3E248192BC858E4002D5098 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
-			productName = GoogleMobileAds;
 		};
 		B3F30CAA2BBDC82A00A734F8 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -976,6 +1147,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B3F30CA92BBDC82A00A734F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
+		};
+		B3FE90A02BD887FD008EBBA9 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B3FE909F2BD887FD008EBBA9 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
+		B3FE90DE2BE01926008EBBA9 /* SwiftyGif */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B3FE90D92BE01643008EBBA9 /* XCRemoteSwiftPackageReference "SwiftyGif" */;
+			productName = SwiftyGif;
+		};
+		B3FE90E72BE03D1B008EBBA9 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B3F30CA92BBDC82A00A734F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		B3FE90E92BE03D1B008EBBA9 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B3F30CA92BBDC82A00A734F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

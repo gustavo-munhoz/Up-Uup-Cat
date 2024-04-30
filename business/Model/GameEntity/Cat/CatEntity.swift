@@ -12,8 +12,14 @@ class CatEntity: GKEntity {
     let spriteComponent: CatSpriteComponent
     let agentComponent: AgentComponent
     
+    private let jumpSFX = [SoundEffect.jump1, SoundEffect.jump2, SoundEffect.jump3,
+                           SoundEffect.jump4, SoundEffect.jump5, SoundEffect.jump6]
+    
     var currentHeight: Int = 0
     var maxHeight: Int = 0
+    
+    var isPumpedUpByCatnip = CurrentValueSubject<Bool, Never>(false)
+    private var catnipTimerWorkItem: DispatchWorkItem?
     
     init(size: CGSize) {
         spriteComponent = CatSpriteComponent(size: size)
@@ -36,6 +42,7 @@ class CatEntity: GKEntity {
     
     func updateHeight(newHeight: Int) {
         currentHeight = newHeight
+        
         if newHeight > maxHeight {
             maxHeight = newHeight
             GameManager.shared.updateHighScore(maxHeight)
@@ -83,7 +90,7 @@ extension CatEntity {
         if spriteComponent.canJump {
             if hasStarted {
                 spriteComponent.node.texture = GC.PLAYER.TEXTURE.HOLDING_WALL
-                UIImpactFeedbackGenerator(style: .rigid).impactOccurred()
+                HapticsManager.playRigidImpact()
             }
             else if isTouching {
                 spriteComponent.node.texture = GC.PLAYER.TEXTURE.PREPARE
@@ -105,16 +112,15 @@ extension CatEntity {
     func handleJump(from start: CGPoint, to end: CGPoint) {
         guard spriteComponent.canJump else { return }
 
-        let effect = [SoundEffect.jump1, SoundEffect.jump2, SoundEffect.jump3,
-                      SoundEffect.jump4, SoundEffect.jump5, SoundEffect.jump6].randomElement()!
+        let effect = jumpSFX.randomElement()!
         
-        effect.play()
+        effect.playIfAllowed()
         
         var dx = start.x - end.x
         var dy = start.y - end.y
 
         let magnitude = sqrt(dx * dx + dy * dy)
-        let maxMagnitude: CGFloat = GC.PLAYER.DEFAULT_BOOST_MAX
+        let maxMagnitude: CGFloat = isPumpedUpByCatnip.value ? GC.PLAYER.PUMPED_BOOST_MAX : GC.PLAYER.DEFAULT_BOOST_MAX
         
         let normalizedMagnitude = min(1, magnitude / maxMagnitude)
         
@@ -140,17 +146,33 @@ extension CatEntity {
     func collectItem(c: Collectible, execute callClosure: @escaping () -> Void = {}) {
         switch c {
             case .catnip:
+                SoundEffect.pickUpCatnip.playIfAllowed()
+                setPumpedUpState(true, for: 5)
+                HapticsManager.playHeavyImpact()
                 break
                 
             case .nigiri:
-                SoundEffect.pickUpNigiri.play()
+                SoundEffect.pickUpNigiri.playIfAllowed()
                 GameManager.shared.increaseNigiriCount()
-                UIImpactFeedbackGenerator(style: .soft).impactOccurred(intensity: 1)
+                HapticsManager.playSoftImpact()
                 break
         }
         
-        
         callClosure()
+    }
+    
+    private func setPumpedUpState(_ state: Bool, for duration: TimeInterval) {
+        catnipTimerWorkItem?.cancel()
+        
+        isPumpedUpByCatnip.value = state
+
+        let workItem = DispatchWorkItem {
+            self.isPumpedUpByCatnip.value = false
+        }
+        
+        catnipTimerWorkItem = workItem
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration, execute: workItem)
     }
 }
 

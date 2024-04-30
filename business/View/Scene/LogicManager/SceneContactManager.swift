@@ -30,17 +30,20 @@ class SceneContactManager {
         if let _ = cucumber {
             scene.cucumberEntity.isJumpingAtPlayer = false
             
-            if scene.gameOverScreen.isHidden {
-                scene.handleCatDeath()
-            }
+            scene.handleCatDeath()
             
             return
         }
         
         if let collectibleNode = collectibleNode?.node as? CollectibleNode, !scene.isGameOver, !scene.isPaused {
             scene.catEntity.collectItem(c: collectibleNode.type) {
-                if collectibleNode.type == .nigiri {
-                    scene.hud.updateNigiriScore(GameManager.shared.currentNigiriScore.value)
+                switch collectibleNode.type {
+                    case .nigiri:
+                        scene.hud.updateNigiriScore(GameManager.shared.currentNigiriScore.value)
+                        
+                    case .catnip:
+                        scene.cameraManager.zoomOutByCatnip()
+                        scene.hud.handleCatnipPickup()
                 }
                 collectibleNode.removeFromParent()
             }

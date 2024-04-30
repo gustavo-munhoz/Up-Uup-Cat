@@ -26,6 +26,7 @@ class SceneSetupManager {
 
     private func setupBackground() {
         let backgroundImage = SKSpriteNode(imageNamed: "roof_background_start")
+        
         backgroundImage.position = CGPoint(x: frame.midX, y: frame.midY)
         backgroundImage.size = CGSize(width: 4 * frame.width, height: frame.height)
         backgroundImage.zPosition = -1
@@ -47,6 +48,7 @@ class SceneSetupManager {
         scene.addChild(scene.cameraManager.cameraNode)
 
         let background = SKSpriteNode(imageNamed: "background_gradient")
+        background.name = "background"
         background.size = frame.size
         background.position = CGPoint(x: frame.minX, y: frame.minY)
         background.zPosition = -2
@@ -67,7 +69,7 @@ class SceneSetupManager {
         let moveAction = SKAction.move(to: finalPosition, duration: 3.0)
         moveAction.timingMode = .easeInEaseOut
 
-        let scaleAction = SKAction.scale(to: 1, duration: 3.0)
+        let scaleAction = SKAction.scale(to: 1.25, duration: 3.0)
         scaleAction.timingMode = .easeInEaseOut
         
         scene.cameraManager.cameraNode.run(.group([scaleAction, moveAction])) {
@@ -115,15 +117,5 @@ class SceneSetupManager {
         scene.hud = HUDNode()
         scene.hud.setup(withFrame: frame)
         scene.cameraManager.cameraNode.addChild(scene.hud)
-        
-        scene.pauseScreen = PauseScreen()
-        scene.pauseScreen.setup(withFrame: frame)
-        scene.pauseScreen.isHidden = true
-        scene.cameraManager.cameraNode.addChild(scene.pauseScreen)
-        
-        scene.gameOverScreen = GameOverScreen()
-        scene.gameOverScreen.setup(withFrame: frame)
-        scene.gameOverScreen.isHidden = true
-        scene.cameraManager.cameraNode.addChild(scene.gameOverScreen)
     }
 }

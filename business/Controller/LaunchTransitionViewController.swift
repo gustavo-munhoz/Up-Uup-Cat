@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import AdSupport
+import AppTrackingTransparency
 
 class LaunchTransitionViewController: UIViewController {
     
@@ -20,14 +22,41 @@ class LaunchTransitionViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        SoundEffect.snore.play()
+        requestTrackingAuthorization()
+        
+        SoundEffect.snore.playIfAllowed()
         
         launchTransitionView.startAnimation {
-            BackgroundAudio.catNipDaze.play()
+            UserPreferences.shared.selectedBackgroundMusic.play()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.navigationController?.pushViewController(MenuViewController(), animated: true)
             }
+        }
+    }
+    
+    func requestTrackingAuthorization() {
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization { status in
+                switch status {
+                case .authorized:
+                    print("Tracking Authorized")
+                        
+                case .denied:
+                    print("Tracking Denied")
+                        
+                case .notDetermined:
+                    print("Tracking Not Determined")
+                        
+                case .restricted:
+                    print("Tracking Restricted")
+                        
+                @unknown default:
+                    print("Tracking Unknown")
+                }
+            }
+        } else {
+            print(ASIdentifierManager.shared().advertisingIdentifier)
         }
     }
 }

@@ -12,15 +12,18 @@ class AdMobService {
     
     // MARK: - Rewarded Ads
     
-    static func loadRewardedAd(inAVC vc: AdViewController) {
-        GADRewardedAd.load(withAdUnitID: Secrets.rewardAdId, request: GADRequest()) { [weak vc] (ad, error) in
-            guard let vc = vc else { return }
-            if let error = error {
-                print("Failed to load rewarded ad with error: \(error.localizedDescription)")
-                return
+    static func loadRewardedAd(inAVC vc: AdViewController) async {
+        do {
+            let ad = try await GADRewardedAd.load(
+                withAdUnitID: Secrets.rewardAdId,
+                request: GADRequest()
+            )
+            DispatchQueue.main.async {
+                vc.rewardedAd = ad
+                vc.rewardedAd?.fullScreenContentDelegate = vc
             }
-            vc.rewardedAd = ad
-            vc.rewardedAd?.fullScreenContentDelegate = vc
+        } catch {
+            print("Failed to load rewarded ad with error: \(error.localizedDescription)")
         }
     }
     
@@ -37,24 +40,39 @@ class AdMobService {
     
     // MARK: - Interstitial Ads
     
-    static func loadInterstitialAd(inAVC vc: AdViewController) {
-        GADInterstitialAd.load(withAdUnitID: Secrets.interstitialAdId, request: GADRequest()) { [weak vc] (ad, error) in
-            guard let vc = vc else { return }
-            if let error = error {
-                print("Failed to load rewarded ad with error: \(error.localizedDescription)")
-                return
+    static func loadInterstitialAd(inAVC vc: AdViewController) async {
+        do {
+            let ad = try await GADInterstitialAd.load(
+                withAdUnitID: Secrets.interstitialAdId,
+                request: GADRequest()
+            )
+            DispatchQueue.main.async {
+                vc.interstitialAd = ad
+                vc.interstitialAd?.fullScreenContentDelegate = vc
             }
-            vc.interstitialAd = ad
-            vc.interstitialAd?.fullScreenContentDelegate = vc
+        } catch {
+            print("Failed to load interstitial ad with error: \(error.localizedDescription)")
         }
     }
     
     static func showInterstitialAd(atAVC vc: AdViewController) {
+        guard !UserDefaults.standard.bool(forKey: UserDefaultsKeys.areAdsRemoved) else { return }
+        
         if let ad = vc.interstitialAd {
             ad.present(fromRootViewController: vc)
             
         } else {
             print("Ad was not ready.")
         }
+    }
+    
+    // MARK: - Banner Ads
+    
+    static func loadBannerAd(inAVC vc: AdViewController) {
+        guard !UserDefaults.standard.bool(forKey: UserDefaultsKeys.areAdsRemoved) else { return }
+        
+        vc.bannerView?.adUnitID = Secrets.bannerAdId
+        vc.bannerView?.rootViewController = vc
+        vc.bannerView?.load(GADRequest())
     }
 }

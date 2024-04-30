@@ -9,6 +9,9 @@ import UIKit
 
 class LaunchTransitionView: UIView {
     
+    private let totalAnimationDuration: TimeInterval = 7.4
+    private var startTime: Date!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
@@ -34,9 +37,34 @@ class LaunchTransitionView: UIView {
         return view
     }()
     
+    private(set) lazy var progressView: UIProgressView = {
+        let progress = UIProgressView(progressViewStyle: .bar)
+        progress.translatesAutoresizingMaskIntoConstraints = false
+        progress.trackTintColor = UIColor.lightGray
+        progress.progressTintColor = .green
+        progress.progress = 0.0
+        progress.layer.cornerRadius = 8
+        progress.layer.borderWidth = 4
+        progress.layer.borderColor = UIColor.white.cgColor
+        progress.layer.masksToBounds = true
+        
+        return progress
+    }()
+
+    func updateProgress() {
+        let progress = CGFloat(Date().timeIntervalSince(startTime)) / CGFloat(totalAnimationDuration)
+        progressView.setProgress(Float(progress), animated: true)
+        if progress < 1.0 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                self.updateProgress()
+            }
+        }
+    }
+    
     func addSubviews() {
         addSubview(backgroundImage)
         addSubview(cucumberImage)
+        addSubview(progressView)
     }
     
     func setupConstraints() {
@@ -52,14 +80,24 @@ class LaunchTransitionView: UIView {
             cucumberImage.leadingAnchor.constraint(equalTo: trailingAnchor),
             cucumberImage.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.316),
         ])
+        
+        NSLayoutConstraint.activate([
+            progressView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 50),
+            progressView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -50),
+            progressView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            progressView.heightAnchor.constraint(equalToConstant: 16)
+        ])
     }
     
     func startAnimation(completion: @escaping () -> Void) {
-        animateCucumberEntering(completion: {
-            self.animateCucumberFullyVisible(completion: {
+        startTime = Date()
+        updateProgress()
+
+        animateCucumberEntering {
+            self.animateCucumberFullyVisible {
                 self.backgroundImage.image = UIImage(named: "launch_transition_2")
                 SoundEffect.snore.stop()
-                SoundEffect.surprise.play()
+                SoundEffect.surprise.playIfAllowed()
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     self.animateCucumberDisappears {
@@ -69,8 +107,8 @@ class LaunchTransitionView: UIView {
                         completion()
                     }
                 }
-            })
-        })
+            }
+        }
     }
     
     private func animateCucumberEntering(completion: @escaping () -> Void) {
@@ -96,7 +134,7 @@ class LaunchTransitionView: UIView {
     }
     
     private func animateCucumberDisappears(completion: @escaping () -> Void) {
-        SoundEffect.cucumberMove.play()
+        SoundEffect.cucumberMove.playIfAllowed()
         
         UIView.animate(withDuration: 0.4,
                        delay: 0,

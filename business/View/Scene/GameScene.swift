@@ -10,6 +10,8 @@ import GameplayKit
 import Combine
 import FirebaseAnalytics
 
+import GoogleMobileAds
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     /// Transforms the CG expression to a relative value
     private lazy var t: CGAffineTransform = .init(scaleX: frame.width / 393, y: frame.height / 852)
@@ -36,6 +38,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var hasGeneratedFirstWalls = false
     
     var cameraManager: CameraManager!
+    var zoomOutTimer: Timer?
+    
     
     var wallFactory: WallFactory!
     var existingWalls: [WallNode] = []
@@ -48,20 +52,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var arrowNode: ArrowNode?
     var hud: HUDNode!
-    var pauseScreen: PauseScreen!
-    var gameOverScreen: GameOverScreen!
+    
     
     var isGrabbingGlass = false {
         didSet {
             if isGrabbingGlass {
-                SoundEffect.squeakingGlass.play()
+                SoundEffect.squeakingGlass.playIfAllowed()
             } else {
                 SoundEffect.squeakingGlass.stop()
             }
         }
     }
-    
-    var zoomOutTimer: Timer?
     
     var sceneSetupManager: SceneSetupManager!
     var sceneTouchManager: SceneTouchManager!
@@ -69,16 +70,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var sceneUpdateManager: SceneUpdateManager!
     
     var cucumberShouldJump: Bool {
-        get {
-            if let vy = catEntity.spriteComponent.node.physicsBody?.velocity.dy, vy < -2250 ||
-                catEntity.spriteComponent.node.position.y < -frame.minY ||
-                catEntity.spriteComponent.node.position.x < -frame.width * 2 ||
-                catEntity.spriteComponent.node.position.x > frame.width * 2
-            {
-                return true
-            } 
-            else { return false }
-        }
+        catEntity.spriteComponent.node.position.y < -frame.minY
+        || catEntity.spriteComponent.node.position.x < -frame.width * 2
+        || catEntity.spriteComponent.node.position.x > frame.width * 2
     }
     
     // MARK: - Scene setup
@@ -101,7 +95,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
-            
     }
     
     // MARK: - Default methods
@@ -139,36 +132,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 // MARK: - Custom methods
 extension GameScene {
     func setupSubscriptions() {
-        GameManager.shared.shouldAnimateDoubleNigiris.sink { values in
-            self.animateDoubleNigiri(start: values[0], end: values[1])
+        catEntity.isPumpedUpByCatnip.sink { isPumped in
+            if !isPumped && self.hasStarted {
+                self.cameraManager.adjustScale(progress: self.catEntity.calculateProgress())
+            }
         }
         .store(in: &cancellables)
     }
     
-    func animateDoubleNigiri(start startValue: Int, end endValue: Int) {
-        let steps = abs(endValue - startValue)
-        let timePerStep = 2 / Double(steps)
-        
-        var currentStep = 0
-        let action = SKAction.run {
-            self.gameOverScreen.nigiriBalanceLabel.text = "\(startValue + currentStep)"
-            currentStep += 1
-        }
-        
-        let wait = SKAction.wait(forDuration: timePerStep)
-        let sequence = SKAction.sequence([action, wait])
-        let repeatAction = SKAction.repeat(sequence, count: steps)
-        
-        gameOverScreen.nigiriBalanceLabel.run(repeatAction)
-    }
-    
     func handleCatMovement() {
+        guard !isGameOver else { return }
+        
         catEntity.handleMovement(startingHeight: startingHeight, walls: existingWalls)
         
         if !isGameOver, catEntity.currentHeight >= catEntity.maxHeight {
             hud.updateCurrentScore(catEntity.maxHeight)
-            pauseScreen.update(withScore: catEntity.maxHeight)
-            gameOverScreen.update(withScore: catEntity.maxHeight)
             cucumberEntity.updateSpeedAndAcceleration(basedOnProgress: catEntity.calculateProgress())
         }
     }
@@ -204,27 +182,6 @@ extension GameScene {
         }
     }
     
-    func togglePause() {
-        isPaused.toggle()
-        pauseScreen.isHidden.toggle()
-    }
-    
-    func showGameOverScreen() {
-        gameOverScreen?.removeFromParent()
-        
-        gameOverScreen = GameOverScreen()
-        gameOverScreen.setup(
-            withFrame: frame,
-            isHighScore: GameManager.shared.currentScore.value > GameManager.shared.personalBestScore
-        )
-        
-        gameOverScreen.isHidden = false
-        
-        cameraManager.cameraNode.addChild(gameOverScreen)
-        
-        GameManager.shared.saveStats()
-    }
-    
     func handleCatDeath() {
         guard !isGameOver else { return }
         
@@ -234,9 +191,9 @@ extension GameScene {
         catEntity.spriteComponent.node.removeAllActions()
         
         
-        SoundEffect.catScream.play()
+        SoundEffect.catScream.playIfAllowed()
         catEntity.spriteComponent.node.run(deathSequence) {
-            self.showGameOverScreen()
+            GameManager.shared.endGame()
         }
         
         isGameOver = true
