@@ -70,7 +70,9 @@ class SceneTouchManager {
             }
         }
         
-        scene.catEntity.handleJump(from: start, to: location)
+        if scene.catEntity.spriteComponent.node.physicsBody?.velocity == .zero {
+            scene.catEntity.handleJump(from: start, to: location)
+        }
         
         scene.isGrabbingGlass = false
         deleteArrowNodeFromScene()
