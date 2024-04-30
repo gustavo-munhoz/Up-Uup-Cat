@@ -9,9 +9,10 @@ import UIKit
 
 import Firebase
 import FirebaseCore
+import FirebaseMessaging
+import FirebaseAnalytics
 
 import FacebookCore
-import FirebaseAnalytics
 
 import AppTrackingTransparency
 import AdSupport
@@ -32,6 +33,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseConfiguration.shared.setLoggerLevel(.min)
         FirebaseApp.configure()
 
+        Messaging.messaging().delegate = self
+        UNUserNotificationCenter.current().delegate = self
+        
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: authOptions,
+            completionHandler: {_, _ in })
+        
+        application.registerForRemoteNotifications()
+        
         
         GameManager.shared.loadStats()
         AudioManager.shared.loadUserAudioPreferences()
@@ -81,3 +92,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    // Lide com a recepção de notificação enquanto o app está em primeiro plano
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .sound, .badge])
+    }
+}
+
+extension AppDelegate: MessagingDelegate {
+    // Receber o token de registro atualizado
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        print("Firebase registration token: \(String(describing: fcmToken))")
+    }
+}

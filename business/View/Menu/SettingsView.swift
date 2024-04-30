@@ -60,8 +60,6 @@ class SettingsView: UIView {
         config.baseForegroundColor = .white
         config.baseBackgroundColor = .clear
         
-        config.contentInsets = .init(top: 12, leading: 0, bottom: 0, trailing: 0)
-        
         let view = UIButton(configuration: config)
         
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -203,7 +201,9 @@ class SettingsView: UIView {
             jukeboxButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             jukeboxButton.heightAnchor.constraint(equalToConstant: 48),
             jukeboxButton.imageView!.trailingAnchor.constraint(equalTo: jukeboxButton.trailingAnchor, constant: -20),
-            jukeboxButton.titleLabel!.leadingAnchor.constraint(equalTo: jukeboxButton.leadingAnchor, constant: 20)
+            jukeboxButton.titleLabel!.leadingAnchor.constraint(equalTo: jukeboxButton.leadingAnchor, constant: 20),
+            jukeboxButton.titleLabel!.centerYAnchor.constraint(equalTo: jukeboxButton.centerYAnchor),
+            jukeboxButton.imageView!.centerYAnchor.constraint(equalTo: jukeboxButton.centerYAnchor),
         ])
         
         NSLayoutConstraint.activate([
