@@ -25,6 +25,7 @@ enum SoundEffect: String {
     case jump4 = "jump-4"
     case jump5 = "jump-5"
     case jump6 = "jump-6"
+    case wingFlap = "wing-flap"
 }
 
 extension SoundEffect {
@@ -38,8 +39,9 @@ extension SoundEffect {
         }
     }
     
-    func playIfAllowed(_ completion: @escaping () -> Void = {}) {
+    func playIfAllowed(withVolume volume: Float = 1.0, _ completion: @escaping () -> Void = {}) {
         if UserPreferences.shared.isSoundEffectsEnabled {
+            AudioManager.shared.setSoundEffectPlayerVolume(self, to: volume)
             AudioManager.shared.playSoundEffect(effect: self)
         }
         

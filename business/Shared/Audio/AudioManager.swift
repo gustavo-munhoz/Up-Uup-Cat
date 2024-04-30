@@ -118,6 +118,12 @@ class AudioManager {
         backgroundMusicPlayer = nil
     }
 
+    func setSoundEffectPlayerVolume(_ effect: SoundEffect, to volume: Float) {
+        if let player = soundEffectPlayers[effect.filename] {
+            player.setVolume(volume, fadeDuration: 0)
+        }
+    }
+    
     func playSoundEffect(effect: SoundEffect) {
         if let player = soundEffectPlayers[effect.filename] {
             if effect == .squeakingGlass {

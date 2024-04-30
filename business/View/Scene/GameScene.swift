@@ -75,6 +75,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         || catEntity.spriteComponent.node.position.x > frame.width * 2
     }
     
+    var gameShouldEnd: Bool {
+        catEntity.spriteComponent.node.position.y < -frame.minY
+        || catEntity.spriteComponent.node.position.x < -frame.width * 2
+        || catEntity.spriteComponent.node.position.x > frame.width * 2
+        || catEntity.spriteComponent.node.physicsBody!.velocity.dy <= -4000
+    }
+    
     // MARK: - Scene setup
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -88,23 +95,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sceneSetupManager.animateCameraIntro()
         
         setupSubscriptions()
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(appDidBecomeActive),
-            name: UIApplication.didBecomeActiveNotification,
-            object: nil
-        )
     }
     
     // MARK: - Default methods
 
-    @objc func appDidBecomeActive() {
-        // TODO: FIX LEAVING THE APP AND COMING BACK
-//        if !isPaused {
-//            togglePause()
-//        }
-    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         sceneTouchManager.touchesBegan(touches, with: event)
@@ -166,20 +160,40 @@ extension GameScene {
     }
     
     func handleCucumberMovement(currentTime: TimeInterval) {
-        if cucumberShouldJump && !isGameOver { cucumberEntity.jumpAtPlayer(player: catEntity) }
-        
-        else if !cucumberEntity.isJumpingAtPlayer {
-            cucumberEntity.updateTarget(catEntity.agentComponent.agent)
-            var deltaTime = currentTime - lastUpdateTime
-            lastUpdateTime = currentTime
-            
-            if deltaTime > 0.02 {
-                deltaTime = 0.02
-            }
-            
-            cucumberEntity.agentComponent.agent.update(deltaTime: deltaTime)
-            catEntity.agentComponent.agent.update(deltaTime: deltaTime)
+        if !isGameOver && gameShouldEnd {
+            handleCatDeath()
+            return
         }
+        
+        cucumberEntity.updateTarget(catEntity.agentComponent.agent)
+        var deltaTime = currentTime - lastUpdateTime
+        lastUpdateTime = currentTime
+        
+        if deltaTime > 0.02 {
+            deltaTime = 0.02
+        }
+        
+        cucumberEntity.agentComponent.agent.update(deltaTime: deltaTime)
+        catEntity.agentComponent.agent.update(deltaTime: deltaTime)
+        
+        let distance = distanceBetween(
+            cucumberEntity.spriteComponent.node.position,
+            catEntity.spriteComponent.node.position
+        )
+        
+        let volume = calculateVolumeBasedOnDistance(distance)
+        
+        SoundEffect.wingFlap.playIfAllowed(withVolume: volume)
+    }
+    
+    func distanceBetween(_ point1: CGPoint, _ point2: CGPoint) -> CGFloat {
+        return sqrt(pow(point2.x - point1.x, 2) + pow(point2.y - point1.y, 2))
+    }
+
+    func calculateVolumeBasedOnDistance(_ distance: CGFloat) -> Float {
+        let maxDistance: CGFloat = 2500
+        let volume = max(0, 1 - (distance / maxDistance))
+        return Float(volume)
     }
     
     func handleCatDeath() {

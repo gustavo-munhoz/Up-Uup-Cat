@@ -147,6 +147,7 @@ class MenuViewController: UIViewController, UINavigationControllerDelegate, GKGa
         AudioManager.shared.loadSoundEffects(effects: [
             .claws2,
             .jump1, .jump2, .jump3, .jump4, .jump5, .jump6,
+            .wingFlap
         ])
     }
 }

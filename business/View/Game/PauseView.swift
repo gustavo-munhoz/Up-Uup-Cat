@@ -130,7 +130,7 @@ class PauseView: UIView {
         var config = UIButton.Configuration.filled()
         config.image = UIImage(systemName: "house.fill")
         config.imagePadding = 10 * scaleFactor
-        config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 25 * scaleFactor)
+        config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 16 * scaleFactor)
         config.baseForegroundColor = .white
         config.baseBackgroundColor = .clear
         
@@ -201,7 +201,7 @@ class PauseView: UIView {
         
         NSLayoutConstraint.activate([
             gamePausedLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            gamePausedLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5),
+            gamePausedLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6),
             gamePausedLabel.topAnchor.constraint(equalTo: topAnchor, constant: frame.height * 0.05),
             gamePausedLabel.heightAnchor.constraint(equalToConstant: 140 * scaleFactor)
         ])
