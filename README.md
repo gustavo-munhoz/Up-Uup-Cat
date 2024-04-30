@@ -2,7 +2,7 @@
 
 Welcome to the official repository of "Up Uup Cat", a thrilling arcade game where agility and quick reflexes are your best tools for survival. Join our adventurous cat in a vertical sprint away from its quirky fear: cucumbers, while collecting delicious nigiris along the way!
 
-![Up Uup Cat Logo](business/Assets.xcassets/background/home/game_logo.imageset)
+![Up Uup Cat Logo](business/Assets.xcassets/background/home/game_logo.imageset/game_logo.png)
 
 ## Features 🚀
 
