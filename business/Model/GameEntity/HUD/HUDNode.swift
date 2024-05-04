@@ -18,7 +18,7 @@ class HUDNode: SKSpriteNode {
     var nigiriCountLabel: SKLabelNode!
     var nigiriSprite: SKSpriteNode!
     
-    var catnipTimerWorkItem: DispatchWorkItem?
+    weak var catnipTimerWorkItem: DispatchWorkItem?
     
     func setup(withFrame frame: CGRect) {
         self.name = GC.HUD.HUD_NAME

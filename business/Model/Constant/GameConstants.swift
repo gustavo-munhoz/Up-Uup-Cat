@@ -107,7 +107,7 @@ struct GC {
         }
         
         struct COLLECTIBLE_PROBABILITY {
-            static let NIGIRI: CGFloat = 0.1
+            static let NIGIRI: CGFloat = 0.05
             static let CATNIP: CGFloat = 0.025
         }
         

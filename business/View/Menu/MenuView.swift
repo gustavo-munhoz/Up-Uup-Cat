@@ -229,6 +229,7 @@ class MenuView: UIView {
     private func resetMenuVisibility() {
         UIView.animate(withDuration: 0.5, animations: {
             self.closeModalButton.alpha = 0
+            self.tutorialView.tutorialImage.stopAnimatingGif()
             
             self.tutorialView.alpha = 0
             self.tutorialView.transform = CGAffineTransform(translationX: 0, y: UIScreen.main.bounds.height)
@@ -271,6 +272,7 @@ class MenuView: UIView {
                 self.tutorialView.alpha = 1
                 self.tutorialView.transform = .identity
                 self.closeModalButton.alpha = 1
+                self.tutorialView.tutorialImage.startAnimatingGif()
                 
             }) { _ in
                 UIView.animate(

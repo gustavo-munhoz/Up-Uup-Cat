@@ -14,17 +14,9 @@ enum SoundEffect: String {
     case pop = "pop"
     case pickUpNigiri = "nigiri-pickup-pop"
     case pickUpCatnip = "catnip-pickup"
-    case claws1 = "claws-1"
-    case claws2 = "claws-2"
-    case claws3 = "claws-3"
+    case jump = "jump"
     case squeakingGlass = "squeaking-glass"
     case catScream = "cat-scream"
-    case jump1 = "jump-1"
-    case jump2 = "jump-2"
-    case jump3 = "jump-3"
-    case jump4 = "jump-4"
-    case jump5 = "jump-5"
-    case jump6 = "jump-6"
     case wingFlap = "wing-flap"
 }
 

@@ -28,8 +28,6 @@ class SceneContactManager {
         guard let _ = cat else { return }
         
         if let _ = cucumber {
-            scene.cucumberEntity.isJumpingAtPlayer = false
-            
             scene.handleCatDeath()
             
             return

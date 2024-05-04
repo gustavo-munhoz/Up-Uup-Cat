@@ -12,15 +12,17 @@ class WallFactory {
     var frame: CGRect
     var wallParameters = WallParameters()
     var lastWallMaxY: CGFloat
+    var playerFrame: CGRect
     
-    init(frame: CGRect, cameraPositionY: CGFloat, firstWallsHeight: CGFloat) {
+    init(frame: CGRect, cameraPositionY: CGFloat, firstWallsHeight: CGFloat, playerFrame: CGRect) {
         self.frame = frame
         self.lastWallMaxY = firstWallsHeight
+        self.playerFrame = playerFrame
     }
     
     func createWalls() -> [WallNode] {
         var walls: [WallNode] = []
-        let numberOfWalls = Int.random(in: 3...12)
+        let numberOfWalls = Int.random(in: 3...10)
         var currentLineMaxY: CGFloat = lastWallMaxY
 
         for _ in 0..<numberOfWalls {
@@ -63,8 +65,18 @@ class WallFactory {
                 
                 newWall.position = CGPoint(x: wallXPosition, y: wallYPosition)
                 newWall.zPosition = 1
+                
+                newWall.setContactArea(
+                    rect: CGRectMake(
+                        newWall.position.x - (newWall.frame.width - playerFrame.width) / 2,
+                        newWall.position.y - newWall.frame.height / 2,
+                        newWall.frame.width - playerFrame.width,
+                        newWall.frame.height - playerFrame.height * 0.75
+                    )
+                )
+                
                 walls.append(newWall)
-
+                
                 currentLineMaxY = max(currentLineMaxY, wallYPosition + wallHeight / 2)
             }
         }

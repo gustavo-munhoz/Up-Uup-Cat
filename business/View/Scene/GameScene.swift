@@ -82,9 +82,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         || catEntity.spriteComponent.node.physicsBody!.velocity.dy <= -4000
     }
     
+    private var lastUpdateCall = Date()
+    
     // MARK: - Scene setup
+    
+    
     override func didMove(to view: SKView) {
         super.didMove(to: view)
+    
+        NotificationCenter.default.addObserver(
+            forName: UIApplication.didReceiveMemoryWarningNotification,
+            object: nil,
+            queue: .main) { [weak self] _ in
+                self?.existingWalls.removeAll(where: {
+                    $0.position.y * 5 <= self?.catEntity.spriteComponent.node.position.y ?? 0
+                })
+            }
         
         self.sceneSetupManager = SceneSetupManager(scene: self, frame: frame)
         self.sceneTouchManager = SceneTouchManager(scene: self)
@@ -126,8 +139,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 // MARK: - Custom methods
 extension GameScene {
     func setupSubscriptions() {
-        catEntity.isPumpedUpByCatnip.sink { isPumped in
-            if !isPumped && self.hasStarted {
+        catEntity.isPumpedUpByCatnip.sink { [weak self] isPumped in
+            if let self = self, !isPumped && self.hasStarted {
                 self.cameraManager.adjustScale(progress: self.catEntity.calculateProgress())
             }
         }
@@ -141,14 +154,17 @@ extension GameScene {
         
         if !isGameOver, catEntity.currentHeight >= catEntity.maxHeight {
             hud.updateCurrentScore(catEntity.maxHeight)
-            cucumberEntity.updateSpeedAndAcceleration(basedOnProgress: catEntity.calculateProgress())
+            cucumberEntity.updateSpeedAndAcceleration(
+                basedOnProgress: catEntity.calculateProgress(),
+                isCatPumpedUp: catEntity.isPumpedUpByCatnip.value
+            )
         }
     }
     
     func handleWallGeneration() {
         wallFactory.adjustWallParameters(forProgress: catEntity.calculateProgress())
         
-        if cameraManager.cameraNode.position.y * cameraManager.currentScale + (frame.size.height * 0.5) > wallFactory.lastWallMaxY {
+        if cameraManager.cameraNode.position.y * cameraManager.currentScale + (frame.size.height * 0.75) > wallFactory.lastWallMaxY {
             let walls = wallFactory.createWalls()
             
             for wall in walls {
@@ -165,25 +181,32 @@ extension GameScene {
             return
         }
         
+        // TODO: Make cucumber go faster if player is with catnip
+        
+        
+        
         cucumberEntity.updateTarget(catEntity.agentComponent.agent)
         var deltaTime = currentTime - lastUpdateTime
         lastUpdateTime = currentTime
         
-        if deltaTime > 0.02 {
-            deltaTime = 0.02
+        if deltaTime > 1/60 {
+            deltaTime = 1/60
         }
         
-        cucumberEntity.agentComponent.agent.update(deltaTime: deltaTime)
-        catEntity.agentComponent.agent.update(deltaTime: deltaTime)
-        
-        let distance = distanceBetween(
-            cucumberEntity.spriteComponent.node.position,
-            catEntity.spriteComponent.node.position
-        )
-        
-        let volume = calculateVolumeBasedOnDistance(distance)
-        
-        SoundEffect.wingFlap.playIfAllowed(withVolume: volume)
+        if Date().timeIntervalSince(lastUpdateCall) > 1/60 {
+            lastUpdateCall = Date()
+            cucumberEntity.agentComponent.agent.update(deltaTime: deltaTime)
+            catEntity.agentComponent.agent.update(deltaTime: deltaTime)
+            
+            let distance = distanceBetween(
+                cucumberEntity.spriteComponent.node.position,
+                catEntity.spriteComponent.node.position
+            )
+            
+            let volume = calculateVolumeBasedOnDistance(distance)
+            
+            if volume != .zero { SoundEffect.wingFlap.playIfAllowed(withVolume: volume) }
+        }
     }
     
     func distanceBetween(_ point1: CGPoint, _ point2: CGPoint) -> CGFloat {

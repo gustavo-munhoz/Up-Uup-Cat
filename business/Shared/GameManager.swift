@@ -36,7 +36,7 @@ class GameManager {
     
     private(set) var sessionGameCounts = 1 {
         didSet {
-            if sessionGameCounts == 4 {
+            if sessionGameCounts == 3 {
                 shouldShowIntersticialAd.send(true)
                 sessionGameCounts = 1
             }
@@ -53,16 +53,6 @@ class GameManager {
     
     func didDismissRewardedAd() {
         didFinishShowingRewardedAd.send(true)
-    }
-    
-    func requestAnimateDoubleNigiriLabel() {
-        shouldAnimateDoubleNigiris.send([currentNigiriScore.value, currentNigiriScore.value * 2])
-    }
-    
-    func doubleNigiriCount() {
-        requestAnimateDoubleNigiriLabel()
-        
-        currentNigiriScore.value *= 2
     }
     
     // MARK: - Game Methods
@@ -133,7 +123,7 @@ class GameManager {
     
     func setPersonalBest(_ value: Int) {
         personalBestScore = value
-        UserDefaults.standard.set(value, forKey: UserDefaultsKeys.nigiriBalance)
+        UserDefaults.standard.set(value, forKey: UserDefaultsKeys.highScore)
     }
     
     func setNigiriBalance(_ value: Int) {

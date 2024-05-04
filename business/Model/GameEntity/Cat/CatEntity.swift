@@ -12,14 +12,13 @@ class CatEntity: GKEntity {
     let spriteComponent: CatSpriteComponent
     let agentComponent: AgentComponent
     
-    private let jumpSFX = [SoundEffect.jump1, SoundEffect.jump2, SoundEffect.jump3,
-                           SoundEffect.jump4, SoundEffect.jump5, SoundEffect.jump6]
+    private var sfxCounter = 0
     
     var currentHeight: Int = 0
     var maxHeight: Int = 0
     
     var isPumpedUpByCatnip = CurrentValueSubject<Bool, Never>(false)
-    private var catnipTimerWorkItem: DispatchWorkItem?
+    private weak var catnipTimerWorkItem: DispatchWorkItem?
     
     init(size: CGSize) {
         spriteComponent = CatSpriteComponent(size: size)
@@ -56,34 +55,29 @@ class CatEntity: GKEntity {
 
 extension CatEntity {
     func handleMovement(startingHeight: CGFloat, walls: [WallNode]) {
-        self.updateHeight(newHeight: Int((self.spriteComponent.node.position.y - startingHeight) / 50))
+        let heightDifference = self.spriteComponent.node.position.y - startingHeight
+        self.updateHeight(newHeight: Int(heightDifference / 50))
         
-        if spriteComponent.node.texture == GC.PLAYER.TEXTURE.HOLDING_WALL ||
-            spriteComponent.node.texture == GC.PLAYER.TEXTURE.PREPARE
+        if spriteComponent.node.texture == GC.PLAYER.TEXTURE.HOLDING_WALL
+            || spriteComponent.node.texture == GC.PLAYER.TEXTURE.PREPARE
         {
             spriteComponent.node.run(GC.PLAYER.TEXTURE.ANIMATION.JUMP)
         }
-        
+
+        var isContactMade = false
         for wall in walls {
-            let contactAreaWidth = wall.frame.width - self.spriteComponent.node.frame.width
-            let contactAreaHeight = wall.frame.height - self.spriteComponent.node.frame.height
-
-            let contactAreaOriginX = wall.position.x - contactAreaWidth / 2
-            let contactAreaOriginY = wall.position.y - wall.frame.height / 2
-
-            let contactAreaFrameInScene = CGRect(
-                x: contactAreaOriginX,
-                y: contactAreaOriginY,
-                width: contactAreaWidth,
-                height: contactAreaHeight
-            )
-
-            if self.spriteComponent.node.frame.intersects(contactAreaFrameInScene) { 
+            guard let contactArea = wall.contactArea else { continue }
+            
+            if spriteComponent.node.frame.intersects(contactArea) {
                 self.spriteComponent.currentWallMaterial = wall.material
-                return
+                isContactMade = true
+                break
             }
         }
-        self.spriteComponent.currentWallMaterial = .none
+        
+        if !isContactMade {
+            self.spriteComponent.currentWallMaterial = .none
+        }
     }
     
     func prepareForJump(hasStarted: Bool = true, isTouching: Bool = false) {
@@ -111,37 +105,33 @@ extension CatEntity {
     
     func handleJump(from start: CGPoint, to end: CGPoint) {
         guard spriteComponent.canJump else { return }
+        
+    
+        SoundEffect.jump.playIfAllowed()
 
-        let effect = jumpSFX.randomElement()!
-        
-        effect.playIfAllowed()
-        
         var dx = start.x - end.x
         var dy = start.y - end.y
 
         let magnitude = sqrt(dx * dx + dy * dy)
         let maxMagnitude: CGFloat = isPumpedUpByCatnip.value ? GC.PLAYER.PUMPED_BOOST_MAX : GC.PLAYER.DEFAULT_BOOST_MAX
-        
-        let normalizedMagnitude = min(1, magnitude / maxMagnitude)
-        
-        let adjustedMagnitude = pow(2, normalizedMagnitude) - 1
-        
-        let scaledMagnitude = adjustedMagnitude * maxMagnitude
 
         if magnitude != 0 {
-            dx /= magnitude
-            dy /= magnitude
-        }
-        dx *= scaledMagnitude
-        dy *= scaledMagnitude
+            let normalizedMagnitude = min(1, magnitude / maxMagnitude)
+            let adjustedMagnitude = pow(2, normalizedMagnitude) - 1
+            let scaledMagnitude = adjustedMagnitude * maxMagnitude
+            
+            dx *= scaledMagnitude / magnitude
+            dy *= scaledMagnitude / magnitude
 
-        spriteComponent.node.physicsBody?.isDynamic = true
-        spriteComponent.node.physicsBody?.applyImpulse(CGVector(dx: dx, dy: dy))
-        
-        if spriteComponent.node.texture == GC.PLAYER.TEXTURE.JUMP_FRAME_1 {
-            spriteComponent.node.run(GC.PLAYER.TEXTURE.ANIMATION.GLASS_JUMP)
+            spriteComponent.node.physicsBody?.isDynamic = true
+            spriteComponent.node.physicsBody?.applyImpulse(CGVector(dx: dx, dy: dy))
+
+            if spriteComponent.node.texture == GC.PLAYER.TEXTURE.JUMP_FRAME_1 {
+                spriteComponent.node.run(GC.PLAYER.TEXTURE.ANIMATION.GLASS_JUMP)
+            }
         }
     }
+
     
     func collectItem(c: Collectible, execute callClosure: @escaping () -> Void = {}) {
         switch c {

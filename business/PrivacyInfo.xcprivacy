@@ -9,7 +9,7 @@
 			<string>NSPrivacyAccessedAPICategoryDiskSpace</string>
 			<key>NSPrivacyAccessedAPITypeReasons</key>
 			<array>
-				<string>B728.1 Optional bug reports</string>
+				<string>B728.1</string>
 			</array>
 		</dict>
 		<dict>
@@ -17,7 +17,7 @@
 			<string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
 			<key>NSPrivacyAccessedAPITypeReasons</key>
 			<array>
-				<string>0A2A.1 App only access file timestamp when third-party SDKs do so.</string>
+				<string>0A2A.1</string>
 			</array>
 		</dict>
 		<dict>
@@ -25,7 +25,7 @@
 			<string>NSPrivacyAccessedAPICategorySystemBootTime</string>
 			<key>NSPrivacyAccessedAPITypeReasons</key>
 			<array>
-				<string>8FFB.1 System Boot Time used in events related to UIKit and AVFAudio.</string>
+				<string>8FFB.1</string>
 			</array>
 		</dict>
 		<dict>

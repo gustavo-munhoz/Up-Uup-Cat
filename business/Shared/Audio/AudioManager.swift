@@ -132,7 +132,9 @@ class AudioManager {
                 player.setVolume(0.15, fadeDuration: 0.5)
                 
             } else {
-                player.play()
+                DispatchQueue.main.async {
+                    player.play()
+                }
             }
             
         } else {
@@ -141,7 +143,7 @@ class AudioManager {
                 ofType: nil,
                 inDirectory: "Media/SoundEffects"
             ) else {
-                print("Background music file not found.")
+                print("Sound effect file not found.")
                 return
             }
             do {

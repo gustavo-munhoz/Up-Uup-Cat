@@ -49,12 +49,14 @@ class UserPreferences {
     }
     
     func setLocalHighscore(_ value: Int) {
+        localSettings?.lastUpdated = Date()
         localSettings?.highScore = value
         GameManager.shared.setPersonalBest(value)
         saveSettingsRemotely()
     }
     
     func setLocalNigiriBalance(_ value: Int) {
+        localSettings?.lastUpdated = Date()
         localSettings?.nigiriBalance = value
         GameManager.shared.setNigiriBalance(value)
         saveSettingsRemotely()

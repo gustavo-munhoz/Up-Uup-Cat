@@ -9,9 +9,6 @@ import UIKit
 
 class LaunchTransitionView: UIView {
     
-    private let totalAnimationDuration: TimeInterval = 7.4
-    private var startTime: Date!
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
@@ -36,35 +33,93 @@ class LaunchTransitionView: UIView {
         
         return view
     }()
-    
-    private(set) lazy var progressView: UIProgressView = {
-        let progress = UIProgressView(progressViewStyle: .bar)
-        progress.translatesAutoresizingMaskIntoConstraints = false
-        progress.trackTintColor = UIColor.lightGray
-        progress.progressTintColor = .green
-        progress.progress = 0.0
-        progress.layer.cornerRadius = 8
-        progress.layer.borderWidth = 4
-        progress.layer.borderColor = UIColor.white.cgColor
-        progress.layer.masksToBounds = true
-        
-        return progress
-    }()
 
-    func updateProgress() {
-        let progress = CGFloat(Date().timeIntervalSince(startTime)) / CGFloat(totalAnimationDuration)
-        progressView.setProgress(Float(progress), animated: true)
-        if progress < 1.0 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                self.updateProgress()
+    private var container: UIView!
+    private var characterLabels: [UILabel] = []
+    
+    /// Used to animate text in a wave-like motion.
+    func setupAnimatedText(text: String) {
+        guard container == nil else {
+            restartAnimations()
+            return
+        }
+        
+        container = UIView()
+        container.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(container)
+
+        NSLayoutConstraint.activate([
+            container.centerXAnchor.constraint(equalTo: centerXAnchor),
+            container.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20)
+        ])
+
+        var lastView: UIView? = nil
+        let spacing: CGFloat = 2
+        let characters = Array(text)
+        
+        for char in characters {
+            let label = UILabel()
+            label.text = String(char)
+            label.font = UIFont(name: "Urbanist-ExtraBold", size: 32)
+            label.textColor = .menuLightPurple
+            label.translatesAutoresizingMaskIntoConstraints = false
+            container.addSubview(label)
+            characterLabels.append(label)
+
+            if let lastView = lastView {
+                NSLayoutConstraint.activate([
+                    label.leadingAnchor.constraint(equalTo: lastView.trailingAnchor, constant: spacing)
+                ])
+            } else {
+                NSLayoutConstraint.activate([
+                    label.leadingAnchor.constraint(equalTo: container.leadingAnchor)
+                ])
             }
+
+            NSLayoutConstraint.activate([
+                label.topAnchor.constraint(equalTo: container.topAnchor),
+                label.bottomAnchor.constraint(equalTo: container.bottomAnchor)
+            ])
+
+            lastView = label
+        }
+
+        if let lastView = lastView {
+            NSLayoutConstraint.activate([
+                lastView.trailingAnchor.constraint(equalTo: container.trailingAnchor)
+            ])
+        }
+        
+        restartAnimations()
+    }
+
+    func restartAnimations() {
+        for (index, label) in characterLabels.enumerated() {
+            animateCharacter(label, delay: TimeInterval(index) * 0.1, isLast: index == characterLabels.count - 1)
         }
     }
+
+    func animateCharacter(_ label: UILabel, delay: TimeInterval, isLast: Bool) {
+        let duration: TimeInterval = 0.2
+        UIView.animate(withDuration: duration, delay: delay, options: [.curveEaseInOut], animations: {
+            label.transform = CGAffineTransform(translationX: 0, y: -30).scaledBy(x: 1.5, y: 1.5)
+        }) { _ in
+            UIView.animate(withDuration: duration, animations: {
+                label.transform = .identity
+            }, completion: { _ in
+                if isLast {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                        self.restartAnimations()
+                    }
+                }
+            })
+        }
+    }
+
     
     func addSubviews() {
         addSubview(backgroundImage)
         addSubview(cucumberImage)
-        addSubview(progressView)
     }
     
     func setupConstraints() {
@@ -80,18 +135,10 @@ class LaunchTransitionView: UIView {
             cucumberImage.leadingAnchor.constraint(equalTo: trailingAnchor),
             cucumberImage.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.316),
         ])
-        
-        NSLayoutConstraint.activate([
-            progressView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 50),
-            progressView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -50),
-            progressView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            progressView.heightAnchor.constraint(equalToConstant: 16)
-        ])
     }
     
     func startAnimation(completion: @escaping () -> Void) {
-        startTime = Date()
-        updateProgress()
+        setupAnimatedText(text: String(localized: "loading"))
 
         animateCucumberEntering {
             self.animateCucumberFullyVisible {

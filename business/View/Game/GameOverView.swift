@@ -16,8 +16,6 @@ class GameOverView: UIView {
 
     let isHighscore: Bool
     
-    // TODO: isHighscore?
-    
     // MARK: - Labels
     
     private(set) lazy var bg: UIImageView = {
@@ -431,9 +429,9 @@ class GameOverView: UIView {
     }
     
     func setupSubscriptions() {
-        GameManager.shared.didFinishShowingRewardedAd.sink {
-            if $0 {
-                self.animateNigiriCountDoubled()
+        GameManager.shared.didFinishShowingRewardedAd.sink { [weak self] didFinish in
+            if didFinish {
+                self?.animateNigiriCountDoubled()
             }
         }
         .store(in: &cancellables)

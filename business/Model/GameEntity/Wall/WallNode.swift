@@ -10,8 +10,14 @@ import SpriteKit
 class WallNode: SKSpriteNode {
     var material: WallMaterial = .normal
     
+    var contactArea: CGRect?
+    
     var hasNigiri = false
     var hasCatnip = false
+    
+    func setContactArea(rect: CGRect) {
+        self.contactArea = rect
+    }
     
     init(size: CGSize, material: WallMaterial) {
         self.material = material

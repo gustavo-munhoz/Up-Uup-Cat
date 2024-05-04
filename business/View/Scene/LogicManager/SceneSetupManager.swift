@@ -83,7 +83,12 @@ class SceneSetupManager {
         setupCatEntity()
         setupCucumberEntity()
         
-        scene.wallFactory = WallFactory(frame: frame, cameraPositionY: scene.cameraManager.cameraNode.position.y, firstWallsHeight: frame.height/2)
+        scene.wallFactory = WallFactory(
+            frame: frame,
+            cameraPositionY: scene.cameraManager.cameraNode.position.y,
+            firstWallsHeight: frame.height/2,
+            playerFrame: scene.catEntity.spriteComponent.node.frame
+        )
     }
 
     private func setupCatEntity() {

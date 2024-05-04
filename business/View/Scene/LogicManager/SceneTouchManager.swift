@@ -70,7 +70,7 @@ class SceneTouchManager {
             }
         }
         
-        if scene.catEntity.spriteComponent.node.physicsBody?.velocity == .zero {
+        if scene.catEntity.spriteComponent.node.physicsBody?.velocity == .zero || scene.isGrabbingGlass {
             scene.catEntity.handleJump(from: start, to: location)
         }
         
@@ -82,9 +82,9 @@ class SceneTouchManager {
         guard let scene = scene, scene.catEntity.spriteComponent.currentWallMaterial != .none,
               !scene.isPaused, scene.canStart else { return }
         
-        if scene.hasStarted {
-            SoundEffect.claws2.playIfAllowed()
-        }
+//        if scene.hasStarted {
+//            SoundEffect.claws2.playIfAllowed()
+//        }
         
         scene.zoomOutTimer?.invalidate()
         scene.zoomOutTimer = Timer.scheduledTimer(withTimeInterval: 0.75, repeats: false) { _ in

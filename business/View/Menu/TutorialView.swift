@@ -33,6 +33,7 @@ class TutorialView: UIView {
             view.layer.cornerRadius = 4
             view.layer.masksToBounds = true
             view.backgroundColor = .red
+            view.stopAnimatingGif()
             
             return view
             
